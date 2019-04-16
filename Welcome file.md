@@ -130,7 +130,8 @@ predictor_pdp <span class="token operator">&lt;-</span> Predictor<span class="to
 pdp <span class="token operator">=</span> FeatureEffect<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_pdp<span class="token punctuation">,</span> feature <span class="token operator">=</span> <span class="token string">"CGPA"</span><span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"pdp"</span><span class="token punctuation">)</span> <span class="token comment">#explanation for the "CGPA" feature</span>
 pdp<span class="token operator">$</span>plot<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment"># plot the results</span>
 </code></pre>
-<p><img src="https://lh3.googleusercontent.com/2J2DJgT8dF9Af1NV1qoueaRea3tiy3rcTh3LbCCB1R5UeOxnrHEDEqbvMg32xivyAEqjFW-YXX_U=s900" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/2J2DJgT8dF9Af1NV1qoueaRea3tiy3rcTh3LbCCB1R5UeOxnrHEDEqbvMg32xivyAEqjFW-YXX_U=s900" alt="enter image description here"><br>
+From the figure we can interpret that  CGPA grades greater than 8 start to predict that a person has a higher probability to be accepted for the master program. The greater (than 8) the score, the greater the possibility to be accepted.</p>
 <pre class=" language-r"><code class="prism  language-r">
 </code></pre>
 
