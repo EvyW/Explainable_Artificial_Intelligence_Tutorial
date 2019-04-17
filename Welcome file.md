@@ -79,9 +79,7 @@ Partial dependence plots can be used to compare models</p>
 <p>Overlaying partial dependence of different models can help to choose models that are not only accurate, but also make intuitive sense.</p>
 <h3 id="demo"><strong>Demo</strong></h3>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># Required libraries</span>
-library<span class="token punctuation">(</span>lime<span class="token punctuation">)</span> 
 library<span class="token punctuation">(</span>data.table<span class="token punctuation">)</span>
-library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span>
 library<span class="token punctuation">(</span>randomForest<span class="token punctuation">)</span>
 library<span class="token punctuation">(</span>rpart<span class="token punctuation">)</span>
 
@@ -268,8 +266,7 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <li>Select m features best describing the complex model outcome from the permuted data.</li>
 <li>Fit a simple model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation)(how does it add this weight?).</li>
 <li>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.<br>
-<img src="https://lh3.googleusercontent.com/kCUsIS2ECrWIp21bw1GjhyAlBy-CqSHrewDf3i5pPAlB4_IGtFHtF6-m6NaVXPk_4CiHvm5LWiP9=s900" alt="enter image description here"><br>
-<strong>Toy example</strong></li>
+<img src="https://lh3.googleusercontent.com/kCUsIS2ECrWIp21bw1GjhyAlBy-CqSHrewDf3i5pPAlB4_IGtFHtF6-m6NaVXPk_4CiHvm5LWiP9=s900" alt="enter image description here"></li>
 </ol>
 <p><strong>LIME in detail</strong></p>
 <p>Permutation:  LIME depends on the type of input data. Currently two types of inputs are supported: tabular and text</p>
@@ -298,6 +295,43 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <ul>
 <li>The user must select the number of features. The number must strike a balance between the complexity of the model and the simplicity of the explanation, some suggests to keep it below 10 features.</li>
 </ul>
-<pre class=" language-r"><code class="prism  language-r">
+<h3 id="demo-3">Demo</h3>
+<p>This time we are going to generate explanations for predictions resulting from a SVM</p>
+<pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
+
+<span class="token comment">#create model and show summary</span>
+svm_model <span class="token operator">&lt;-</span> svm<span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
+summary<span class="token punctuation">(</span>svm_model<span class="token punctuation">)</span>
+
+<span class="token comment">#run prediction and show execution time</span>
+pred <span class="token operator">&lt;-</span> predict<span class="token punctuation">(</span>svm_model<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
+system.time<span class="token punctuation">(</span>pred <span class="token operator">&lt;-</span> predict<span class="token punctuation">(</span>svm_model<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment"># load predictions as data.table</span>
+predictionsTable <span class="token operator">=</span> as.data.frame<span class="token punctuation">(</span>table<span class="token punctuation">(</span>pred<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+write.csv<span class="token punctuation">(</span>predictionsTable<span class="token punctuation">,</span> file <span class="token operator">=</span> <span class="token string">"predictions.csv"</span><span class="token punctuation">)</span> <span class="token comment"># Write CSV in R</span>
+predictionsTable <span class="token operator">=</span> fread<span class="token punctuation">(</span><span class="token string">"predictions.csv"</span><span class="token punctuation">)</span> <span class="token comment"># load as data.table</span>
+
+<span class="token comment"># select predictions</span>
+predictionsTable <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">450</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
+
+<span class="token comment"># change to integers </span>
+predictionsTable <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token punctuation">,</span> pred <span class="token operator">:</span><span class="token operator">=</span> ifelse<span class="token punctuation">(</span>predictionsTable<span class="token operator">$</span>pred <span class="token operator">&gt;=</span> <span class="token number">2.5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> 
+                                                               ifelse<span class="token punctuation">(</span>myData<span class="token operator">$</span>ChanceOfAdmit <span class="token operator">&gt;=</span> <span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+<span class="token comment"># confusion matrix</span>
+predictionVector <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token punctuation">,</span> pred<span class="token punctuation">]</span>
+table<span class="token punctuation">(</span>predictionVector<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
+
+
+
 </code></pre>
+<pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>lime<span class="token punctuation">)</span> 
+library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
+
+<span class="token comment"># select 1 observation from the test set to explain with lime</span>
+localObs <span class="token operator">=</span> read.csv<span class="token punctuation">(</span><span class="token string">"data_test.csv"</span><span class="token punctuation">,</span> sep <span class="token operator">=</span> <span class="token string">";"</span><span class="token punctuation">)</span>
+localObs <span class="token operator">=</span> subset<span class="token punctuation">(</span>localObs<span class="token punctuation">,</span> select<span class="token operator">=</span><span class="token operator">-</span>c<span class="token punctuation">(</span>ID<span class="token punctuation">,</span> ChanceOfAdmit<span class="token punctuation">)</span><span class="token punctuation">)</span>
+localObs <span class="token operator">=</span> localObs<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/CwEqlvqvSWO9DZCMFhHoi-G5wCOuGKaWyUDDwO3VwebhEg7t8IniVi5OwnQ-5S_kF_vLFBzIiNM5=s900" alt="enter image description here"></p>
 
