@@ -299,39 +299,67 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <p>This time we are going to generate explanations for predictions resulting from a SVM</p>
 <pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
 
-<span class="token comment">#create model and show summary</span>
+<span class="token comment">#create SVM model </span>
 svm_model <span class="token operator">&lt;-</span> svm<span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-summary<span class="token punctuation">(</span>svm_model<span class="token punctuation">)</span>
 
-<span class="token comment">#run prediction and show execution time</span>
+<span class="token comment">#run the prediction </span>
 pred <span class="token operator">&lt;-</span> predict<span class="token punctuation">(</span>svm_model<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
-system.time<span class="token punctuation">(</span>pred <span class="token operator">&lt;-</span> predict<span class="token punctuation">(</span>svm_model<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-<span class="token comment"># load predictions as data.table</span>
+<span class="token comment"># Create a table with the SVM predictions</span>
 predictionsTable <span class="token operator">=</span> as.data.frame<span class="token punctuation">(</span>table<span class="token punctuation">(</span>pred<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span> 
-write.csv<span class="token punctuation">(</span>predictionsTable<span class="token punctuation">,</span> file <span class="token operator">=</span> <span class="token string">"predictions.csv"</span><span class="token punctuation">)</span> <span class="token comment"># Write CSV in R</span>
-predictionsTable <span class="token operator">=</span> fread<span class="token punctuation">(</span><span class="token string">"predictions.csv"</span><span class="token punctuation">)</span> <span class="token comment"># load as data.table</span>
 
-<span class="token comment"># select predictions</span>
-predictionsTable <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">450</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
-
-<span class="token comment"># change to integers </span>
-predictionsTable <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token punctuation">,</span> pred <span class="token operator">:</span><span class="token operator">=</span> ifelse<span class="token punctuation">(</span>predictionsTable<span class="token operator">$</span>pred <span class="token operator">&gt;=</span> <span class="token number">2.5</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> 
-                                                               ifelse<span class="token punctuation">(</span>myData<span class="token operator">$</span>ChanceOfAdmit <span class="token operator">&gt;=</span> <span class="token number">1.5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
 <span class="token comment"># confusion matrix</span>
 predictionVector <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token punctuation">,</span> pred<span class="token punctuation">]</span>
 table<span class="token punctuation">(</span>predictionVector<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-
-
-
 </code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">##                 y</span>
+<span class="token comment">## predictionVector   1   2   3</span>
+<span class="token comment">##                1 134   0   0</span>
+<span class="token comment">##                2   0 270  35</span>
+<span class="token comment">##                3   7   4   0</span>
+</code></pre>
+<p>Generate the explanation for the first observation in the test dataset</p>
 <pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>lime<span class="token punctuation">)</span> 
-library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
 
 <span class="token comment"># select 1 observation from the test set to explain with lime</span>
 localObs <span class="token operator">=</span> read.csv<span class="token punctuation">(</span><span class="token string">"data_test.csv"</span><span class="token punctuation">,</span> sep <span class="token operator">=</span> <span class="token string">";"</span><span class="token punctuation">)</span>
 localObs <span class="token operator">=</span> subset<span class="token punctuation">(</span>localObs<span class="token punctuation">,</span> select<span class="token operator">=</span><span class="token operator">-</span>c<span class="token punctuation">(</span>ID<span class="token punctuation">,</span> ChanceOfAdmit<span class="token punctuation">)</span><span class="token punctuation">)</span>
-localObs <span class="token operator">=</span> localObs<span class="token punctuation">[</span><span class="token number">1</span><span class="token operator">:</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
+localObs <span class="token operator">=</span> localObs<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
+
+<span class="token comment"># create an explainer object</span>
+explainer <span class="token operator">=</span> lime<span class="token punctuation">(</span>x<span class="token punctuation">,</span> svm_model<span class="token punctuation">)</span>
+
+<span class="token comment"># define model_type (needed for the next step)</span>
+model_type.svm <span class="token operator">&lt;-</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token ellipsis">...</span><span class="token punctuation">)</span> <span class="token string">'classification'</span>
+
+<span class="token comment"># explain and plot explanations</span>
+explanation <span class="token operator">&lt;-</span> explain<span class="token punctuation">(</span>localObs<span class="token punctuation">,</span> explainer<span class="token punctuation">,</span> n_labels <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> n_features <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token comment">#show the explanation for the 6 features that influence the prediction the most</span>
+plot_features<span class="token punctuation">(</span>explanation<span class="token punctuation">)</span>
 </code></pre>
-<p><img src="https://lh3.googleusercontent.com/CwEqlvqvSWO9DZCMFhHoi-G5wCOuGKaWyUDDwO3VwebhEg7t8IniVi5OwnQ-5S_kF_vLFBzIiNM5=s900" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/XKL11e39l0jWjxeJzAjRlj7EakT6vXf_ySPvPeCLjA5hcj8sinoIzZkYyIpoj6imKTp7fVpmfBhc=s900" alt="enter image description here"><br>
+This point  has been predicted as “likely” (class 2) to be accepted for the master program because:</p>
+<ul>
+<li>The  GPA  is  lower  than  8.13</li>
+<li>The GRE score is between 309 and 317</li>
+<li>The University rating  is  lower  than 2</li>
+<li>…</li>
+</ul>
+<h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>Provide a human-friendly  explanation</li>
+<li>Works for  tabular  data, text, and  images</li>
+<li>It  has a fidelity  measure  that  gives us a good idea of how reliable the interpretable model is.</li>
+<li>With the R-squared measure we can easily measure how good our surrogate models are in approximating the black box predictions.</li>
+<li>We  don´t  need  training  data  for  generating  the  explamations.</li>
+<li>The advantage of LIME is its easy understandable and intuitive idea of applying a surrogate model in a local area of interest</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>In the current implementation, only linear models are used to approximate local behaviour. To a certain extent, this assumption is correct when looking at a very small region around the data sample. By expanding this region however, it is possible that a linear model might not be powerful enough to explain the behavior of the original model.</li>
+<li>Second, our choice of G (sparse linear models) means that if the underlying model is highly non-linear even in the locality of the prediction, there may not be a faithful explanation.</li>
+<li>it is not clear to which other instances the explanation is valid.</li>
+<li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss</li>
+<li>LIME or our method LORE mentionedabove, do not yield an overall proxy of the black box (<a href="https://www.aaai.org/Papers/AAAI/2019/SMT-PedreschiD.176.pdf">https://www.aaai.org/Papers/AAAI/2019/SMT-PedreschiD.176.pdf</a>)</li>
+</ul>
 
