@@ -347,19 +347,237 @@ This point  has been predicted as “likely” (class 2) to be accepted for the 
 <h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>Provide a human-friendly  explanation</li>
+<li>Provide a human-friendly  explanation and the idea of the algorithm is very intuitive, basically it applies a surrogate (linear) model in a local area of interest.</li>
 <li>Works for  tabular  data, text, and  images</li>
-<li>It  has a fidelity  measure  that  gives us a good idea of how reliable the interpretable model is.</li>
-<li>With the R-squared measure we can easily measure how good our surrogate models are in approximating the black box predictions.</li>
-<li>We  don´t  need  training  data  for  generating  the  explamations.</li>
-<li>The advantage of LIME is its easy understandable and intuitive idea of applying a surrogate model in a local area of interest</li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>In the current implementation, only linear models are used to approximate local behaviour. To a certain extent, this assumption is correct when looking at a very small region around the data sample. By expanding this region however, it is possible that a linear model might not be powerful enough to explain the behavior of the original model.</li>
-<li>Second, our choice of G (sparse linear models) means that if the underlying model is highly non-linear even in the locality of the prediction, there may not be a faithful explanation.</li>
-<li>it is not clear to which other instances the explanation is valid.</li>
-<li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss</li>
-<li>LIME or our method LORE mentionedabove, do not yield an overall proxy of the black box (<a href="https://www.aaai.org/Papers/AAAI/2019/SMT-PedreschiD.176.pdf">https://www.aaai.org/Papers/AAAI/2019/SMT-PedreschiD.176.pdf</a>)</li>
+<li>LIME assumes that linear models can approximate local behaviour, which is an assumption that can be correct when it is about examining a very small region around the data sample. However, for a larger region the linear model might not be powerful enough to explain the behavior.</li>
+<li>Also, if the  model is highly non-linear even for a very small region, then the exaplanation might not be a faithful.</li>
+<li>It is not clear to which other instances  (or reagion) the explanation is valid.</li>
+<li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
+</ul>
+<h2 id="anchors">Anchors</h2>
+<h3 id="conceptualization-4">Conceptualization</h3>
+<ul>
+<li>An Anchor explains individual predictions with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
+<li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
+</ul>
+<p><img src="https://lh3.googleusercontent.com/M4Ype1yzyvv61H2GW1530lOmvU0tt2ONjhe-tR_meqLyC-5jtyiPJ854UzedFGeq3fRwzyOsqLt0=s600" alt="enter image description here"></p>
+<ul>
+<li>In short, an anchor is a rule that sufficiently “anchors” a prediction – such that changes to the rest of the instance do not matter  with a high probability.</li>
+</ul>
+<p>Anchors aims to improve pitfalls of LIME. It is developed by the same authors of LIME</p>
+<ul>
+<li>The linear LIME explanation brings some light into the reasons for the prediction, but it is not clear whether the same explanation can be applied to other instances. The question is then: what the local region is? With the LIME approach this is not easy to discover.</li>
+<li>Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
+<li>The assumption is that while the model is globally too complex to be explained succinctly, “zooming in” on individual predictions makes the explanation task feasible.<br>
+<img src="https://lh3.googleusercontent.com/UICNP49fWJpyJx2QaV6D9MvCsYBgjKKi5Uu7nckdOhaqGL9RPTKPdELV7gRORCEvyOyxejEWckU0=s400" alt="enter image description here"></li>
+</ul>
+<p><strong>Toy example: predicting positive and negative sentiment</strong></p>
+<p><img src="https://lh3.googleusercontent.com/MuRxjtNtRg-_6yl6wNVuIP0vjY5MEnA5h_YoTZWeLXh0xiKZrCcNXTQ0RjJzZjkLkocyr7UHBAo0=s600" alt="enter image description here"></p>
+<ul>
+<li>While LIME explanations provide insight into the model, their coverage is not clear, e.g. when does the word not have a positive influence on sentiment?</li>
+<li>Anchors only apply when all the conditions in the rule are met (Figure part c). The anchors in Figure part c state that the presence of the words “not bad” ensure a prediction of positive sentiment</li>
+<li>A piece of text that has the words not and bad will be likely predicted as positive even if the rest of the feature values change.</li>
+<li>Anchors enable users to predict how a model would behave on unseen instances with higher precision.</li>
+</ul>
+<p><strong>Definition of an anchor:</strong></p>
+<ul>
+<li>Let f be the black box model</li>
+<li>Let x be an instance (the one that we want to explain) that is perturbed by some perturbation distribution D.</li>
+<li>Let A be the rule (set of predicates) that acts on x, such that A(x) returns 1 if all the predicates are true. For example, in past Figure: x = “This movie is not bad.”, f (x) = Positive, A = {“not”, “bad”}, then A(x) = 1.</li>
+<li>Let D(·|A) denote the conditional distribution (perturbed distribution) where the rule A applies e.g. (e.g. similar texts where not and bad are present). E.g.:</li>
+</ul>
+<p><img src="https://lh3.googleusercontent.com/QuAikPS1uN-9HbLUZg14foyogNBkOxuaOxdU7P_8NAp8WZVhI_sPRshAHGqTuK_mTkqVJEb3m_7P=s300" alt="enter image description here"></p>
+<ul>
+<li>A is an anchor if A(x) = 1 (if all predicates of the rule are true) and if a sample z from D(z|A) (a z sample that follows the perturbed distribution and complies with rule A) has a high probability to be predicted as Positive. This would mean that f(x) = f(z), i.e.  the prediction of x is equal to the predictions on z. This  is formally stated as precision, where
+<ul>
+<li>precision(A) ≥ τ (predictions of z should be at least τ. τ is set by the user).</li>
+</ul>
+</li>
+</ul>
+<p>In short, an anchor A is a set of feature predicates on x that achieves a “high” probability of being predicted as positive.</p>
+<p><strong>Perturbation:</strong></p>
+<ul>
+<li>At its core, the algorithm deploys a perturbation-based strategy. That means that the observed or explained instance gets perturbed, i.e., its feature values change according to some application-specific policy where the resulting data instances resemble neighbors of the initial instance. The policy in this case  is that the generated perturbations must comply with the rule A.</li>
+<li>The resulting data instances are then evaluated using the model. However, querying often the model can be expensive. Also, there can be no exhaustive search in the case of continuous or sufficiently complex models. Reinforcement learning and its multi-armed bandits (MABs) provide a solution to this problem. They help to significantly reduce the number of samples required by using stochastic exploration approaches.</li>
+</ul>
+<p><strong>Anchors in deep</strong></p>
+<p>There are two approaches to find anchors: bottom-up approach and beam search.</p>
+<p>Bottom-up construction of Anchors:</p>
+<ol>
+<li>Initialize with an empty rule</li>
+<li>Generate a number of candidate rules extending A by 1 additional feature predicate ai<br>
+<span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo>=</mo><mo>{</mo><mi>A</mi>&amp;ThinSpace;<mi mathvariant="normal">Λ</mi>&amp;ThinSpace;<msub><mi>a</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>A</mi>&amp;ThinSpace;<mi mathvariant="normal">Λ</mi>&amp;ThinSpace;<msub><mi>a</mi><mrow><mi>i</mi><mo>+</mo><mn>1</mn></mrow></msub><mo separator="true">,</mo><mi>A</mi>&amp;ThinSpace;<mi mathvariant="normal">Λ</mi>&amp;ThinSpace;<msub><mi>a</mi><mrow><mi>i</mi><mo>+</mo><mn>2</mn></mrow></msub><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mo>}</mo>&amp;ThinSpace;&amp;ThinSpace;<msub><mo>(</mo><mrow><mi>E</mi><mi>x</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi>&amp;ThinSpace;<mi>o</mi><mi>f</mi>&amp;ThinSpace;<mi>h</mi><mi>o</mi><mi>w</mi>&amp;ThinSpace;<mi>a</mi><mi>n</mi>&amp;ThinSpace;<mi>i</mi><mi>t</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi>&amp;ThinSpace;<mi>m</mi><mi>i</mi><mi>g</mi><mi>h</mi>&amp;ThinSpace;<mi>l</mi><mi>o</mi><mi>o</mi><mi>k</mi></mrow></msub><mo>)</mo></mrow><annotation encoding="application/x-tex"> A= \{A\, \Lambda\, a_i, A\, \Lambda\,  a_{i+1}, A\, \Lambda\,  a_{i+2}, ... \} \,\, (_{Example\, of\, how\, an\, iteration\, migh\, look})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 0.68333em; vertical-align: 0em;"></span><span class="mord mathit">A</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1.03611em; vertical-align: -0.286108em;"></span><span class="mopen">{</span><span class="mord mathit">A</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord">Λ</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathit mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.15em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord mathit">A</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord">Λ</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.208331em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord mathit">A</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord">Λ</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mord mathit">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.311664em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathit mtight">i</span><span class="mbin mtight">+</span><span class="mord mtight">2</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.208331em;"><span class=""></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mclose">}</span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mopen"><span class="mopen">(</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 0.336108em;"><span class="" style="top: -2.55em; margin-left: 0em; margin-right: 0.05em;"><span class="pstrut" style="height: 2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span style="margin-right: 0.05764em;" class="mord mathit mtight">E</span><span class="mord mathit mtight">x</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">m</span><span class="mord mathit mtight">p</span><span style="margin-right: 0.01968em;" class="mord mathit mtight">l</span><span class="mord mathit mtight">e</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span class="mord mathit mtight">o</span><span style="margin-right: 0.10764em;" class="mord mathit mtight">f</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span class="mord mathit mtight">h</span><span class="mord mathit mtight">o</span><span style="margin-right: 0.02691em;" class="mord mathit mtight">w</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">n</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span class="mord mathit mtight">i</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">e</span><span style="margin-right: 0.02778em;" class="mord mathit mtight">r</span><span class="mord mathit mtight">a</span><span class="mord mathit mtight">t</span><span class="mord mathit mtight">i</span><span class="mord mathit mtight">o</span><span class="mord mathit mtight">n</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span class="mord mathit mtight">m</span><span class="mord mathit mtight">i</span><span style="margin-right: 0.03588em;" class="mord mathit mtight">g</span><span class="mord mathit mtight">h</span><span class="mspace mtight" style="margin-right: 0.195167em;"></span><span style="margin-right: 0.01968em;" class="mord mathit mtight">l</span><span class="mord mathit mtight">o</span><span class="mord mathit mtight">o</span><span style="margin-right: 0.03148em;" class="mord mathit mtight">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.286108em;"><span class=""></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></span></span></li>
+<li>Estimate the precision of every candidate and identify the one with the highest precision, which will be used to extend A.</li>
+<li>Iterate from step 2, or If the current candidate rule satisfy the precision constraint (precision(A) ≥ τ) with high probability, we have identified our desired anchor and terminate. It means that the following needs to be satisfied: <span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi><mo>(</mo><mi>p</mi><mi>r</mi><mi>e</mi><mi>c</mi><mo>(</mo><mi>A</mi><mo>)</mo><mo>≥</mo><mi>τ</mi><mo>)</mo><mo>≥</mo><mn>1</mn><mo>−</mo><mi>δ</mi><mo>)</mo></mrow><annotation encoding="application/x-tex"> P(prec(A) \ge \tau ) \ge 1 - \delta)  </annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span style="margin-right: 0.13889em;" class="mord mathit">P</span><span class="mopen">(</span><span class="mord mathit">p</span><span style="margin-right: 0.02778em;" class="mord mathit">r</span><span class="mord mathit">e</span><span class="mord mathit">c</span><span class="mopen">(</span><span class="mord mathit">A</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span style="margin-right: 0.1132em;" class="mord mathit">τ</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 0.72777em; vertical-align: -0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span style="margin-right: 0.03785em;" class="mord mathit">δ</span><span class="mclose">)</span></span></span></span></span></span>
+<ul>
+<li>e.g. 90% probability that the evaluated/predicted points in sample z have a positive prediction 95% accurate.</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://lh3.googleusercontent.com/Xyx4BZI7_RqLeYG_I6xZ0AQvVYhM9DYuNU_Ep5twBQeIwvP18zrACWXlRSTzvNuovZsALJjMB47B=s900" alt="enter image description here"></p>
+<p>Estimating precision:</p>
+<ul>
+<li>Anchors rely on samples from D(·|A) to efficiently estimate the precision of A, one sample per candidate. To estimate the fewest  samples (fewest  candidates), a multiarmed bandit algorithm is used:
+<ul>
+<li>Each candidate is an arm.</li>
+<li>True precision of A on D(·|A) is  the latent reward (the  ones  that  come  clo)</li>
+<li>Each pull of  the arm is an evaluation  of f(x) = f(z) on a sample from  D(z|A)<br>
+The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rule with the highest precision (refer to Ribeiro et al. 2018 for details about how this algorithm is used.)</li>
+</ul>
+</li>
+</ul>
+<p>Beam search:</p>
+<ul>
+<li>The Bottom-up approach has 2 major concerns: (1) due to the greedy nature of the approach, it is only able to maintain a single rule at a time and thus any suboptimal choice is irreversible, and (2) the algorithm does not try to achieve the highest coverage, instead returns the shortest anchor (regarding the number of predicates) that it finds. Nevertheless, note that the findings show that short anchors are likely to have a higher coverage.<br>
+•In order to address both these concerns, a greedy approach is extended to perform a beam-search (a strategy to choose better results from all possible candidates) by maintaining a set of candidate rules, while guiding the search to identify amongst many possible anchors the one that has the highest coverage (refer to Ribeiro et al. 2018 for details about how this algorithm is used) .<br>
+•It is expected that this approach will likely identify an anchor with higher coverage than bottom-up search.</li>
+</ul>
+<h3 id="advantages-and-disadvantages-4">Advantages and disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>An important advantage of anchors is that it expresses the explanation in short, disjoint rules, which are easier to interpret</li>
+<li>The user knows when the explanation for an instance generalizes to other instances.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Only captures the behavior of the model on a local region.</li>
+<li>Anchors can create explanations for complex functions, but the rule set to explain the prediction can become large.</li>
+</ul>
+<h2 id="shapley-values">Shapley values</h2>
+<h3 id="conceptualization-5">Conceptualization</h3>
+<ul>
+<li>Shapley values is a local explanation approach, this is, it explain the prediction of a specific instance.</li>
+<li>It is a game theory-based approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.  Shapley values explains how much the feature value i contribute to the prediction compared to the average predictions of all data.
+<ul>
+<li>Game: the prediction task for a single instance.</li>
+<li>Players: the feature values of the instance that collaborated to receive the gain (to make the prediction).</li>
+<li>Coalition: combination of features</li>
+<li>Payoff: prediction that a coalition receives</li>
+<li>Gain: actual prediction minus average prediction for all instances.</li>
+</ul>
+</li>
+<li>Formally, a Shapley value (ϕ) is the average marginal contribution of a feature value to the prediction over all possible coalitions. A Shapley value for a certain feature value  i , in a model with n total features, given a prediction p is: <span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>S</mi><mo>⊆</mo><mi>N</mi><mi mathvariant="normal">/</mi><mi>i</mi></mrow></munder><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>!</mo><mo>(</mo><mi>n</mi><mo>−</mo><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>(</mo><mi>p</mi><mo>(</mo><mi>s</mi><mo>∪</mo><mi>i</mi><mo>)</mo><mo>−</mo><mi>p</mi><mo>(</mo><mi>S</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">  \phi (p)=\sum_{S\subseteq N/i} \frac{ |S|!(n - |S| -1)!}{n!}(p(s \cup i) - p(S))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">ϕ</span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.94301em; vertical-align: -1.51601em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.05001em;"><span class="" style="top: -1.809em; margin-left: 0em;"><span class="pstrut" style="height: 3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span style="margin-right: 0.05764em;" class="mord mathit mtight">S</span><span class="mrel mtight">⊆</span><span style="margin-right: 0.10903em;" class="mord mathit mtight">N</span><span class="mord mtight">/</span><span class="mord mathit mtight">i</span></span></span></span><span class="" style="top: -3.05001em;"><span class="pstrut" style="height: 3.05em;"></span><span class=""><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.51601em;"><span class=""></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathit">n</span><span class="mclose">!</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mclose">!</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">i</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">p</span><span class="mopen">(</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></span></li>
+<li>In a very simple way, this equation computes what the prediction of the model would be without the feature value i, .Then computes the prediction of the model with feature value i (feature effect), and finally calculates the difference, which corresponds to the contribution:
+<ul>
+<li>Importance of i = p(with i) – p(without i)</li>
+</ul>
+</li>
+</ul>
+<p><strong>Spliting the payoff between the players</strong></p>
+<p>One important question to answer is about how to split fairly the payoff when players with different skills act in a coalition. Some conditions are first set to make sure that the payoff is being divided fairly:</p>
+<ol>
+<li>The sum of what every player receives should equal to the total reward</li>
+<li>If two players contributed the same value, then they should receive the same amount from the reward</li>
+<li>Someone who contributed no value should receive nothing</li>
+<li>If the coalition plays two games, then an player’s reward from both games should equal its reward from their first game plus its reward from the second game</li>
+</ol>
+<p>But again, <strong>how to split the payoff fairly?</strong> A possible solutions is according to the sequence of how group members joined, and tracking marginal contributions of each player.<br>
+This would mean that every player would be rewarded for what they contribute to achieve the total payoff, and according to the the order in which a player joined. For example:</p>
+<blockquote>
+<p>“If Ava was the first member of the group, with a payoff of 5, and Bill joined to bring the payoff to 9, and later Christine joined to bring the payoff to 11, then the players’ respective payoffs would be (5, 4, 2). But, what if Christine and Bill have very similar skill sets? Then, it might the case that Christine would have a higher marginal contribution if she joined the group before Bill, because she’d be the first one to provide their overlapping skill set, and then when he joined, his marginal contribution would be lower. imagine a different payoff vector for (Ava, Bill, Christine) of (5, 1, 5)"<br>
+<a href="https://towardsdatascience.com/one-feature-attribution-method-to-supposedly-rule-them-all-shapley-values-f3e04534983d">https://towardsdatascience.com/one-feature-attribution-method-to-supposedly-rule-them-all-shapley-values-f3e04534983d</a></p>
+</blockquote>
+<p>Let´s see this problem in the following toy example: given the age and gender of an individual, we predict whether or not they will like computer games.</p>
+<p><img src="https://lh3.googleusercontent.com/bR5YreBzvcRqwQz_rveIvOriLMO1xZVbyGThgm14g2Gt4TWYSat6QatswvEeAXBmuB2NdQxdBnFE=s600" alt=""></p>
+<ol>
+<li>
+<p>Sequence (age, gender) for Bobby-14:</p>
+<ul>
+<li>When the model sees Bobby’s age at first, it will take him left on the first split.</li>
+<li>As gender is still not identified, the average of the leaves below will be assigned: (2 + 0.1) / 2 = 1.05 (effect of the age)</li>
+<li>Then, when the model sees he is a male, the model assigns him a score of 2: 2 – 1.05 = 0.95 (effect of the gender)<br>
+Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
+</ul>
+</li>
+<li>
+<p>Sequence (gender, age) for Bobby-14:</p>
+</li>
+</ol>
+<ul>
+<li>At first the model does not have an age to split on, it then has to take the average of all leaves:
+<ul>
+<li>The average of leaves from is male? is: (2 + 0.1) / 2 = 1.05</li>
+<li>The total average with the remaining leaf is: (1.05 + (-1)) / 2 = 0.025 (effect of the gender)</li>
+</ul>
+</li>
+<li>Then, when the model sees he is 14, it assigns him a score of 2, the effect of age is then: (2–0.025)=1.975 (effect of the age)</li>
+<li>Therefore, for this sequence: ϕAgeBobby=1.975 and ϕGenderBobby=0.025, which is different from the past sequence</li>
+</ul>
+<p><strong>Which of these is a fair payoff for the feature value of AgeBobby, 1.05 or 1.975?, and for GenderBobby?.</strong></p>
+<p>Shapley values solve the problem by finding each player’s marginal contribution, averaged over every possible sequence in which the players could have been added to the group. For instance, for the previus example about Ava, Bill, and Christine´s payoff, all the possible sequences are: ABC, ACB, BCA, BAC, CAB, and CBA. For each player we can compute its marginal payoff in every sequence and the average them to make it “fair”.</p>
+<p>Shapley value considers all possible values by calculating a weighted sum to find a final value. It means that it does not really compute for all sequences (e.g (age, gender) and (gender, age)) but computes a weighted sum.</p>
+<p><strong>But how are the the weights assigned to each component of the sum?</strong></p>
+<ul>
+<li>It considers how many different permutations in the sequence vector exist by taking into account the features which are in the set S (this is done by the ∣S∣! ) as well as the features that still have to be added ( by the (n−∣S∣−1)!). What is important to know here is</li>
+<li>Finally, everything is normalized by the features we have in total in the coalition (n).<br>
+<img src="https://lh3.googleusercontent.com/bTg-d8VCUoMd7SFroXpLMQlueCYqgBAVH07B0i1er-rH-gnbw03NXhLPbG0OlkgXlAbXZXB4pLIv=s600" alt="enter image description here"><br>
+<strong>Computing a Shapley Value</strong></li>
+</ul>
+<ol>
+<li>Build sets S (all possible feature combinations of Bobby, excluding his age). As he has only one feature left (gender) then all the possible coalitions are: {gender}, and an empty set {}. If we would have more features, as for instance age, gender, and occupation, then all the possible coalitions would be: {age}, {gender}, {occupation}, {age, gender}, {age, occupation}, {gender, occupation}, {age, gender, occupation}, and an empty set {}.</li>
+<li>Calculate the Shapley value ϕ_i § for each sets S.
+<ol>
+<li>Shapley value for S = {}:
+<ul>
+<li>∣S∣ = 0, ∣S∣! = 1</li>
+<li>n = 2 (features)</li>
+<li>p(S) = the model’s prediction when it sees no features is the average of the leaves (average effect): 0.025</li>
+<li>p(S ∪ i ) = the prediction of the model when it sees only the age (we calculated this before): 1.05</li>
+<li>Shapley value is then: 0.5125</li>
+</ul>
+</li>
+<li>Shapley value for S = {gender}:
+<ul>
+<li>∣S∣ = 1, ∣S∣! = 1</li>
+<li>n =</li>
+<li>p(S) = the model’s prediction when it sees only gender is the average effect (we calculated this before): 0.025</li>
+<li>p(S ∪ i ) = the prediction of the model when it sees the gender and then when it sees the age (we calculated this before): 2</li>
+<li>Shapley value is then: 0.9875</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>Add the values together: ϕBobby-14 = 0.5125 + 0.9875 = 1.5</li>
+</ol>
+<ul>
+<li>Remember that the contribution is the difference between the feature effect minus the average effect. It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people. Imagine that the average prediction of all people is 0.25 and 2 represents the class: likes video games. Then his age makes the probability that he likes video games to be higher than the average person by 1.5.</li>
+</ul>
+<p>In <strong>summary,</strong> Shapley values calculate the importance of a feature by comparing what a model predicts with and without the feature. However, since the order in which a model sees features can affect its predictions, this is done in every possible order, so that the features are fairly compared.</p>
+<h3 id="demo-4">Demo</h3>
+<pre class=" language-r"><code class="prism  language-r">predictor_shapley <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span>class <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+shapley_rf <span class="token operator">&lt;-</span> Shapley<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_shapley<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># explain the fifth obeservation of the dataset</span>
+plot<span class="token punctuation">(</span>shapley_rf<span class="token punctuation">)</span> <span class="token comment">#plot </span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/QhgzxlIjeJH0GhYAwQL9t-4BqBiZavdnpoYyTXZtuVrbwkfPEH8FQz9q_rIIt-dmLHPQu9lmpmg8=s900" alt="enter image description here"><br>
+From the results we can interpret:</p>
+<ul>
+<li>The difference between the actual prediction and the average prediction is 0.36. Note that the sum of the contributions yields 0.36</li>
+<li>This person has 0.36 more chance to be predicted as “likely” (class 2) to be accepted for the master program compared to the average people in class 2.</li>
+<li>The CPGA score of 8.21 increased the chance the most (It increased  the  probability of being classified as “likely” in ~ 0.09 above  the  average  aspirants (0.63)).</li>
+</ul>
+<h3 id="advantages-and-disadvantages-5">Advantages and disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>The difference between the prediction and the average prediction is fairly distributed among the feature values of the instance</li>
+<li>Compared with many of the other approaches, shapley values take into consideration the relationships between the features</li>
+</ul>
+<p>Disadvantages:</p>
+<h1 id="use-cases">Use cases</h1>
+<ul>
+<li>Instant explanation: implementation together with recommender systems. Individual more willing to buy something if it is explained why a product is being recommended. E.g. 2 a bank that explains why a customer can’t get a loan, and what can s/he do to get one (credit rating).</li>
+<li>Historical Explanation: consists of storing explanations as a proof that supports the reasons of a decision  that was taken.</li>
+<li>Qualitative assessment: to evaluate the quality of the criteria taken by the algorithm for the classification.</li>
+<li>Detect biased or manipulated predictions (identify problems with the models)</li>
+<li>Legal requirements: to fulfil external legal requirements or internal compliances. In the future —&gt; the right to explanation of automated decision-making</li>
+<li>Ethical assessment: discrimination caused by AI, see the following example from the Amazon company:
+<ul>
+<li>The retailer Amazon experimented with an AI recruiting tool that showed bias against women. This tool was developed to assist the human resource department for classifying  job applicants according to their suitability.</li>
+<li>It was revealed that the model penalized applicants with a resume containing words like female or woman. Because of that, Amazon adjusted the model to be neutral to gender-related terminology but decided nevertheless to shut down the project since there was no guarantee that the model did not find other ways to discriminate applicants.</li>
+</ul>
+</li>
+<li>Security assessment: detect manipulated data that attempt to change the results of the predictions.</li>
 </ul>
 
