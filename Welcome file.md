@@ -20,6 +20,7 @@
 3.8.Anchors</li>
 <li>Use-cases</li>
 </ol>
+<h1 id="manual-de-usuario">manual de usuario</h1>
 <h1 id="motivation">Motivation</h1>
 <p>A real case:</p>
 <ul>
@@ -151,6 +152,21 @@ This figure tells us that the model tends to predict “class 2” when the grad
 <li>The most important problem with PDPs is that they assume that the features are not correlated, when this might not be true. However, pdps can work well when the relations between the features of the PDP and the other features are weak.</li>
 <li>Due to the permutation, we could be possibly creating data points that are not according to the reality, especially if the features are correlated.</li>
 </ul>
+<h2 id="global-surrogate-models">Global surrogate models</h2>
+<p>###Conceptualization<br>
+A surrogate model is a glass-box model that is learned on the predictions of a black-box model to approximate its behavior.</p>
+<h3 id="demo-1">Demo</h3>
+<h3 id="advantages-and-disadvantages-1">Advantages and Disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>The surrogate model method is flexible: any model that is interpretable can be used.</li>
+<li>The approach is very intuitive and straightforward to implement.</li>
+<li>Easy to explain to people not familiar with data science or machine learning.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>It is not clear what is the best R-squared  to be confident that the surrogate model is close enough to the black box model</li>
+</ul>
 <h2 id="individual-conditional-expectation-ice">Individual Conditional Expectation (ICE)</h2>
 <h3 id="conceptualization-1"><strong>Conceptualization</strong></h3>
 <ul>
@@ -159,7 +175,7 @@ This figure tells us that the model tends to predict “class 2” when the grad
 <li>From the past example then a total of 3 lines per observation will be displayed.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/ir8GJHrMvxT7g3h9BjVEyJeLKYIc7MVwr3opk_kdrjlNfJcx83O7zjBzzlC7kAKj-fvnmRz3GCg2=s300" alt="enter image description here"></p>
-<h3 id="demo-1"><strong>Demo</strong></h3>
+<h3 id="demo-2"><strong>Demo</strong></h3>
 <p>Create an ICE plot for the class: <em>very likely</em> (class “1”) to be admitted for the Master Program</p>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># generate the predictor </span>
 predictor_ice <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># set the explanation for class "1"</span>
@@ -170,7 +186,7 @@ ice<span class="token operator">$</span>plot<span class="token punctuation">(</s
 </code></pre>
 <p><img src="https://lh3.googleusercontent.com/mmT6VEP67BmgEs_s46wEs7aBuG-xxMkRnIFcrnONzuJsjEEz1AlVTOmNaWwbY0KHuz3Phn0-GAuv=s900" alt="enter image description here">Different to the PDP, all the lines are showed in the plot. What we can notice is that most of the lines follow the same pattern that the PDP (which shows the average). For all the cases a CGPA score greater than 8.4 makes the model to predict “very likely”. As the majority of lines are very similar to the PDP, then we could use only the PDP as this seems to be a good summary.<br>
 If we would get an ICE plot where the patterns differ greatly among each other, then a PDP is probably not a good representation of the true patterns.</p>
-<h3 id="advantages-and-disadvantages-1"><strong>Advantages and disadvantages</strong></h3>
+<h3 id="advantages-and-disadvantages-2"><strong>Advantages and disadvantages</strong></h3>
 <p>Advantages:</p>
 <ul>
 <li>Easy to  compute</li>
@@ -235,7 +251,7 @@ Total interaction:</li>
 </ul>
 </li>
 </ol>
-<h3 id="demo-2"><strong>Demo</strong></h3>
+<h3 id="demo-3"><strong>Demo</strong></h3>
 <p>Create a feature interaction plot of type “total interaction” (interaction of one feature with all the others)</p>
 <pre class=" language-r"><code class="prism  language-r">predictor_inter <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment">#set the explanation for class "1"</span>
 interactions <span class="token operator">&lt;-</span> Interaction<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_inter<span class="token punctuation">)</span>
@@ -243,9 +259,67 @@ interactions <span class="token operator">&lt;-</span> Interaction<span class="t
 interactions<span class="token operator">$</span>plot<span class="token punctuation">(</span><span class="token punctuation">)</span> 
 </code></pre>
 <p><img src="https://lh3.googleusercontent.com/K3HhqNZZm3VutN-YyU4YZqfmMP4HSZ57NcMPc5j_N99E2EJdXzAKlEkJuNYhAVlBrPwxgFgt9fS_=s900" alt="enter image description here">The H-statistic plot shows that indeed the features interact with each other.  The CGPA grade shows to have the highest interaction with all the other features. However, in general the interaction with all the features is relatively low.</p>
-<h3 id="advantages-and-disadvantages-2">Advantages and disadvantages</h3>
-<h2 id="local-interpretable-model-agnostic-explanations-lime">Local interpretable model-agnostic explanations (LIME)</h2>
+<h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
+<h2 id="permutation-feature-importance">Permutation Feature Importance</h2>
 <h3 id="conceptualization-3">Conceptualization</h3>
+<ul>
+<li>It is a global explanation approach to identify the contribution of each feature based on its accuracy.</li>
+<li>The importance of a feature is the increase in the prediction error of the model after we permuted the feature’s values, which will break the relationship between the feature and the true outcome.</li>
+<li>We measure the importance of a feature by calculating the increase in the model’s prediction error after permuting the feature. A feature is important if shuffling its values increases the model error, because it would mean that the model relied on the feature for the prediction. Then, a feature is not important if shuffling its values leaves the model error unchanged.</li>
+<li>The permutation feature importance measurement was introduced originally for random forest, and based on this a new model agnostic approach was created</li>
+</ul>
+<p><strong>The permutation feature importance algorithm based on Fisher et al. (2018):</strong></p>
+<ul>
+<li>Input: Trained model f, feature matrix X, target vector y, error measure e.</li>
+</ul>
+<ol>
+<li>Estimate the original model error (e.g. mean squared error): eorig</li>
+<li>For each feature j = 1,…,p:
+<ul>
+<li>Generate a feature matrix by permuting feature j of the X data.</li>
+<li>Estimate the error based on the predictions of the permuted data: e<sup>perm</sup></li>
+<li>Calculate permutation feature importance: FI<sub>j</sub>= eperm/eorig, or alternatively FI<sub>j</sub> = e<sup>perm</sup> – e<sup>orig</sup></li>
+</ul>
+</li>
+<li>Sort features by descending FI</li>
+</ol>
+<p><strong>Things to consider</strong></p>
+<ul>
+<li>Feature importance values are always positive values greater than 0, since the minimum increase in error is 0. A feature with an importance of 0 is interpreted as a feature that does not contribute to the model and thus we can consider to remove it.</li>
+<li>To get more accurate results the permutation can be done by combining every feature value with all possible instances, however this can be an expensive task. Thus, the authors suggest to split the dataset in half and exchange their feature values (of j), which is basically a permutation.</li>
+<li>It is possible that a feature has a small random feature importance:
+<ul>
+<li>To identify such variables with only random importance, a variable random can be added to the data with values generated at random.</li>
+<li>All features with an importance less than random can be considered as unimportant.</li>
+</ul>
+</li>
+<li>Shall we get the feature importances from training data or from test data? It depends, we need to decide whether:
+<ul>
+<li>We want to know how much the model relies on each feature for making predictions à training data, or</li>
+<li>How much the features contribute to the performance of the model on unseen data à test data</li>
+</ul>
+</li>
+</ul>
+<p><strong>Toy example: prediction of the number of rented bikes given weather conditions and calendar information. The error measurement is the mean absolute error.</strong></p>
+<p><img src="https://lh3.googleusercontent.com/nmtXq83dtzO8Jk_EC6MQYqtqtVM_WHnnHZ9bMybpxPhPBSN7uovFI1Lo_bWhEIhBwD8a0nVW6whA=s900" alt="enter image description here"></p>
+<h3 id="advantages-and-disadvantages-4">Advantages and disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>Feature importance is the increase in model error when the feature’s information is destroyed.</li>
+<li>Provides a general view about the model’s behavior</li>
+<li>Since the permutation also destroy the interaction with other features (if any) , the change in the error reflects not only the changes in the relationship between the feature and the outcome but also the interactions with the other features.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>Because of the permutation, it can be computationally expensive to get the most accurate feature importances.</li>
+<li>The permutation breaks the interaction not only with the outcome but also breaks the interaction with the other features (if any). Thus, the error increases not only due to the permutation of the feature but also due to the broken interaction with other features, reason why the result might be biased. Then, the importance would not be exclusively of the feature under examination.</li>
+<li>If features are correlated, the feature importance because the permutation would create unrealistic data instances (e.g  (2 meter person weighing 30 kg for example).</li>
+<li>The permutation feature importance is computed based on the error of the model, but sometimes we might need to explain the importance of a feature based in other  criteria  than  the performance of the model. For example we might be interested in: how much of the prediction variation is explained by a feature, like partial dependent plots do .</li>
+<li>You need access to the true outcome. If someone only provides you with the model and unlabeled data – but not the true outcome – you cannot compute the permutation feature importance.</li>
+<li>The permutation feature importance depends on shuffling the feature, which adds randomness to the measurement. When the permutation is repeated, the results might vary greatly. Repeating the permutation and averaging the importance measures over repetitions stabilizes the measure, but increases the time of computation.</li>
+</ul>
+<h2 id="local-interpretable-model-agnostic-explanations-lime">Local interpretable model-agnostic explanations (LIME)</h2>
+<h3 id="conceptualization-4">Conceptualization</h3>
 <ul>
 <li>The technique attempts to understand the model by perturbing the input of data samples and understanding how the predictions change.</li>
 <li>LIME provides local model interpretability. LIME modifies a single data sample by tweaking the feature values and observes the resulting impact on the output.</li>
@@ -255,7 +329,7 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <li>The ‘dataset’ is created by e.g. adding noise to continuous features, removing words or hiding parts of the image. By only approximating the black-box locally (in the neighborhood of the data sample) the task is significantly simplified.</li>
 <li>Behind the workings of lime lies the (big) assumption that every complex model is linear on a local scale. While this is not justified in the paper it is not difficult to convince yourself that this is generally sound — you usually expect two very similar observations to behave predictably even in a complex model.</li>
 <li>LIME then asserts that it is possible to fit a simple model around a single observation that will mimic how the global model behaves at that locality (in the parameter space just around my data point). The simple model can then be used to explain the predictions of the more complex model locally.<br>
-<img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s900" alt="enter image description here"></li>
+<img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="enter image description here"></li>
 </ul>
 <p><strong>How does it work in general?</strong></p>
 <ol>
@@ -295,7 +369,7 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <ul>
 <li>The user must select the number of features. The number must strike a balance between the complexity of the model and the simplicity of the explanation, some suggests to keep it below 10 features.</li>
 </ul>
-<h3 id="demo-3">Demo</h3>
+<h3 id="demo-4">Demo</h3>
 <p>This time we are going to generate explanations for predictions resulting from a SVM</p>
 <pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
 
@@ -344,7 +418,7 @@ This point  has been predicted as “likely” (class 2) to be accepted for the 
 <li>The University rating  is  lower  than 2</li>
 <li>…</li>
 </ul>
-<h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
+<h3 id="advantages-and-disadvantages-5">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
 <li>Provide a human-friendly  explanation and the idea of the algorithm is very intuitive, basically it applies a surrogate (linear) model in a local area of interest.</li>
@@ -358,7 +432,7 @@ This point  has been predicted as “likely” (class 2) to be accepted for the 
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
 <h2 id="anchors">Anchors</h2>
-<h3 id="conceptualization-4">Conceptualization</h3>
+<h3 id="conceptualization-5">Conceptualization</h3>
 <ul>
 <li>An Anchor explains individual predictions with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
 <li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
@@ -417,7 +491,7 @@ This point  has been predicted as “likely” (class 2) to be accepted for the 
 </ul>
 </li>
 </ol>
-<p><img src="https://lh3.googleusercontent.com/Xyx4BZI7_RqLeYG_I6xZ0AQvVYhM9DYuNU_Ep5twBQeIwvP18zrACWXlRSTzvNuovZsALJjMB47B=s900" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/Z_5mEkInapuwj5fRLR-rPvb0LuNHVgpJ9zu8HFR-DvbK3ld4AeiFRRlNTesVbTuoO52EL3K2_rOH=s900" alt="enter image description here"></p>
 <p>Estimating precision:</p>
 <ul>
 <li>Anchors rely on samples from D(·|A) to efficiently estimate the precision of A, one sample per candidate. To estimate the fewest  samples (fewest  candidates), a multiarmed bandit algorithm is used:
@@ -435,7 +509,7 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 •In order to address both these concerns, a greedy approach is extended to perform a beam-search (a strategy to choose better results from all possible candidates) by maintaining a set of candidate rules, while guiding the search to identify amongst many possible anchors the one that has the highest coverage (refer to Ribeiro et al. 2018 for details about how this algorithm is used) .<br>
 •It is expected that this approach will likely identify an anchor with higher coverage than bottom-up search.</li>
 </ul>
-<h3 id="advantages-and-disadvantages-4">Advantages and disadvantages</h3>
+<h3 id="advantages-and-disadvantages-6">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
 <li>An important advantage of anchors is that it expresses the explanation in short, disjoint rules, which are easier to interpret</li>
@@ -447,7 +521,7 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <li>Anchors can create explanations for complex functions, but the rule set to explain the prediction can become large.</li>
 </ul>
 <h2 id="shapley-values">Shapley values</h2>
-<h3 id="conceptualization-5">Conceptualization</h3>
+<h3 id="conceptualization-6">Conceptualization</h3>
 <ul>
 <li>Shapley values is a local explanation approach, this is, it explain the prediction of a specific instance.</li>
 <li>It is a game theory-based approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.  Shapley values explains how much the feature value i contribute to the prediction compared to the average predictions of all data.
@@ -546,7 +620,7 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <li>Remember that the contribution is the difference between the feature effect minus the average effect. It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people. Imagine that the average prediction of all people is 0.25 and 2 represents the class: likes video games. Then his age makes the probability that he likes video games to be higher than the average person by 1.5.</li>
 </ul>
 <p>In <strong>summary,</strong> Shapley values calculate the importance of a feature by comparing what a model predicts with and without the feature. However, since the order in which a model sees features can affect its predictions, this is done in every possible order, so that the features are fairly compared.</p>
-<h3 id="demo-4">Demo</h3>
+<h3 id="demo-5">Demo</h3>
 <pre class=" language-r"><code class="prism  language-r">predictor_shapley <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span>class <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
 shapley_rf <span class="token operator">&lt;-</span> Shapley<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_shapley<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># explain the fifth obeservation of the dataset</span>
 plot<span class="token punctuation">(</span>shapley_rf<span class="token punctuation">)</span> <span class="token comment">#plot </span>
@@ -558,7 +632,7 @@ From the results we can interpret:</p>
 <li>This person has 0.36 more chance to be predicted as “likely” (class 2) to be accepted for the master program compared to the average people in class 2.</li>
 <li>The CPGA score of 8.21 increased the chance the most (It increased  the  probability of being classified as “likely” in ~ 0.09 above  the  average  aspirants (0.63)).</li>
 </ul>
-<h3 id="advantages-and-disadvantages-5">Advantages and disadvantages</h3>
+<h3 id="advantages-and-disadvantages-7">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
 <li>The difference between the prediction and the average prediction is fairly distributed among the feature values of the instance</li>
@@ -580,4 +654,5 @@ From the results we can interpret:</p>
 </li>
 <li>Security assessment: detect manipulated data that attempt to change the results of the predictions.</li>
 </ul>
+<h1 id="references">References</h1>
 
