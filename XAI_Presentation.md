@@ -148,9 +148,11 @@ Now we compare with a PDP for the class: <em>likely</em> (class “2”)  to be 
 <ul>
 <li>The model tends to predict “likely” when the grades are in between ~7.4 and ~8.3, which makes sence, because the plot for “very_likely” told us that the model tends to predict “very_likely” when the grades are greater than 8.4</li>
 </ul>
+<p><strong>PDPs for model comparison</strong></p>
+<p><img src="https://lh3.googleusercontent.com/KgTb1vQc9HfcUEy-aTv8ct77RVIfVDSElZTFqazcagg9XSCRFHFu7BSHJ01e2eIZc1TL4dBboinc=s900" alt="enter image description here"></p>
 <h3 id="pdps-in-detail">PDPs in detail</h3>
 <ul>
-<li>Partial dependence works by marginalizing the machine learning model output over the distribution of the all the features (excluding the ones that we want to plot), so that the function shows the relationship between the features we are interested in and the predicted outcome. <strong>In simple words, it shows how my model will respond or changes if I increase or decrease x. How model inputs affect the model’s predictions.</strong></li>
+<li>Partial dependence works by marginalizing the machine learning model output over the distribution of all the features (excluding the ones that we want to plot), so that the function shows the relationship between the features we are interested in and the predicted outcome. <strong>In simple words, it shows how my model will respond or changes if I increase or decrease x. How model inputs affect the model’s predictions.</strong></li>
 <li>The plot shows the relationship between the features that we want to display and the predicted outcome. PDPs can show whether the relationship between the target and a feature is linear,  monotonous or more complex.</li>
 </ul>
 <p><strong>How to compute a pdp?</strong></p>
@@ -174,10 +176,10 @@ Partial dependence plots can be used to compare models</p>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>As PDPs plots  are  plots  of  averages, they  tend  to  obscure individual differences.</li>
+<li>As PDPs plots  are  plots  of  averages, they  could  o<strong>bscure individual differences</strong>.</li>
 <li>The maximum number of features that a PDP can display is two (plus one for the average prediction), because we can not visualize more than 3 dimensions.</li>
-<li>The most important problem with PDPs is that they assume that the features are not correlated, when this might not be true. However, pdps can work well when the relations between the features of the PDP and the other features are weak.</li>
-<li>Due to the permutation, we could be possibly creating data points that are not according to the reality, especially if the features are correlated.</li>
+<li>The most important problem with PDPs is that <strong>they assume that the features are not correlated</strong>, when this might not be true. However, pdps can work well when the relations between the features of the PDP and the other features are weak.</li>
+<li><strong>Due to the combination, we could be possibly creating data points that are not according to the reality</strong>, especially if the features are correlated.</li>
 </ul>
 <h2 id="global-surrogate-models">Global surrogate models</h2>
 <h3 id="conceptualization">Conceptualization</h3>
@@ -197,13 +199,10 @@ Partial dependence plots can be used to compare models</p>
 <h2 id="individual-conditional-expectation-ice">Individual Conditional Expectation (ICE)</h2>
 <h3 id="conceptualization-1"><strong>Conceptualization</strong></h3>
 <ul>
-<li>As it was claimed that partial dependent plots might obscure the complexity of the model relationship since it disoplay the average predictions, individual conditional expectation plots (ICEs) where introduced.</li>
-<li>The major idea of ICE is then to disaggregate the average plot by displaying the estimated relationships for each observation. So instead of only plotting out the average predictions, ICE displays all individual lines. So I allow us to drill down to the level of individuals observations (Goldstein et al. 2017).</li>
-<li>From the past example then a total of 3 lines per observation will be displayed.</li>
+<li>As it was claimed that partial dependent plots might obscure the complexity of the model relationship since it display the average predictions, individual conditional expectation plots (ICEs) where introduced.</li>
 </ul>
-<p><img src="https://lh3.googleusercontent.com/ir8GJHrMvxT7g3h9BjVEyJeLKYIc7MVwr3opk_kdrjlNfJcx83O7zjBzzlC7kAKj-fvnmRz3GCg2=s300" alt="enter image description here"></p>
 <h3 id="demo-2"><strong>Demo</strong></h3>
-<p>Create an ICE plot for the class: <em>very likely</em> (class “1”) to be admitted for the Master Program</p>
+<p>Create an ICE plot for the class:  “very_likely” to be admitted for the Master Program</p>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># generate the predictor </span>
 predictor_ice <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token comment"># set the explanation for class "1"</span>
 <span class="token comment"># generate ice function</span>
@@ -211,8 +210,15 @@ ice <span class="token operator">=</span> FeatureEffect<span class="token operat
 <span class="token comment"># plot</span>
 ice<span class="token operator">$</span>plot<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p><img src="https://lh3.googleusercontent.com/mmT6VEP67BmgEs_s46wEs7aBuG-xxMkRnIFcrnONzuJsjEEz1AlVTOmNaWwbY0KHuz3Phn0-GAuv=s900" alt="enter image description here">Different to the PDP, all the lines are showed in the plot. What we can notice is that most of the lines follow the same pattern that the PDP (which shows the average). For all the cases a CGPA score greater than 8.4 makes the model to predict “very likely”. As the majority of lines are very similar to the PDP, then we could use only the PDP as this seems to be a good summary.<br>
+<p><img src="https://lh3.googleusercontent.com/o7T_6o_sErRA6UPKM1utGWhdZdN2u-YxoiEVL34yqQBMpMldi_-wSc3_VyAARlhKl-nr-iL1Lf79=s900" alt="enter image description here"></p>
+<p>Different to the PDP, all the lines are showed in the plot. What we can notice is that most of the lines follow the same pattern that the PDP (which shows the average). For all the cases a CGPA score greater than 8.4 makes the model to predict “very likely”. As the majority of lines are very similar to the PDP, then we could use only the PDP as this seems to be a good summary.<br>
 If we would get an ICE plot where the patterns differ greatly among each other, then a PDP is probably not a good representation of the true patterns.</p>
+<h3 id="ice-in-detail">ICE in detail</h3>
+<ul>
+<li>The major idea of ice is then to disaggregate the average plot by displaying the estimated relationships for each observation.</li>
+<li>From the past example (pdp example) then a total of 3 lines per observation will be displayed.</li>
+</ul>
+<p><img src="https://lh3.googleusercontent.com/ir8GJHrMvxT7g3h9BjVEyJeLKYIc7MVwr3opk_kdrjlNfJcx83O7zjBzzlC7kAKj-fvnmRz3GCg2=s300" alt="enter image description here"></p>
 <h3 id="advantages-and-disadvantages-2"><strong>Advantages and disadvantages</strong></h3>
 <p>Advantages:</p>
 <ul>
