@@ -401,32 +401,37 @@ Interpretation:</p>
 <li>The technique attempts to <strong>understand the model by perturbing the input</strong> of data samples and understanding how the predictions change.</li>
 <li>An <strong>explanation is created</strong> by approximating the underlying <strong>model locally by an interpretable one</strong>. Interpretable models are <strong>e.g. linear models</strong>, decision tree’s, etc. <strong>The interpretable models are trained on small perturbations</strong> of the original instance and should only provide a good local approximation.</li>
 </ul>
-<p><img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="(Molnar 2018)"> (Molnar 2018)</p>
 <p><strong>How does it work in general?</strong></p>
 <ol>
 <li>Permutation: from the labels of the training data take a sample (in python a normal distribution is assumed), see picture B.</li>
 </ol>
-<p><img src="https://lh3.googleusercontent.com/ay1hYKdkBb27Ny9ryoX6cSCyDNul0MUor2BndSJnHdVakT4mP0D79ZqCs4ML_84I1xtbmGnJeXm5=s900" alt=""></p>
+<p><img src="https://lh3.googleusercontent.com/ay1hYKdkBb27Ny9ryoX6cSCyDNul0MUor2BndSJnHdVakT4mP0D79ZqCs4ML_84I1xtbmGnJeXm5=s900" alt="">(Molnar 2018)</p>
 <ol start="2">
-<li>
-<p>Assign higher weight to points near the instance of interest</p>
-</li>
-<li>
-<p>Fit an interpretable model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation).</p>
-</li>
-<li>
-<p>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.</p>
-</li>
+<li>Assign higher weight to points near the instance of interest</li>
+</ol>
+<p><img src="https://lh3.googleusercontent.com/CcDkl-J5ULSf6Y4BZ4KVUIlSu_ZkC4KlKUY2JUPzjIcbi3poWdRFn9EJyTL1sWbTOSY_cmUhgyn1=s900" alt="">(Molnar 2018)</p>
+<ol start="3">
+<li>Fit an interpretable model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation).</li>
+</ol>
+<p><img src="https://lh3.googleusercontent.com/CFXSdKkR1WGX_7RYfoRyw3FQG6JmtqhGUBBvmO6qbMUZaT5y1MLY8pSX1TowV4QXkc1IlSVcLtBh=s900" alt="enter image description here">(Molnar 2018)</p>
+<ol start="4">
+<li>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.</li>
 </ol>
 <h3 id="demo-5">Demo</h3>
 <p>Generate the explanation for the first observation in the test dataset</p>
-<pre class=" language-r"><code class="prism  language-r">i <span class="token operator">=</span> <span class="token number">6</span>
+<pre class=" language-r"><code class="prism  language-r">i <span class="token operator">=</span> <span class="token number">6</span> <span class="token comment"># explain for observation 6th </span>
 
 predictor_lime <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token string">"likely"</span><span class="token punctuation">)</span> 
 lime <span class="token operator">&lt;-</span> LocalModel<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_lime<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">)</span>
 plot<span class="token punctuation">(</span>lime<span class="token punctuation">)</span>
 </code></pre>
 <p><img src="https://lh3.googleusercontent.com/j7PYP1gxkmACGVl7SU2NNSIYDvO_fWAXRrHS4Z5bny3Ovmph1IBhgMYdsVkrixkLhL5LKaD0PsRK=s900" alt=""></p>
+<p>Interpretation:</p>
+<ul>
+<li>The variable that caused the prediction is the “Recommedion letter strength”</li>
+<li>While the varibles that  are</li>
+</ul>
 <p>This point  has been predicted as “likely” (class 2) to be accepted for the master program because:</p>
 <ul>
 <li>The  GPA  is  lower  than  8.13</li>
@@ -434,6 +439,20 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <li>The University rating  is  lower  than 2</li>
 <li>…</li>
 </ul>
+<pre class=" language-r"><code class="prism  language-r">lime<span class="token operator">$</span>results
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">##                              beta x.recoded      effect x.original</span>
+<span class="token comment">## GREScore             -0.0002521975    314.00 -0.07919001        314</span>
+<span class="token comment">## TOEFLScore           -0.0079450623    103.00 -0.81834141        103</span>
+<span class="token comment">## UniversityRating     -0.0904920219      2.00 -0.18098404          2</span>
+<span class="token comment">## StatementOfPurpose   -0.0283988243      2.00 -0.05679765          2</span>
+<span class="token comment">## RecommendationLetter  0.0521051108      3.00  0.15631533          3</span>
+<span class="token comment">## CGPA                 -0.0777916701      8.21 -0.63866961       8.21</span>
+<span class="token comment">## Research             -0.1428017233      0.00  0.00000000          0</span>
+</code></pre>
+<blockquote>
+<p>lime$results</p>
+</blockquote>
 <h3 id="lime-in-detail"><strong>LIME in detail</strong></h3>
 <ul>
 <li>LIME provides local model interpretability. LIME modifies a single data sample by tweaking the feature values and observes the resulting impact on the output.</li>
@@ -707,7 +726,5 @@ From the results we can interpret:</p>
 <li>Security assessment: detect manipulated data that attempt to change the results of the predictions.</li>
 </ul>
 <h1 id="references">References</h1>
-<blockquote>
-<p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
-</blockquote>
+<p>Molnar, C. (2018). Interpretable machine learning: A guide for making black box models explainable. <em>Christoph Molnar, Leanpub</em>.</p>
 
