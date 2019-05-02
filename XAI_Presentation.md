@@ -41,6 +41,21 @@
 <ul>
 <li>Goal: classify according to 3 categories (1) very likely to be admitted, (2) likely to be admitted, (3) unlikely to be admitted</li>
 </ul>
+<h2 id="global-surrogate-models">Global surrogate models</h2>
+<h3 id="conceptualization">Conceptualization</h3>
+<p>A surrogate model is a glass-box model that is learned on the predictions of a black-box model to approximate its behavior.</p>
+<h3 id="demo">Demo</h3>
+<h3 id="advantages-and-disadvantages">Advantages and Disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>The surrogate model method is flexible: any model that is interpretable can be used.</li>
+<li>The approach is very intuitive and straightforward to implement.</li>
+<li>Easy to explain to people not familiar with data science or machine learning.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>It is not clear what is the best R-squared  to be confident that the surrogate model is close enough to the black box model</li>
+</ul>
 <h2 id="partial-dependence-plot-pdp">Partial Dependence Plot (PDP)</h2>
 <h3 id="general-idea">General idea</h3>
 <ul>
@@ -52,7 +67,7 @@
 <li>When the distance is 10m the average probability of being - classified as a successful shot is around 0.38</li>
 <li>Values lower than 10 begin to predict ”successful shot" more strongly than values greater than 10</li>
 </ul>
-<h3 id="demo"><strong>Demo</strong></h3>
+<h3 id="demo-1"><strong>Demo</strong></h3>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># Required libraries</span>
 library<span class="token punctuation">(</span>data.table<span class="token punctuation">)</span>
 library<span class="token punctuation">(</span>iml<span class="token punctuation">)</span>
@@ -166,7 +181,7 @@ Partial dependence plots can be used to compare models</p>
 <li>Note that only random forest predicts a significant drop off in success when shot are taken from around 30 feet or more. Which makes more sense. Due to the long distance, the shot is probably less likely to succeed.</li>
 </ul>
 <p>Overlaying partial dependence of different models can help to choose models that are not only accurate, but also make intuitive sense.</p>
-<h3 id="advantages-and-disadvantages"><strong>Advantages and disadvantages</strong></h3>
+<h3 id="advantages-and-disadvantages-1"><strong>Advantages and disadvantages</strong></h3>
 <p>Advantages:</p>
 <ul>
 <li>Easy to  compute</li>
@@ -179,21 +194,6 @@ Partial dependence plots can be used to compare models</p>
 <li>The maximum number of features that a PDP can display is two (plus one for the average prediction), because we can not visualize more than 3 dimensions.</li>
 <li>The most important problem with PDPs is that <strong>they assume that the features are not correlated</strong>, when this might not be true. However, pdps can work well when the relations between the features of the PDP and the other features are weak.</li>
 <li><strong>Since we vary the feature of interest we could be possibly creating data points that are not according to the reality</strong>, especially if the features are correlated.</li>
-</ul>
-<h2 id="global-surrogate-models">Global surrogate models</h2>
-<h3 id="conceptualization">Conceptualization</h3>
-<p>A surrogate model is a glass-box model that is learned on the predictions of a black-box model to approximate its behavior.</p>
-<h3 id="demo-1">Demo</h3>
-<h3 id="advantages-and-disadvantages-1">Advantages and Disadvantages</h3>
-<p>Advantages:</p>
-<ul>
-<li>The surrogate model method is flexible: any model that is interpretable can be used.</li>
-<li>The approach is very intuitive and straightforward to implement.</li>
-<li>Easy to explain to people not familiar with data science or machine learning.</li>
-</ul>
-<p>Disadvantages:</p>
-<ul>
-<li>It is not clear what is the best R-squared  to be confident that the surrogate model is close enough to the black box model</li>
 </ul>
 <h2 id="individual-conditional-expectation-ice">Individual Conditional Expectation (ICE)</h2>
 <h3 id="general-idea-1"><strong>General idea</strong></h3>
@@ -288,10 +288,10 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 </ol>
 <ul>
 <li>The statistic is 0 if there is no interaction at all, and 1 if there is full interaction, meaning that if the interaction is 1 then the effect of the prediction is achieved only throughout the interaction. If the features interact, then they are non-additive.</li>
-<li>Note that the H-statistic is expensive to compute because it iterates over all data points. At each point the partial dependence has to be computed, with is done with all n data points.<br>
-<img src="https://lh3.googleusercontent.com/m4_oK-5CiST4_h468SkW8_C-WF0JIrW4s2EzPc9eZ1gEP7lY7sCtQSF2v6tDBLKGL1XCo0wQ4a-H=s900" alt="enter image description here"><br>
-Total interaction:</li>
+<li>Note that the H-statistic is expensive to compute because it iterates over all data points, where at each point the partial dependence has to be computed, which is done with all n data points. However, if we want to reduce the computation we could select only a part of the data points.</li>
 </ul>
+<p><img src="https://lh3.googleusercontent.com/m4_oK-5CiST4_h468SkW8_C-WF0JIrW4s2EzPc9eZ1gEP7lY7sCtQSF2v6tDBLKGL1XCo0wQ4a-H=s900" alt="enter image description here"><br>
+Total interaction:</p>
 <ol>
 <li>Compute the decomposed PD function (in this case it is the full prediction function): If a feature has no interaction with any of the other features, the full prediction function can be expressed as following.
 <ul>
@@ -309,10 +309,40 @@ Total interaction:</li>
 </li>
 </ol>
 <h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
-<h2 id="permutation-feature-importance">Permutation Feature Importance</h2>
-<h3 id="conceptualization-1">Conceptualization</h3>
+<p>Advantages:</p>
 <ul>
-<li>It is a global explanation approach to identify the contribution of each feature based on its accuracy.</li>
+<li>The interactions can be detected among an arbitrary number of features.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li>It is a computational expensive expensive algorithm (due to the computation of partial dependence functions at each point.)</li>
+<li>In order to reduce the computation, a sample of points can be used. However, the results can variate significantly for every sample (as it is possible to see in the example below). Executing the algorithm several times and comparing the results to check the stability might be helpful.</li>
+</ul>
+<p><img src="https://lh3.googleusercontent.com/4t0l53mr9PwKUTR-gPjDQBmFJX76XA6Y-U4k1NuwjG2zewmcsQzeQG5G4XWS8Bo0OZEHGqq7LE-Q=s1100" alt="enter image description here"></p>
+<ul>
+<li>It is not easy to determine what is a “strong” or “weak” interaction</li>
+<li>As this technique is based on partial dependence functions, it also carries the problem of <strong>possibly creating data points that are not according to the reality</strong></li>
+</ul>
+<h2 id="permutation-feature-importance">Permutation Feature Importance</h2>
+<h3 id="general-idea-3">General idea</h3>
+<ul>
+<li>It is a global explanation approach that identifies the contribution of each feature based on its accuracy.</li>
+<li>A feature is important if shuffling its values increases the model error, because it would mean that the model relied on the feature for the prediction.</li>
+</ul>
+<h3 id="demo-4"><strong>Demo</strong></h3>
+<p>Note that the loss function used for this example is “cross-entropy”</p>
+<pre class=" language-r"><code class="prism  language-r">predictor_imp <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> y <span class="token operator">=</span> myData<span class="token operator">$</span>ChanceOfAdmit<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">)</span>
+importace_rf <span class="token operator">=</span> FeatureImp<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_imp<span class="token punctuation">,</span> loss <span class="token operator">=</span> <span class="token string">"ce"</span><span class="token punctuation">,</span> compare <span class="token operator">=</span> <span class="token string">'difference'</span><span class="token punctuation">,</span> n.repetitions <span class="token operator">=</span> <span class="token number">60</span><span class="token punctuation">)</span>
+importace_rf<span class="token operator">$</span>plot<span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/vQxSCCCiw1OFOM73iHzo2Mt0EmHxK5cTdXYvkOjL5nEGUAW0qBVFnoxicjqqfN6gaGb_32uLBQqB=s900" alt="enter image description here"><br>
+Interpretation:</p>
+<ul>
+<li>The feature with the highest importance is “CGPA”,  the increase of the error due to the permutation is around 0.24</li>
+<li>The least important features are “Research”, “University”, and “Statement of purpose”</li>
+</ul>
+<h3 id="permutation-feature-importance-in-detail">Permutation feature importance in detail</h3>
+<ul>
 <li>The importance of a feature is the increase in the prediction error of the model after we permuted the feature’s values, which will break the relationship between the feature and the true outcome.</li>
 <li>We measure the importance of a feature by calculating the increase in the model’s prediction error after permuting the feature. A feature is important if shuffling its values increases the model error, because it would mean that the model relied on the feature for the prediction. Then, a feature is not important if shuffling its values leaves the model error unchanged.</li>
 <li>The permutation feature importance measurement was introduced originally for random forest, and based on this a new model agnostic approach was created</li>
@@ -327,7 +357,7 @@ Total interaction:</li>
 <ul>
 <li>Generate a feature matrix by permuting feature j of the X data.</li>
 <li>Estimate the error based on the predictions of the permuted data: e<sup>perm</sup></li>
-<li>Calculate permutation feature importance: FI<sub>j</sub>= eperm/eorig, or alternatively FI<sub>j</sub> = e<sup>perm</sup> – e<sup>orig</sup></li>
+<li>Calculate permutation feature importance: FI<sub>j</sub>= e<sup>perm</sup> / e<sup>orig</sup>, or alternatively FI<sub>j</sub> = e<sup>perm</sup> – e<sup>orig</sup></li>
 </ul>
 </li>
 <li>Sort features by descending FI</li>
@@ -335,7 +365,7 @@ Total interaction:</li>
 <p><strong>Things to consider</strong></p>
 <ul>
 <li>Feature importance values are always positive values greater than 0, since the minimum increase in error is 0. A feature with an importance of 0 is interpreted as a feature that does not contribute to the model and thus we can consider to remove it.</li>
-<li>To get more accurate results the permutation can be done by combining every feature value with all possible instances, however this can be an expensive task. Thus, the authors suggest to split the dataset in half and exchange their feature values (of j), which is basically a permutation.</li>
+<li>To get more accurate results we can permute every feature value with all possible instances, however this can be an expensive task. Thus, the authors (Fisher et al.) suggest to split the dataset in half and exchange their feature values (of j), which is basically a permutation.</li>
 <li>It is possible that a feature has a small random feature importance:
 <ul>
 <li>To identify such variables with only random importance, a variable random can be added to the data with values generated at random.</li>
@@ -345,54 +375,75 @@ Total interaction:</li>
 <li>Shall we get the feature importances from training data or from test data? It depends, we need to decide whether:
 <ul>
 <li>We want to know how much the model relies on each feature for making predictions à training data, or</li>
-<li>How much the features contribute to the performance of the model on unseen data à test data</li>
+<li>How much the features contribute to the performance of the model on unseen data a test data</li>
 </ul>
 </li>
 </ul>
-<p><strong>Toy example: prediction of the number of rented bikes given weather conditions and calendar information. The error measurement is the mean absolute error.</strong></p>
-<p><img src="https://lh3.googleusercontent.com/nmtXq83dtzO8Jk_EC6MQYqtqtVM_WHnnHZ9bMybpxPhPBSN7uovFI1Lo_bWhEIhBwD8a0nVW6whA=s900" alt="enter image description here"></p>
 <h3 id="advantages-and-disadvantages-4">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>Feature importance is the increase in model error when the feature’s information is destroyed.</li>
-<li>Provides a general view about the model’s behavior</li>
-<li>Since the permutation also destroy the interaction with other features (if any) , the change in the error reflects not only the changes in the relationship between the feature and the outcome but also the interactions with the other features.</li>
+<li>Easy to understand</li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>Because of the permutation, it can be computationally expensive to get the most accurate feature importances.</li>
-<li>The permutation breaks the interaction not only with the outcome but also breaks the interaction with the other features (if any). Thus, the error increases not only due to the permutation of the feature but also due to the broken interaction with other features, reason why the result might be biased. Then, the importance would not be exclusively of the feature under examination.</li>
-<li>If features are correlated, the feature importance because the permutation would create unrealistic data instances (e.g  (2 meter person weighing 30 kg for example).</li>
-<li>The permutation feature importance is computed based on the error of the model, but sometimes we might need to explain the importance of a feature based in other  criteria  than  the performance of the model. For example we might be interested in: how much of the prediction variation is explained by a feature, like partial dependent plots do .</li>
+<li><strong>Because of the permutation</strong>, it can be <strong>computationally expensive</strong> to get the most accurate feature importances.</li>
+<li>The <strong>permutation breaks the interaction not only with the outcome but also</strong> breaks the interaction <strong>with the other features</strong> (if any). Thus, <strong>the error increases not only due to the permutation</strong> of the feature <strong>but also due to the broken interaction</strong> with other features, reason why the <strong>results might be not related exclusively to the feature</strong> under examination. Then, the importance would not be exclusively of the feature under examination.</li>
+<li>If features are correlated, the feature importance because the permutation would create <strong>unrealistic data instances</strong> (e.g  (2 meter person weighing 30 kg for example).</li>
+<li>The permutation feature importance is <strong>computed based on the error</strong> of the model, but <strong>sometimes we might need to explain the importance of a feature based in other  criteria</strong>  than  the performance of the model. For example we might be interested in: how much of the prediction variate when the feature value changes, like partial dependent plots do .</li>
 <li>You need access to the true outcome. If someone only provides you with the model and unlabeled data – but not the true outcome – you cannot compute the permutation feature importance.</li>
-<li>The permutation feature importance depends on shuffling the feature, which adds randomness to the measurement. When the permutation is repeated, the results might vary greatly. Repeating the permutation and averaging the importance measures over repetitions stabilizes the measure, but increases the time of computation.</li>
+<li>The permutation feature importance <strong>depends on shuffling the feature</strong> , which adds randomness to the measurement. When the permutation is repeated, the <strong>results might vary greatly.</strong> <strong>However, repeating the permutation</strong> and averaging the importance measures over repetitions <strong>stabilizes the measure, but increases the time of computation.</strong></li>
 </ul>
 <h2 id="local-interpretable-model-agnostic-explanations-lime">Local interpretable model-agnostic explanations (LIME)</h2>
-<h3 id="conceptualization-2">Conceptualization</h3>
+<h3 id="general-idea-4">General idea</h3>
 <ul>
-<li>The technique attempts to understand the model by perturbing the input of data samples and understanding how the predictions change.</li>
-<li>LIME provides local model interpretability. LIME modifies a single data sample by tweaking the feature values and observes the resulting impact on the output.</li>
+<li>LIME provides an explanation <strong>for a single data point.</strong></li>
 <li>It tries to answer: which variables caused the prediction?</li>
-<li>The output of LIME is a list of explanations, reflecting the contribution of each feature to the prediction of a data sample.</li>
-<li>An explanation is created by approximating the underlying model locally by an interpretable one. Interpretable models are e.g. linear models with strong regularisation, decision tree’s, etc. The interpretable models are trained on small perturbations of the original instance and should only provide a good local approximation.</li>
-<li>The ‘dataset’ is created by e.g. adding noise to continuous features, removing words or hiding parts of the image. By only approximating the black-box locally (in the neighborhood of the data sample) the task is significantly simplified.</li>
-<li>Behind the workings of lime lies the (big) assumption that every complex model is linear on a local scale. While this is not justified in the paper it is not difficult to convince yourself that this is generally sound — you usually expect two very similar observations to behave predictably even in a complex model.</li>
-<li>LIME then asserts that it is possible to fit a simple model around a single observation that will mimic how the global model behaves at that locality (in the parameter space just around my data point). The simple model can then be used to explain the predictions of the more complex model locally.<br>
-<img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="enter image description here"></li>
+<li>The technique attempts to <strong>understand the model by perturbing the input</strong> of data samples and understanding how the predictions change.</li>
+<li>An <strong>explanation is created</strong> by approximating the underlying <strong>model locally by an interpretable one</strong>. Interpretable models are <strong>e.g. linear models</strong>, decision tree’s, etc. <strong>The interpretable models are trained on small perturbations</strong> of the original instance and should only provide a good local approximation.</li>
 </ul>
+<p><img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="enter image description here"></p>
 <p><strong>How does it work in general?</strong></p>
 <ol>
-<li>For each prediction to explain, permute the observation n times.</li>
-<li>Let the complex model predict the outcome of all permuted observations.</li>
-<li>Calculate the distance from all permutations to the original observation.</li>
-<li>Convert the distance into a similarity score.</li>
-<li>Select m features best describing the complex model outcome from the permuted data.</li>
-<li>Fit a simple model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation)(how does it add this weight?).</li>
-<li>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.<br>
-<img src="https://lh3.googleusercontent.com/kCUsIS2ECrWIp21bw1GjhyAlBy-CqSHrewDf3i5pPAlB4_IGtFHtF6-m6NaVXPk_4CiHvm5LWiP9=s900" alt="enter image description here"></li>
+<li>Permutation: from the labels of the training data take a sample (in python a normal distribution is assumed), see picture B.</li>
 </ol>
-<p><strong>LIME in detail</strong></p>
-<p>Permutation:  LIME depends on the type of input data. Currently two types of inputs are supported: tabular and text</p>
+<p><img src="https://lh3.googleusercontent.com/ay1hYKdkBb27Ny9ryoX6cSCyDNul0MUor2BndSJnHdVakT4mP0D79ZqCs4ML_84I1xtbmGnJeXm5=s900" alt=""></p>
+<ol start="2">
+<li>
+<p>Assign higher weight to points near the instance of interest</p>
+</li>
+<li>
+<p>Fit an interpretable model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation).</p>
+</li>
+<li>
+<p>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.</p>
+</li>
+</ol>
+<h3 id="demo-5">Demo</h3>
+<p>Generate the explanation for the first observation in the test dataset</p>
+<pre class=" language-r"><code class="prism  language-r">i <span class="token operator">=</span> <span class="token number">6</span>
+
+predictor_lime <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token string">"likely"</span><span class="token punctuation">)</span> 
+lime <span class="token operator">&lt;-</span> LocalModel<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_lime<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">)</span>
+plot<span class="token punctuation">(</span>lime<span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/j7PYP1gxkmACGVl7SU2NNSIYDvO_fWAXRrHS4Z5bny3Ovmph1IBhgMYdsVkrixkLhL5LKaD0PsRK=s900" alt=""></p>
+<p>This point  has been predicted as “likely” (class 2) to be accepted for the master program because:</p>
+<ul>
+<li>The  GPA  is  lower  than  8.13</li>
+<li>The GRE score is between 309 and 317</li>
+<li>The University rating  is  lower  than 2</li>
+<li>…</li>
+</ul>
+<h3 id="lime-in-detail"><strong>LIME in detail</strong></h3>
+<ul>
+<li>LIME provides local model interpretability. LIME modifies a single data sample by tweaking the feature values and observes the resulting impact on the output.</li>
+<li>The output of LIME is a list of explanations, reflecting the contribution of each feature to the prediction of a data sample.</li>
+<li>The ‘dataset’ is created by for example adding noise to continuous features, removing words or hiding parts of the image. By only approximating the black-box locally (in the neighborhood of the data sample) the task is significantly simplified.</li>
+<li>LIME assumes that every complex model is linear on a local scale. We would expect two observations that are very similar (very close from each other) to output the same prediction regardless of how complex is the model.</li>
+<li>LIME then states that it is possible to fit a simple model around a single observation that will mimic how the global model behaves at the space around my data point. The simple model can then be used to explain the predictions of the more complex model locally.</li>
+</ul>
+<p><strong>Permutation</strong><br>
+LIME depends on the type of input data. Currently two types of inputs are supported: tabular and text</p>
 <ul>
 <li>Tabular  data: when  tabular  data, the permutations are dependent on the training set. During the creation of the explainer the statistics for each variable are extracted and permutations are then sampled from the variable distributions (no treally the variable distribution, but more like from the variable range). This means that permutations are in fact independent from the explained variable (because when permuting (creating the new data points, relationship among variables is not considered, so realtionships are destroyed) making the similarity computation even more important as this is the only thing establishing the locality of the analysis.</li>
 <li>Which statistics are extracted?: we compute the mean and std, and discretize it into quartiles (what are quartiles for?). If it is categorical data then  we compute the frequency of each value.</li>
@@ -404,7 +455,8 @@ Total interaction:</li>
 </ul>
 </li>
 </ul>
-<p>Computing the similarity score: it is calculated differently according to whether it is for tabular or textual data</p>
+<p><strong>Computing the similarity score</strong><br>
+It is calculated differently according to whether it is for tabular or textual data</p>
 <ul>
 <li>Textual: For text data the cosine similarity measure is used, which is the standard in text analysis</li>
 <li>Tabular: For tabular data an optimal solution will depend on the type of input data
@@ -417,55 +469,6 @@ Total interaction:</li>
 <p>Selecting features: LIME implements a range of different feature selection approaches that the user is free to choose from (e.g. “forward selection”, “lasso”, etc.).</p>
 <ul>
 <li>The user must select the number of features. The number must strike a balance between the complexity of the model and the simplicity of the explanation, some suggests to keep it below 10 features.</li>
-</ul>
-<h3 id="demo-4">Demo</h3>
-<p>This time we are going to generate explanations for predictions resulting from a SVM</p>
-<pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>e1071<span class="token punctuation">)</span> <span class="token comment">#to generate the svm model</span>
-
-<span class="token comment">#create SVM model </span>
-svm_model <span class="token operator">&lt;-</span> svm<span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-
-<span class="token comment">#run the prediction </span>
-pred <span class="token operator">&lt;-</span> predict<span class="token punctuation">(</span>svm_model<span class="token punctuation">,</span> x<span class="token punctuation">)</span>
-
-<span class="token comment"># Create a table with the SVM predictions</span>
-predictionsTable <span class="token operator">=</span> as.data.frame<span class="token punctuation">(</span>table<span class="token punctuation">(</span>pred<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span> 
-
-<span class="token comment"># confusion matrix</span>
-predictionVector <span class="token operator">=</span> predictionsTable<span class="token punctuation">[</span><span class="token punctuation">,</span> pred<span class="token punctuation">]</span>
-table<span class="token punctuation">(</span>predictionVector<span class="token punctuation">,</span>y<span class="token punctuation">)</span>
-</code></pre>
-<pre class=" language-r"><code class="prism  language-r"><span class="token comment">##                 y</span>
-<span class="token comment">## predictionVector   1   2   3</span>
-<span class="token comment">##                1 134   0   0</span>
-<span class="token comment">##                2   0 270  35</span>
-<span class="token comment">##                3   7   4   0</span>
-</code></pre>
-<p>Generate the explanation for the first observation in the test dataset</p>
-<pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>lime<span class="token punctuation">)</span> 
-
-<span class="token comment"># select 1 observation from the test set to explain with lime</span>
-localObs <span class="token operator">=</span> read.csv<span class="token punctuation">(</span><span class="token string">"data_test.csv"</span><span class="token punctuation">,</span> sep <span class="token operator">=</span> <span class="token string">";"</span><span class="token punctuation">)</span>
-localObs <span class="token operator">=</span> subset<span class="token punctuation">(</span>localObs<span class="token punctuation">,</span> select<span class="token operator">=</span><span class="token operator">-</span>c<span class="token punctuation">(</span>ID<span class="token punctuation">,</span> ChanceOfAdmit<span class="token punctuation">)</span><span class="token punctuation">)</span>
-localObs <span class="token operator">=</span> localObs<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">]</span>
-
-<span class="token comment"># create an explainer object</span>
-explainer <span class="token operator">=</span> lime<span class="token punctuation">(</span>x<span class="token punctuation">,</span> svm_model<span class="token punctuation">)</span>
-
-<span class="token comment"># define model_type (needed for the next step)</span>
-model_type.svm <span class="token operator">&lt;-</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token ellipsis">...</span><span class="token punctuation">)</span> <span class="token string">'classification'</span>
-
-<span class="token comment"># explain and plot explanations</span>
-explanation <span class="token operator">&lt;-</span> explain<span class="token punctuation">(</span>localObs<span class="token punctuation">,</span> explainer<span class="token punctuation">,</span> n_labels <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">,</span> n_features <span class="token operator">=</span> <span class="token number">6</span><span class="token punctuation">)</span> <span class="token comment">#show the explanation for the 6 features that influence the prediction the most</span>
-plot_features<span class="token punctuation">(</span>explanation<span class="token punctuation">)</span>
-</code></pre>
-<p><img src="https://lh3.googleusercontent.com/XKL11e39l0jWjxeJzAjRlj7EakT6vXf_ySPvPeCLjA5hcj8sinoIzZkYyIpoj6imKTp7fVpmfBhc=s900" alt="enter image description here"><br>
-This point  has been predicted as “likely” (class 2) to be accepted for the master program because:</p>
-<ul>
-<li>The  GPA  is  lower  than  8.13</li>
-<li>The GRE score is between 309 and 317</li>
-<li>The University rating  is  lower  than 2</li>
-<li>…</li>
 </ul>
 <h3 id="advantages-and-disadvantages-5">Advantages and disadvantages</h3>
 <p>Advantages:</p>
@@ -481,7 +484,7 @@ This point  has been predicted as “likely” (class 2) to be accepted for the 
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
 <h2 id="anchors">Anchors</h2>
-<h3 id="conceptualization-3">Conceptualization</h3>
+<h3 id="conceptualization-1">Conceptualization</h3>
 <ul>
 <li>An Anchor explains individual predictions with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
 <li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
@@ -570,7 +573,7 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <li>Anchors can create explanations for complex functions, but the rule set to explain the prediction can become large.</li>
 </ul>
 <h2 id="shapley-values">Shapley values</h2>
-<h3 id="conceptualization-4">Conceptualization</h3>
+<h3 id="conceptualization-2">Conceptualization</h3>
 <ul>
 <li>Shapley values is a local explanation approach, this is, it explain the prediction of a specific instance.</li>
 <li>It is a game theory-based approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.  Shapley values explains how much the feature value i contribute to the prediction compared to the average predictions of all data.
@@ -669,7 +672,7 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <li>Remember that the contribution is the difference between the feature effect minus the average effect. It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people. Imagine that the average prediction of all people is 0.25 and 2 represents the class: likes video games. Then his age makes the probability that he likes video games to be higher than the average person by 1.5.</li>
 </ul>
 <p>In <strong>summary,</strong> Shapley values calculate the importance of a feature by comparing what a model predicts with and without the feature. However, since the order in which a model sees features can affect its predictions, this is done in every possible order, so that the features are fairly compared.</p>
-<h3 id="demo-5">Demo</h3>
+<h3 id="demo-6">Demo</h3>
 <pre class=" language-r"><code class="prism  language-r">predictor_shapley <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span>class <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
 shapley_rf <span class="token operator">&lt;-</span> Shapley<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_shapley<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># explain the fifth obeservation of the dataset</span>
 plot<span class="token punctuation">(</span>shapley_rf<span class="token punctuation">)</span> <span class="token comment">#plot </span>
