@@ -429,16 +429,10 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <p><img src="https://lh3.googleusercontent.com/j7PYP1gxkmACGVl7SU2NNSIYDvO_fWAXRrHS4Z5bny3Ovmph1IBhgMYdsVkrixkLhL5LKaD0PsRK=s900" alt=""></p>
 <p>Interpretation:</p>
 <ul>
-<li>The variable that caused the prediction is the “Recommedion letter strength”</li>
-<li>While the varibles that  are</li>
+<li>The variable that caused the prediction to be “like” is the recommedion letter strength.</li>
+<li>While the varibles that contradict the prediction are: the statement of purpose, GRE score, university rating, CGPA score, and TOEFL score.</li>
 </ul>
-<p>This point  has been predicted as “likely” (class 2) to be accepted for the master program because:</p>
-<ul>
-<li>The  GPA  is  lower  than  8.13</li>
-<li>The GRE score is between 309 and 317</li>
-<li>The University rating  is  lower  than 2</li>
-<li>…</li>
-</ul>
+<p>The following are the results from the linear regression, the beta values are the ones that we can see in the plot.</p>
 <pre class=" language-r"><code class="prism  language-r">lime<span class="token operator">$</span>results
 </code></pre>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment">##                              beta x.recoded      effect x.original</span>
@@ -450,9 +444,14 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <span class="token comment">## CGPA                 -0.0777916701      8.21 -0.63866961       8.21</span>
 <span class="token comment">## Research             -0.1428017233      0.00  0.00000000          0</span>
 </code></pre>
-<blockquote>
-<p>lime$results</p>
-</blockquote>
+<p>The  figure below shows the results of different data points for every class in order to compare whether we can find some patterns</p>
+<h3 id="figure">FIGURE!!!</h3>
+<p>From this comparison it seems that:</p>
+<ul>
+<li>The features that push the most to predict “very likely to be accepted for the master program” are the CGPA and the TOEFL score when these are “high grades”.  While features like recommendation letter and statement of purpose do not really have a significant impact in the prediction.</li>
+<li>The feature that push the prediction to be “likely to be accepted” is the recommendation letter strength. It seems that when the CGPA and TOEFL scores are not the highest then a <strong>strong recommendation letter</strong> has a significant impact to possibly being accepted.</li>
+<li>The features that push the prediction to be “unlikely to be accepted”  are the university rating and statement of purpose when they are low values. However, other features like the recommendation letter and the GRE score contradict this prediction. We can note that in comparison to the ones in the class “likey”, altough the GRE scores are lower, the difference is not significant.</li>
+</ul>
 <h3 id="lime-in-detail"><strong>LIME in detail</strong></h3>
 <ul>
 <li>LIME provides local model interpretability. LIME modifies a single data sample by tweaking the feature values and observes the resulting impact on the output.</li>
@@ -497,28 +496,23 @@ It is calculated differently according to whether it is for tabular or textual d
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>LIME assumes that linear models can approximate local behaviour, which is an assumption that can be correct when it is about examining a very small region around the data sample. However, for a larger region the linear model might not be powerful enough to explain the behavior.</li>
+<li>LIME assumes that linear models can approximate local behaviour. However, for a larger region the linear model might not be powerful enough to explain the behavior.</li>
 <li>Also, if the  model is highly non-linear even for a very small region, then the exaplanation might not be a faithful.</li>
 <li>It is not clear to which other instances  (or reagion) the explanation is valid.</li>
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
 <h2 id="anchors">Anchors</h2>
-<h3 id="conceptualization-1">Conceptualization</h3>
+<h3 id="general-idea-5">General idea</h3>
 <ul>
-<li>An Anchor explains individual predictions with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
+<li>An anchor explains <strong>individual predictions</strong> with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
+<li>Anchors aims to improve pitfalls of LIME, since in LIME is not clear whether the same explanation can be applied to other instances (we don´t know exactly which is the local region). Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
 <li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/M4Ype1yzyvv61H2GW1530lOmvU0tt2ONjhe-tR_meqLyC-5jtyiPJ854UzedFGeq3fRwzyOsqLt0=s600" alt="enter image description here"></p>
 <ul>
-<li>In short, an anchor is a rule that sufficiently “anchors” a prediction – such that changes to the rest of the instance do not matter  with a high probability.</li>
+<li>In short, an anchor is a rule on x that achieves a “high” probability of being predicted as positive.</li>
 </ul>
-<p>Anchors aims to improve pitfalls of LIME. It is developed by the same authors of LIME</p>
-<ul>
-<li>The linear LIME explanation brings some light into the reasons for the prediction, but it is not clear whether the same explanation can be applied to other instances. The question is then: what the local region is? With the LIME approach this is not easy to discover.</li>
-<li>Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
-<li>The assumption is that while the model is globally too complex to be explained succinctly, “zooming in” on individual predictions makes the explanation task feasible.<br>
-<img src="https://lh3.googleusercontent.com/UICNP49fWJpyJx2QaV6D9MvCsYBgjKKi5Uu7nckdOhaqGL9RPTKPdELV7gRORCEvyOyxejEWckU0=s400" alt="enter image description here"></li>
-</ul>
+<p><img src="https://lh3.googleusercontent.com/UICNP49fWJpyJx2QaV6D9MvCsYBgjKKi5Uu7nckdOhaqGL9RPTKPdELV7gRORCEvyOyxejEWckU0=s400" alt="enter image description here"></p>
 <p><strong>Toy example: predicting positive and negative sentiment</strong></p>
 <p><img src="https://lh3.googleusercontent.com/MuRxjtNtRg-_6yl6wNVuIP0vjY5MEnA5h_YoTZWeLXh0xiKZrCcNXTQ0RjJzZjkLkocyr7UHBAo0=s600" alt="enter image description here"></p>
 <ul>
@@ -538,11 +532,13 @@ It is calculated differently according to whether it is for tabular or textual d
 <ul>
 <li>A is an anchor if A(x) = 1 (if all predicates of the rule are true) and if a sample z from D(z|A) (a z sample that follows the perturbed distribution and complies with rule A) has a high probability to be predicted as Positive. This would mean that f(x) = f(z), i.e.  the prediction of x is equal to the predictions on z. This  is formally stated as precision, where
 <ul>
-<li>precision(A) ≥ τ (predictions of z should be at least τ. τ is set by the user).</li>
+<li>Precision(A) ≥ τ (predictions of z should be at least τ. τ is set by the user).</li>
 </ul>
 </li>
 </ul>
 <p>In short, an anchor A is a set of feature predicates on x that achieves a “high” probability of being predicted as positive.</p>
+<p><strong>How to generate a rule</strong></p>
+<h3 id="anchors-in-detail">Anchors in detail</h3>
 <p><strong>Perturbation:</strong></p>
 <ul>
 <li>At its core, the algorithm deploys a perturbation-based strategy. That means that the observed or explained instance gets perturbed, i.e., its feature values change according to some application-specific policy where the resulting data instances resemble neighbors of the initial instance. The policy in this case  is that the generated perturbations must comply with the rule A.</li>
@@ -589,13 +585,13 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <p>Disadvantages:</p>
 <ul>
 <li>Only captures the behavior of the model on a local region.</li>
-<li>Anchors can create explanations for complex functions, but the rule set to explain the prediction can become large.</li>
+<li>Anchors can create explanations for complex functions, but the rule to explain the prediction can become very large.</li>
 </ul>
 <h2 id="shapley-values">Shapley values</h2>
-<h3 id="conceptualization-2">Conceptualization</h3>
+<h3 id="general-idea-6">General idea</h3>
 <ul>
-<li>Shapley values is a local explanation approach, this is, it explain the prediction of a specific instance.</li>
-<li>It is a game theory-based approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.  Shapley values explains how much the feature value i contribute to the prediction compared to the average predictions of all data.
+<li>Shapley values is a <strong>local explanation approach</strong>, this is, it explain the prediction of a specific instance.</li>
+<li>It is a <strong>game theory-based</strong> approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.
 <ul>
 <li>Game: the prediction task for a single instance.</li>
 <li>Players: the feature values of the instance that collaborated to receive the gain (to make the prediction).</li>
@@ -604,6 +600,12 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <li>Gain: actual prediction minus average prediction for all instances.</li>
 </ul>
 </li>
+</ul>
+<h3 id="pictures">PICTURES!!!</h3>
+<p>Shapley values explains how much the feature value i contribute to the prediction ( ) compared to the <strong>average predictions of all data</strong>.</p>
+<p>For example: the contribution of the feature CGPA-8.5 when its value is  from the instance above<br>
+Contribution:  average contribution of CGPA-8.5 (over all possible coalitions)</p>
+<ul>
 <li>Formally, a Shapley value (ϕ) is the average marginal contribution of a feature value to the prediction over all possible coalitions. A Shapley value for a certain feature value  i , in a model with n total features, given a prediction p is: <span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>S</mi><mo>⊆</mo><mi>N</mi><mi mathvariant="normal">/</mi><mi>i</mi></mrow></munder><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>!</mo><mo>(</mo><mi>n</mi><mo>−</mo><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>(</mo><mi>p</mi><mo>(</mo><mi>s</mi><mo>∪</mo><mi>i</mi><mo>)</mo><mo>−</mo><mi>p</mi><mo>(</mo><mi>S</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">  \phi (p)=\sum_{S\subseteq N/i} \frac{ |S|!(n - |S| -1)!}{n!}(p(s \cup i) - p(S))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">ϕ</span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.94301em; vertical-align: -1.51601em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.05001em;"><span class="" style="top: -1.809em; margin-left: 0em;"><span class="pstrut" style="height: 3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span style="margin-right: 0.05764em;" class="mord mathit mtight">S</span><span class="mrel mtight">⊆</span><span style="margin-right: 0.10903em;" class="mord mathit mtight">N</span><span class="mord mtight">/</span><span class="mord mathit mtight">i</span></span></span></span><span class="" style="top: -3.05001em;"><span class="pstrut" style="height: 3.05em;"></span><span class=""><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.51601em;"><span class=""></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathit">n</span><span class="mclose">!</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mclose">!</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">i</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">p</span><span class="mopen">(</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></span></li>
 <li>In a very simple way, this equation computes what the prediction of the model would be without the feature value i, .Then computes the prediction of the model with feature value i (feature effect), and finally calculates the difference, which corresponds to the contribution:
 <ul>
@@ -611,6 +613,30 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 </ul>
 </li>
 </ul>
+<h3 id="demo-6">Demo</h3>
+<pre class=" language-r"><code class="prism  language-r">predictor_shapley <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span>class <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
+shapley_rf <span class="token operator">&lt;-</span> Shapley<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_shapley<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># explain the fifth obeservation of the dataset</span>
+plot<span class="token punctuation">(</span>shapley_rf<span class="token punctuation">)</span> <span class="token comment">#plot </span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/QhgzxlIjeJH0GhYAwQL9t-4BqBiZavdnpoYyTXZtuVrbwkfPEH8FQz9q_rIIt-dmLHPQu9lmpmg8=s900" alt="enter image description here"></p>
+<p>Interpretation:</p>
+<ul>
+<li>The difference between the actual prediction and the average prediction is 0.36. Note that the sum of the contributions yields 0.36</li>
+<li>This person has 0.36 more chance to be predicted as “likely” to be accepted for the master program compared to the average people in class 2.</li>
+<li>The CPGA score of 8.21 increased the chance the most (It increased  the  probability of being classified as “likely” in ~ 0.09 above  the  average  aspirants (0.63)).</li>
+</ul>
+<p>The figure below shows the results of different data points for every class in order to compare whether we can find some patterns.</p>
+<h3 id="figure-1">FIGURE!!!</h3>
+<p>From this comparison it seems that:</p>
+<ul>
+<li>There is not a clear pattern between observations of the same class.</li>
+<li>However, it is posible to see that in every class the CGPA contribute to some extent to the prediction.</li>
+<li>For the class “very likely” a high CGPA influence the prediction</li>
+<li>For the class “likely” a CGPA lower than the ones in the class “very likely” (around 8 ) influence the prediction</li>
+<li>For the class “unlikely” the lowest CGPA socores influence the prediction.</li>
+</ul>
+<h3 id="shapley-values-in-detail">Shapley values in detail</h3>
+<p>Formally, a Shapley value (ϕ) is the average marginal contribution of a feature value to the prediction over all possible coalitions. A Shapley value for a certain feature value  i , in a model with n total features, given a prediction p is computed as follows: <span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>S</mi><mo>⊆</mo><mi>N</mi><mi mathvariant="normal">/</mi><mi>i</mi></mrow></munder><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>!</mo><mo>(</mo><mi>n</mi><mo>−</mo><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>(</mo><mi>p</mi><mo>(</mo><mi>s</mi><mo>∪</mo><mi>i</mi><mo>)</mo><mo>−</mo><mi>p</mi><mo>(</mo><mi>S</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">  \phi (p)=\sum_{S\subseteq N/i} \frac{ |S|!(n - |S| -1)!}{n!}(p(s \cup i) - p(S))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">ϕ</span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.94301em; vertical-align: -1.51601em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.05001em;"><span class="" style="top: -1.809em; margin-left: 0em;"><span class="pstrut" style="height: 3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span style="margin-right: 0.05764em;" class="mord mathit mtight">S</span><span class="mrel mtight">⊆</span><span style="margin-right: 0.10903em;" class="mord mathit mtight">N</span><span class="mord mtight">/</span><span class="mord mathit mtight">i</span></span></span></span><span class="" style="top: -3.05001em;"><span class="pstrut" style="height: 3.05em;"></span><span class=""><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.51601em;"><span class=""></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathit">n</span><span class="mclose">!</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mclose">!</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">i</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">p</span><span class="mopen">(</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></span></p>
 <p><strong>Spliting the payoff between the players</strong></p>
 <p>One important question to answer is about how to split fairly the payoff when players with different skills act in a coalition. Some conditions are first set to make sure that the payoff is being divided fairly:</p>
 <ol>
@@ -649,21 +675,21 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </ul>
 </li>
 <li>Then, when the model sees he is 14, it assigns him a score of 2, the effect of age is then: (2–0.025)=1.975 (effect of the age)</li>
-<li>Therefore, for this sequence: ϕAgeBobby=1.975 and ϕGenderBobby=0.025, which is different from the past sequence</li>
+<li>Therefore, for this sequence: ϕAgeBobby=1.975 and ϕGenderBobby=0.025, which is different from the past sequence.</li>
 </ul>
 <p><strong>Which of these is a fair payoff for the feature value of AgeBobby, 1.05 or 1.975?, and for GenderBobby?.</strong></p>
-<p>Shapley values solve the problem by finding each player’s marginal contribution, averaged over every possible sequence in which the players could have been added to the group. For instance, for the previus example about Ava, Bill, and Christine´s payoff, all the possible sequences are: ABC, ACB, BCA, BAC, CAB, and CBA. For each player we can compute its marginal payoff in every sequence and the average them to make it “fair”.</p>
+<p>Shapley values solve the problem by finding each player’ contribution averaged over every possible sequence in which the players could have been added to the group. For instance, for the previus example about Ava, Bill, and Christine´s payoff, all the possible sequences are: ABC, ACB, BCA, BAC, CAB, and CBA. For each player we can compute its marginal payoff in every sequence and the average them to make it “fair”.</p>
 <p>Shapley value considers all possible values by calculating a weighted sum to find a final value. It means that it does not really compute for all sequences (e.g (age, gender) and (gender, age)) but computes a weighted sum.</p>
-<p><strong>But how are the the weights assigned to each component of the sum?</strong></p>
+<p><strong>How are the the weights assigned to each component of the sum?</strong></p>
 <ul>
 <li>It considers how many different permutations in the sequence vector exist by taking into account the features which are in the set S (this is done by the ∣S∣! ) as well as the features that still have to be added ( by the (n−∣S∣−1)!). What is important to know here is</li>
-<li>Finally, everything is normalized by the features we have in total in the coalition (n).<br>
-<img src="https://lh3.googleusercontent.com/bTg-d8VCUoMd7SFroXpLMQlueCYqgBAVH07B0i1er-rH-gnbw03NXhLPbG0OlkgXlAbXZXB4pLIv=s600" alt="enter image description here"><br>
-<strong>Computing a Shapley Value</strong></li>
+<li>Finally, everything is normalized by the features we have in total in the coalition (n).</li>
 </ul>
+<p><img src="https://lh3.googleusercontent.com/bTg-d8VCUoMd7SFroXpLMQlueCYqgBAVH07B0i1er-rH-gnbw03NXhLPbG0OlkgXlAbXZXB4pLIv=s600" alt="enter image description here"></p>
+<p><strong>Computing a Shapley Value (for AgeBobby-14)</strong></p>
 <ol>
 <li>Build sets S (all possible feature combinations of Bobby, excluding his age). As he has only one feature left (gender) then all the possible coalitions are: {gender}, and an empty set {}. If we would have more features, as for instance age, gender, and occupation, then all the possible coalitions would be: {age}, {gender}, {occupation}, {age, gender}, {age, occupation}, {gender, occupation}, {age, gender, occupation}, and an empty set {}.</li>
-<li>Calculate the Shapley value ϕ_i § for each sets S.
+<li>Calculate the Shapley value ϕ_i ( p ) for each sets S.
 <ol>
 <li>Shapley value for S = {}:
 <ul>
@@ -677,9 +703,9 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <li>Shapley value for S = {gender}:
 <ul>
 <li>∣S∣ = 1, ∣S∣! = 1</li>
-<li>n =</li>
+<li>n = 2 (features)</li>
 <li>p(S) = the model’s prediction when it sees only gender is the average effect (we calculated this before): 0.025</li>
-<li>p(S ∪ i ) = the prediction of the model when it sees the gender and then when it sees the age (we calculated this before): 2</li>
+<li>p(S ∪ i ) = the prediction of the model when it sees the gender and then when it sees the age (we calculated this before): 1.975</li>
 <li>Shapley value is then: 0.9875</li>
 </ul>
 </li>
@@ -687,22 +713,11 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </li>
 <li>Add the values together: ϕBobby-14 = 0.5125 + 0.9875 = 1.5</li>
 </ol>
+<h3 id="calcular-de-nuevo">Calcular de nuevo!!!</h3>
 <ul>
-<li>Remember that the contribution is the difference between the feature effect minus the average effect. It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people. Imagine that the average prediction of all people is 0.25 and 2 represents the class: likes video games. Then his age makes the probability that he likes video games to be higher than the average person by 1.5.</li>
+<li>Remember that the contribution is the difference between the feature effect minus the average effect (without the feature under examination). It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people.</li>
 </ul>
-<p>In <strong>summary,</strong> Shapley values calculate the importance of a feature by comparing what a model predicts with and without the feature. However, since the order in which a model sees features can affect its predictions, this is done in every possible order, so that the features are fairly compared.</p>
-<h3 id="demo-6">Demo</h3>
-<pre class=" language-r"><code class="prism  language-r">predictor_shapley <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>rf_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span>class <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">)</span>
-shapley_rf <span class="token operator">&lt;-</span> Shapley<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_shapley<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment"># explain the fifth obeservation of the dataset</span>
-plot<span class="token punctuation">(</span>shapley_rf<span class="token punctuation">)</span> <span class="token comment">#plot </span>
-</code></pre>
-<p><img src="https://lh3.googleusercontent.com/QhgzxlIjeJH0GhYAwQL9t-4BqBiZavdnpoYyTXZtuVrbwkfPEH8FQz9q_rIIt-dmLHPQu9lmpmg8=s900" alt="enter image description here"><br>
-From the results we can interpret:</p>
-<ul>
-<li>The difference between the actual prediction and the average prediction is 0.36. Note that the sum of the contributions yields 0.36</li>
-<li>This person has 0.36 more chance to be predicted as “likely” (class 2) to be accepted for the master program compared to the average people in class 2.</li>
-<li>The CPGA score of 8.21 increased the chance the most (It increased  the  probability of being classified as “likely” in ~ 0.09 above  the  average  aspirants (0.63)).</li>
-</ul>
+<p><strong>In conclusion, Shapley values calculate the importance of a feature by comparing what a model predicts with and without the feature. However, since the order in which a model sees features can affect its predictions, this is done in every possible order, so that the features are fairly compared.</strong></p>
 <h3 id="advantages-and-disadvantages-7">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
@@ -710,6 +725,8 @@ From the results we can interpret:</p>
 <li>Compared with many of the other approaches, shapley values take into consideration the relationships between the features</li>
 </ul>
 <p>Disadvantages:</p>
+<h1 id="techniques´-comparison">Techniques´ comparison</h1>
+<h2 id="local-explainability">Local explainability</h2>
 <h1 id="use-cases">Use cases</h1>
 <ul>
 <li>Instant explanation: implementation together with recommender systems. Individual more willing to buy something if it is explained why a product is being recommended. E.g. 2 a bank that explains why a customer can’t get a loan, and what can s/he do to get one (credit rating).</li>
