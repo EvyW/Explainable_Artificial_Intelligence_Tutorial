@@ -721,12 +721,32 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <h3 id="advantages-and-disadvantages-7">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>The difference between the prediction and the average prediction is fairly distributed among the feature values of the instance</li>
+<li>The contribution of every feature value is fairly distributed.</li>
+<li>It is developed based on a solid theory.</li>
 <li>Compared with many of the other approaches, shapley values take into consideration the relationships between the features</li>
 </ul>
 <p>Disadvantages:</p>
+<ul>
+<li>It is a technique computationally expensive because of all the possible coalitions. However, this can be alleviated by taking a sample of these possible coalitions. An idea to reduce the computation is proposed by Strumbelj et al. (2014).</li>
+</ul>
 <h1 id="techniques´-comparison">Techniques´ comparison</h1>
-<h2 id="local-explainability">Local explainability</h2>
+<h2 id="techniques-for-local-explainability">Techniques for local explainability</h2>
+<p><strong>Lime vs. Shapley values</strong></p>
+<p><img src="https://lh3.googleusercontent.com/0Us6jLNw_UWDpAx41Ryszdx4EYbIHHrrg2sCNfEumTBFk4QBOr5TGXv5pHTKZTg9il_Y5uuqCSvc=s900" alt="enter image description here"></p>
+<ul>
+<li>
+<p>Although LIME and Shapley values they are <strong>computed differently,</strong> and are developed under completely different ideas, <strong>we would expect some similarity in the results</strong> (which in this case, it didn´t happen), since both techniques try to address  somehow the  same  question: <strong>how the features of my data point have influenced/contributed to the prediction</strong>.</p>
+</li>
+<li>
+<p>On  the  other  hand,  it is important to notice that the explanations come from different perspectives. For <strong>LIME</strong>, the contribution of a feature is the <strong>weight resulting from a linear model</strong> applied to the vicinity of the point. While for Shapley values the contribution of  a  feature  value is  the difference between the actual prediction and the average prediction,  which considers the participation of the feature in every possible coalition.</p>
+</li>
+</ul>
+<h2 id="techniques-for-global-explainability">Techniques for Global explainability</h2>
+<p><strong>Are the features that interact the most also the most important?</strong></p>
+<p><img src="https://lh3.googleusercontent.com/XNEcQ2mUFbTVwuGl4rwG2KUISZDsl0Y5FJu7yqBKRjRWh6fOibYa_9cDcPTLtUSCMkSh1gF6Chdc=s900" alt="enter image description here"></p>
+<p>At least two of the features that interact the most in every category are also considered the most important features.</p>
+<h2 id="global-explainability-vs.-local-explainability">Global explainability vs. local explainability</h2>
+<p><img src="https://lh3.googleusercontent.com/N1ADiOTwSYx0zTPoy8EyZ0Y6xq88nO4fAA57eyuSYOMFlOZIHt5TNdR8MbHTn924p66za_AjV4XX=s900" alt="enter image description here"></p>
 <h1 id="use-cases">Use cases</h1>
 <ul>
 <li>Instant explanation: implementation together with recommender systems. Individual more willing to buy something if it is explained why a product is being recommended. E.g. 2 a bank that explains why a customer can’t get a loan, and what can s/he do to get one (credit rating).</li>
@@ -744,4 +764,5 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </ul>
 <h1 id="references">References</h1>
 <p>Molnar, C. (2018). Interpretable machine learning: A guide for making black box models explainable. <em>Christoph Molnar, Leanpub</em>.</p>
+<p>this document have some personal opinions in the comparison part, so they can differ from some other peopel or more aknowledge or experienced people.</p>
 
