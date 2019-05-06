@@ -6,7 +6,6 @@
 <h1 id="outline">Outline</h1>
 <ol>
 <li>Motivation</li>
-<li>Why do we want to explain AI?</li>
 <li>Approaches to explain AI (Conceptualization, examples, advantages and disadvantages)<br>
 3.1. Global surrogates models<br>
 3.2. Partial Dependence Plots<br>
@@ -16,8 +15,18 @@
 3.6. Shapley Values<br>
 3.7. LIME<br>
 3.8.Anchors</li>
-<li>Use-cases</li>
+<li>Comparison of results</li>
+<li>Guideline</li>
+<li>Why do we want to explain AI? Use-cases</li>
+<li>References</li>
 </ol>
+<h3 id="how-to-use-this-document">How to use this document?</h3>
+<ul>
+<li><strong>For every XAI approach</strong> a simple idea, an example, technical details, advantages and disadvantages are presented.</li>
+<li><strong>At the begining</strong> of the description of every technique a <strong>general idea</strong> is introduced in order to understand easily what is the technique about. Later, if you are more interested, more technical details are given, but you can skip this part if that is not useful for you.</li>
+<li>The examples are based on the predictions of <strong>boosted trees</strong></li>
+<li><strong>At the end you can find a guideline</strong> that gives you some clues to choose the techniques that might apply to your case.</li>
+</ul>
 <h1 id="motivation">Motivation</h1>
 <p>A real case: Amazon recruiting tool</p>
 <ul>
@@ -29,45 +38,29 @@
 <h1 id="approaches-to-explain-ai">Approaches to explain AI</h1>
 <p><img src="https://lh3.googleusercontent.com/ndXZ9iX-KD42mT-5hTbKxJXGq_XCfGvhL4QbYwDX6AaqBcdTQ79ThedmA3RhFIGU39AvJfn0rJTq=s900" alt="enter image description here"></p>
 <p><strong>Model-specific vs. model agnostic approaches</strong></p>
-<p>As model-agnostic approaches are decoupled from the algorithm that was used, they have the advantage of being modular and therefore they can be used with any model. The rest of this document is then focused on model-agnostic approaches.</p>
+<p>As model-agnostic approaches <strong>do not d epend on</strong> the algorithm that was used, they have the advantage of being modular and therefore they can be used with any model. The rest of this document is then focused on model-agnostic approaches.</p>
 <h2 id="dataset">Dataset</h2>
 <p>Note that the dataset used for the running example has the following characteristics:</p>
 <ul>
-<li>Dataset: Graduate Admissions</li>
+<li>Dataset: <strong>Graduate Admissions</strong></li>
 <li>Description: the dataset contains several parameters which are considered important during the application for Masters Programs in order to be admitted.</li>
 <li>Attributes:</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/PgT3MXB9T5QWcN8P_6x618EhmkHgW6XQDyxspf2qLsnA8rm__qRN5MLHMszVAfq0xcOu1Ly1xW2N=s900" alt="enter image description here"></p>
 <ul>
-<li>Goal: classify according to 3 categories (1) very likely to be admitted, (2) likely to be admitted, (3) unlikely to be admitted</li>
+<li><strong>Goal:</strong> classify according to 3 categories (1) very likely to be admitted, (2) likely to be admitted, (3) unlikely to be admitted</li>
 </ul>
 <h2 id="global-surrogate-models">Global surrogate models</h2>
-<h3 id="conceptualization">Conceptualization</h3>
-<p>A surrogate model is a glass-box model that is learned on the predictions of a black-box model to approximate its behavior.</p>
-<h3 id="demo">Demo</h3>
-<h3 id="advantages-and-disadvantages">Advantages and Disadvantages</h3>
-<p>Advantages:</p>
-<ul>
-<li>The surrogate model method is flexible: any model that is interpretable can be used.</li>
-<li>The approach is very intuitive and straightforward to implement.</li>
-<li>Easy to explain to people not familiar with data science or machine learning.</li>
-</ul>
-<p>Disadvantages:</p>
-<ul>
-<li>It is not clear what is the best R-squared  to be confident that the surrogate model is close enough to the black box model</li>
-</ul>
-<h2 id="partial-dependence-plot-pdp">Partial Dependence Plot (PDP)</h2>
 <h3 id="general-idea">General idea</h3>
-<ul>
-<li>The partial dependence plot (PDP) shows the average effect that one or two features have on the predicted outcome of a machine learning model.</li>
-</ul>
-<p><img src="https://lh3.googleusercontent.com/GwmV9eOm4eCyzyDTJygrnIFPdwNwbWjF8I3OOzFciUmAzgnSl4m0dg2Wfo48x8zfW-ug5I9Kg6hd=s500" alt="enter image description here"></p>
-<p><strong>Interpretation:</strong></p>
-<ul>
-<li>When the distance is 10m the average probability of being - classified as a successful shot is around 0.38</li>
-<li>Values lower than 10 begin to predict ”successful shot" more strongly than values greater than 10</li>
-</ul>
-<h3 id="demo-1"><strong>Demo</strong></h3>
+<p><strong>A surrogate model is a white box model</strong> that is <strong>learned on the predictions of a black-box model to approximate its behavior.</strong></p>
+<ol>
+<li>Get the predictions of the black box model</li>
+<li>Select a model that is interpretable (linear model, decision tree, etc.)</li>
+<li>Train the interpretable model based on the predictions of the black box model</li>
+<li>Measure how well the surrogate model replicates the predictions of the black box model (R-squared)</li>
+<li>Interpret the surrogate model</li>
+</ol>
+<h3 id="demo">Demo</h3>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># Required libraries</span>
 library<span class="token punctuation">(</span>data.table<span class="token punctuation">)</span>
 library<span class="token punctuation">(</span>iml<span class="token punctuation">)</span>
@@ -139,7 +132,105 @@ head<span class="token punctuation">(</span>prediction<span class="token punctua
 <span class="token comment">## 5 0.001391372 0.988758683 0.0098499591</span>
 <span class="token comment">## 6 0.989802063 0.008568874 0.0016291001</span>
 </code></pre>
-<p>Create a PDP for the class: <em>very likely</em> (class “1”)  to be admitted for the Master Program</p>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment"># DECISION TREE</span>
+
+dt_model <span class="token operator">=</span> train<span class="token punctuation">(</span>ChanceOfAdmit <span class="token operator">~</span> .<span class="token punctuation">,</span> data <span class="token operator">=</span> myData<span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"rpart"</span><span class="token punctuation">)</span>
+dt_modelPredict <span class="token operator">=</span> predict<span class="token punctuation">(</span>dt_model<span class="token punctuation">,</span> data <span class="token operator">=</span> myData<span class="token punctuation">)</span>
+
+<span class="token comment"># confusion matrix</span>
+table<span class="token punctuation">(</span>dt_modelPredict<span class="token punctuation">,</span> myData<span class="token operator">$</span>ChanceOfAdmit<span class="token punctuation">)</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">##dt_modelPredict very_likely likely unlikely</span>
+<span class="token comment">##    very_likely         123     17        0</span>
+<span class="token comment">##    likely               18    255       20</span>
+<span class="token comment">##    unlikely              0      2       15</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">#accuracy</span>
+mean<span class="token punctuation">(</span>dt_modelPredict <span class="token operator">==</span> myData<span class="token operator">$</span>ChanceOfAdmit
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">## [1] 0.8733333</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment"># get R-square between decision tree predictions and xgb predictions</span>
+dtPredictions <span class="token operator">=</span> as.data.table<span class="token punctuation">(</span>dt_modelPredict<span class="token punctuation">)</span>
+dtPredictions <span class="token operator">=</span> dtPredictions<span class="token punctuation">[</span><span class="token punctuation">,</span> dt_modelPredict <span class="token operator">:</span><span class="token operator">=</span> ifelse<span class="token punctuation">(</span>dtPredictions<span class="token operator">$</span>dt_modelPredict <span class="token operator">==</span> <span class="token string">"very_likely"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> 
+                                          ifelse<span class="token punctuation">(</span>dtPredictions<span class="token operator">$</span>dt_modelPredict <span class="token operator">==</span> <span class="token string">"likely"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token comment">#make the decision tree results numeric</span>
+
+predictionXGB <span class="token operator">=</span> predictionXGB<span class="token punctuation">[</span><span class="token punctuation">,</span> prediction <span class="token operator">:</span><span class="token operator">=</span> ifelse<span class="token punctuation">(</span>predictionXGB<span class="token operator">$</span>prediction <span class="token operator">==</span> <span class="token string">"very_likely"</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> 
+                                                          ifelse<span class="token punctuation">(</span>predictionXGB<span class="token operator">$</span>prediction <span class="token operator">==</span> <span class="token string">"likely"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token comment"># make xgb results numeric</span>
+
+dtRsq <span class="token operator">&lt;-</span> cor<span class="token punctuation">(</span>predictionXGB<span class="token operator">$</span>prediction<span class="token punctuation">,</span> dtPredictions<span class="token operator">$</span>dt_modelPredict<span class="token punctuation">)</span> <span class="token operator">^</span> <span class="token number">2</span> <span class="token comment"># get R-square</span>
+dtRsq 
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">## [1] 0.6379025</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment"># SURROGATE: train the decision tree with xgb predictions</span>
+
+<span class="token comment">#first prepare the dataset </span>
+
+myDataSurrogate <span class="token operator">=</span> myData<span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token string">"ChanceOfAdmit"</span><span class="token punctuation">]</span> <span class="token comment"># exclude the column with true labels</span>
+myDataSurrogate <span class="token operator">=</span> myDataSurrogate<span class="token punctuation">[</span><span class="token punctuation">,</span> index <span class="token operator">:</span><span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">450</span><span class="token punctuation">]</span> <span class="token comment"># create index for myData</span>
+predictionXGB <span class="token operator">=</span> predictionXGB<span class="token punctuation">[</span><span class="token punctuation">,</span> index <span class="token operator">:</span><span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span><span class="token number">450</span><span class="token punctuation">]</span> <span class="token comment"># create index for xgb predictions´ table</span>
+myDataSurrogate <span class="token operator">=</span> merge<span class="token punctuation">(</span>myDataSurrogate<span class="token punctuation">,</span> predictionXGB<span class="token punctuation">,</span> by <span class="token operator">=</span> <span class="token string">"index"</span><span class="token punctuation">)</span> <span class="token comment"># merge data with xgb predictions</span>
+myDataSurrogate <span class="token operator">=</span> myDataSurrogate<span class="token punctuation">[</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token string">"index"</span><span class="token punctuation">]</span> <span class="token comment"># exclude "index" to feed the model</span>
+
+<span class="token comment"># build decision tree model</span>
+
+myDataSurrogate<span class="token operator">$</span>prediction <span class="token operator">=</span> as.character<span class="token punctuation">(</span>myDataSurrogate<span class="token operator">$</span>prediction<span class="token punctuation">)</span>
+myDataSurrogate<span class="token operator">$</span>prediction <span class="token operator">=</span> as.factor<span class="token punctuation">(</span>myDataSurrogate<span class="token operator">$</span>prediction<span class="token punctuation">)</span>
+
+dt_modelSurrogate <span class="token operator">=</span> train<span class="token punctuation">(</span>prediction <span class="token operator">~</span> .<span class="token punctuation">,</span> data <span class="token operator">=</span> myDataSurrogate<span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"rpart"</span><span class="token punctuation">)</span>
+ 
+<span class="token comment"># predict</span>
+dt_modelPredictSurrogate <span class="token operator">=</span> predict<span class="token punctuation">(</span>dt_modelSurrogate<span class="token punctuation">,</span> data <span class="token operator">=</span> myDataSurrogate<span class="token punctuation">)</span>
+
+<span class="token comment"># confusion matrix</span>
+table<span class="token punctuation">(</span>dt_modelPredictSurrogate<span class="token punctuation">,</span> myDataSurrogate<span class="token operator">$</span>prediction<span class="token punctuation">)</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">## dt_modelPredictSurrogate   0   1   2</span>
+<span class="token comment">##                        0 123  17   0</span>
+<span class="token comment">##                        1  18 255  20</span>
+<span class="token comment">##                        2   0   2  15</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">#accuracy</span>
+mean<span class="token punctuation">(</span>dt_modelPredictSurrogate <span class="token operator">==</span> myDataSurrogate<span class="token operator">$</span>prediction<span class="token punctuation">)</span> <span class="token comment"># around 87%</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment">## [1] 0.8733333</span>
+</code></pre>
+<pre class=" language-r"><code class="prism  language-r"><span class="token comment"># compute importance</span>
+dtVarImp <span class="token operator">=</span> varImp<span class="token punctuation">(</span>dt_modelSurrogate<span class="token punctuation">,</span> scale <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">)</span> <span class="token comment"># scale to show as %</span>
+dtVarImp <span class="token operator">=</span> as.data.frame<span class="token punctuation">(</span>dtVarImp<span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token string">"importance"</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token comment">#plot feature importance</span>
+ggplot<span class="token punctuation">(</span>data <span class="token operator">=</span> dtVarImp<span class="token punctuation">)</span> <span class="token operator">+</span>
+  aes<span class="token punctuation">(</span> x <span class="token operator">=</span> rownames<span class="token punctuation">(</span>dtVarImp<span class="token punctuation">)</span><span class="token punctuation">,</span> y <span class="token operator">=</span> Overall<span class="token punctuation">)</span> <span class="token operator">+</span>
+  geom_bar<span class="token punctuation">(</span>stat <span class="token operator">=</span> <span class="token string">"identity"</span><span class="token punctuation">)</span>
+</code></pre>
+<p><img src="https://lh3.googleusercontent.com/v0HM6u0qBgim9vxUkcyiGwy8ETzQtUN5hl6ky3Trgif676p-dnrJI7NpSBcDMyoOzaJbWq9f2qSB=s900" alt="enter image description here"></p>
+<h3 id="advantages-and-disadvantages">Advantages and Disadvantages</h3>
+<p>Advantages:</p>
+<ul>
+<li>The surrogate model method is <strong>flexible, any model</strong> that is interpretable can be used.</li>
+<li>The approach is very <strong>intuitive and straightforward to implement.</strong></li>
+<li>Easy to explain to people not familiar with data science or machine learning.</li>
+</ul>
+<p>Disadvantages:</p>
+<ul>
+<li><strong>It is not clear what is the best R-squared</strong>  to be confident that the surrogate model is close enough to the black box model</li>
+</ul>
+<h2 id="partial-dependence-plot-pdp">Partial Dependence Plot (PDP)</h2>
+<h3 id="general-idea-1">General idea</h3>
+<ul>
+<li>The partial dependence plot (PDP) shows the <strong>average effect</strong> that one or two features have <strong>on the predicted outcome</strong> of a machine learning model.</li>
+</ul>
+<p>Toy example: predicting NBA shot success<br>
+<img src="https://lh3.googleusercontent.com/GwmV9eOm4eCyzyDTJygrnIFPdwNwbWjF8I3OOzFciUmAzgnSl4m0dg2Wfo48x8zfW-ug5I9Kg6hd=s500" alt="enter image description here"></p>
+<p><strong>Interpretation:</strong></p>
+<ul>
+<li>When the <strong>distance is 10m</strong> the <strong>average</strong> probability of being - classified as a successful shot is <strong>around 0.38</strong></li>
+<li><strong>Values lower than 10</strong> begin to predict ”successful shot" more strongly than values greater than 10</li>
+</ul>
+<h3 id="demo-1"><strong>Demo</strong></h3>
+<p><strong>Create the PDPs for the CGPA fearure for every class</strong></p>
 <pre class=" language-r"><code class="prism  language-r">library<span class="token punctuation">(</span>iml<span class="token punctuation">)</span> <span class="token comment">#library for interpretable machine learning</span>
 library<span class="token punctuation">(</span>tidyverse<span class="token punctuation">)</span>
 
@@ -152,18 +243,18 @@ predictor_pdp <span class="token operator">&lt;-</span> Predictor<span class="to
 pdp <span class="token operator">=</span> FeatureEffect<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_pdp<span class="token punctuation">,</span> feature <span class="token operator">=</span> <span class="token string">"CGPA"</span><span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"pdp"</span><span class="token punctuation">)</span>
 pdp<span class="token operator">$</span>plot<span class="token punctuation">(</span><span class="token punctuation">)</span>
 </code></pre>
-<p><img src="https://lh3.googleusercontent.com/AQ9bHMDsN9JrhUAVU-FmivZUjKX1-aC9dozvPC6xbfYAxMkO5DkFCQ0ba8vjBJgKDA6XPlkYkFaD=s700" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/HJA_c9OsEHrWuZTBAX6OW_TetiTejbVPdEKpIt76SVfTdHGg4QrVuFfp1c-EI2Bg9d1y1z0Ghjfx=s900" alt="enter image description here"></p>
 <p>Interpretation plot “very_likely”:</p>
 <ul>
-<li>CGPA grades greater than 8.4 start to predict that a person has a very favorable chance to be accepted for the master program.</li>
-<li>However, grades greater than 9.3 no longer increase the chance.</li>
+<li>CGPA <strong>grades greater than 8.4</strong> start to predict that a person has a very favorable chance to be accepted for the master program.</li>
+<li>However, grades <strong>greater than 9.3 no longer increase the chance.</strong></li>
 </ul>
 <p>Interpretation plot “likely”:</p>
 <ul>
-<li>The model tends to predict “likely” when the grades are in between ~7.4 and ~8.3, which makes sence, because the plot for “very_likely” told us that the model tends to predict “very_likely” when the grades are greater than 8.4</li>
+<li>The model tends to predict <strong>“likely” more strongly</strong> when the grades are in <strong>between ~7.4 and ~8.3</strong>, which <strong>makes sence</strong>, because the plot for “very_likely” told us that the model tends to predict “very_likely” when the grades are greater than 8.4</li>
 </ul>
 <p><strong>PDPs for model comparison</strong></p>
-<p><img src="https://lh3.googleusercontent.com/Gnp40D29dMN095EIE8niouhYJGX-ySjVwoDhAnp2uj5fWY_DMt5xuX6JjWJdwaO_1wGTgOJQxMgf=s900" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/rjL3A6nC8NDghD-zF5xNF9dzDmVW3PTxgaaUYKHknH5ls7jqebwTZObs2Ovtz-gHwJyh0wF942CP=s900" alt="enter image description here"></p>
 <h3 id="pdps-in-detail">PDPs in detail</h3>
 <ul>
 <li>Partial dependence works by marginalizing the machine learning model output over the distribution of all the features (excluding the ones that we want to plot), so that the function shows the relationship between the features we are interested in and the predicted outcome. <strong>In simple words, it shows how my model will respond or changes if I increase or decrease x. How model inputs affect the model’s predictions.</strong></li>
@@ -196,12 +287,14 @@ Partial dependence plots can be used to compare models</p>
 <li><strong>Since we vary the feature of interest we could be possibly creating data points that are not according to the reality</strong>, especially if the features are correlated.</li>
 </ul>
 <h2 id="individual-conditional-expectation-ice">Individual Conditional Expectation (ICE)</h2>
-<h3 id="general-idea-1"><strong>General idea</strong></h3>
+<h3 id="general-idea-2"><strong>General idea</strong></h3>
 <ul>
-<li>As it was claimed that partial dependent plots might obscure the complexity of the model relationship since it display the average predictions, individual conditional expectation plots (ICEs) where introduced.</li>
+<li>As it was claimed that <strong>partial dependent plots might obscure the complexity of the model</strong> relationship since it display the average predictions, <strong>individual conditional expectation plots (ICEs) where introduced</strong>.</li>
+<li>The major idea of ice is then to <strong>disaggregate the average plot</strong> by displaying the estimated relationships for each observation.</li>
+<li>From the past example (pdp example) then a total of 3 lines per observation will be displayed.</li>
 </ul>
 <h3 id="demo-2"><strong>Demo</strong></h3>
-<p>Create an ICE plot for the class:  “very_likely” to be admitted for the Master Program</p>
+<p>Create an ICE plot for feature CGPA for every class</p>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># plot ice </span>
 predictor_ice <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">)</span>
 ice <span class="token operator">=</span> FeatureEffect<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_ice<span class="token punctuation">,</span> feature <span class="token operator">=</span> <span class="token string">"CGPA"</span><span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"ice"</span><span class="token punctuation">)</span>
@@ -210,22 +303,20 @@ ice<span class="token operator">$</span>plot<span class="token punctuation">(</s
 </code></pre>
 <p><img src="https://lh3.googleusercontent.com/o7T_6o_sErRA6UPKM1utGWhdZdN2u-YxoiEVL34yqQBMpMldi_-wSc3_VyAARlhKl-nr-iL1Lf79=s900" alt="enter image description here"><br>
 <img src="https://lh3.googleusercontent.com/xW-dHDnoHRPOiVzUhQoCprTIGzKd5DsQVc0mUzlAXmZ0xd42bI1dl81ZwZKQm2EjeXK7GfCKzZG3=s900" alt="enter image description here"></p>
-<p>Different to the PDP, all the lines are showed in the plot. What we can notice is that most of the lines follow the same pattern that the PDP (which shows the average). For all the cases a CGPA score greater than 8.4 makes the model to predict “very likely”. As the majority of lines are very similar to the PDP, then we could use only the PDP as this seems to be a good summary.<br>
-If we would get an ICE plot where the patterns differ greatly among each other, then a PDP is probably not a good representation of the true patterns.</p>
-<p>As opposite, the following figure represents an ice plot for cancer prediction that reveals that not all lines follow (roughly) the same pattern.</p>
-<p><img src="https://lh3.googleusercontent.com/HKsiZiSKB9MOdnxrhGYNa0-u0VM5F8yMCa53n50U6u1Fk-X-xAY5pfe3mpYxqPnKbKiO5D9H1xr6=s900" alt="enter image description here"></p>
-<h3 id="ice-in-detail">ICE in detail</h3>
+<p>Different to the PDP, all the lines are showed in the plot. What we can notice is:</p>
 <ul>
-<li>The major idea of ice is then to disaggregate the average plot by displaying the estimated relationships for each observation.</li>
-<li>From the past example (pdp example) then a total of 3 lines per observation will be displayed.</li>
+<li>Most of the lines follow the <strong>same pattern that the PDP</strong> (which shows the average).</li>
+<li>For example, for the <strong>class “very likely”</strong> all the cases start to <strong>predict more strongly</strong> “very likely” when the <strong>CGPA score is greater than 8.4.</strong></li>
+<li>As the majority of lines are very similar to the PDP, then we could use only the PDP as this seems to be a good summary.</li>
 </ul>
-<p><img src="https://lh3.googleusercontent.com/ir8GJHrMvxT7g3h9BjVEyJeLKYIc7MVwr3opk_kdrjlNfJcx83O7zjBzzlC7kAKj-fvnmRz3GCg2=s300" alt="enter image description here"></p>
+<p><strong>If we would get an ICE plot where the patterns differ greatly</strong> among each other, then a PDP is probably not a good representation of the true patterns. <strong>For example</strong>, the following figure represents an ice plot for cancer prediction that reveals that not all lines follow (roughly) the same pattern.</p>
+<p><img src="https://lh3.googleusercontent.com/HKsiZiSKB9MOdnxrhGYNa0-u0VM5F8yMCa53n50U6u1Fk-X-xAY5pfe3mpYxqPnKbKiO5D9H1xr6=s900" alt="enter image description here"></p>
 <h3 id="advantages-and-disadvantages-2"><strong>Advantages and disadvantages</strong></h3>
 <p>Advantages:</p>
 <ul>
 <li>Easy to  compute</li>
 <li>Highly  visual</li>
-<li>ICEs are easier to interpret than partial dependence plots. A line shows the prediction for one observation when we vary the feature of interest.</li>
+<li>ICEs are <strong>easier to interpret</strong> than partial dependence plots. A line shows the prediction for one observation when we vary the feature of interest.</li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
@@ -233,16 +324,16 @@ If we would get an ICE plot where the patterns differ greatly among each other, 
 <li>If many curves are plotted, it becomes cluttered and difficult to read. A possible solution is to cluster lines, add some transparency, or conside only a sample.</li>
 </ul>
 <h2 id="feature-interaction">Feature interaction</h2>
-<h3 id="general-idea-2"><strong>General idea</strong></h3>
+<h3 id="general-idea-3"><strong>General idea</strong></h3>
 <ul>
-<li>This is a global approach that explains the interaction between features. Usually the interaction between one feature and all the others.</li>
-<li>This approach states that the effect of one feature (over the prediction) is possibly influenced by another feature.</li>
-<li>General idea of how to compute the feature interaction:</li>
+<li>This is a <strong>global approach</strong> that <strong>explains the interaction between features</strong>. <strong>Usually the interaction between one feature and all the others</strong>.</li>
+<li>This approach states that <strong>the effect of one feature (over the prediction) is possibly influenced by another feature</strong>.</li>
+<li>General idea of <strong>how to compute the feature interaction</strong>:</li>
 </ul>
-<p><strong>Predicting NBA shot success</strong></p>
-<p><img src="https://lh3.googleusercontent.com/MUca-5goRyGD9bUOtssnmX--VV80ILm0tvPZxZ3D3Kmrv4lw1mRluwLpvN4GgTsNuj4BhXUDPPA9=s900" alt=""><br>
-Note that the feature/s effect is computed via partial dependence functions (marginal effect that a feature have on the predicted outcome, see partial dependence plots)</p>
-<p>We can evaluate the interaction between two features, one feature and the rest, two features and the rest, three features and the rest, etc. However, the most interesting cases are usually:</p>
+<p><strong>Predicting NBA shot success</strong><br>
+<img src="https://lh3.googleusercontent.com/FveRol-nV3XvUo_fPQeEexZbci0Rk0qkQzjK34qTKPtlyPo3bD9eGEnGJSiEMSPHwMl_WbtZtdWi=s900" alt="enter image description here"></p>
+<p>Note that the feature/s effect is computed <strong>via partial dependence functions</strong> (marginal effect that a feature have on the predicted outcome, see partial dependence plots)</p>
+<p><strong>We can evaluate the interaction between two features,</strong> one feature and the rest, two features and the rest, three features and the rest, etc. However, the most interesting cases are usually:</p>
 <ol>
 <li>Two-way interaction: to what extent two features interact with each other.</li>
 <li>Total interaction: to what extend a feature interacts with all the other features</li>
@@ -257,7 +348,8 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <p><img src="https://lh3.googleusercontent.com/z_rw9VsW49LquKH4Ny4kdv8FltNumpP2uVUf6rnG3m03d4zs9mvrrC1kU4BcU6KTZTj3VatXTnd8=s1000" alt="enter image description here"></p>
 <p>Interpretation:</p>
 <ul>
-<li>The plot shows that indeed the features interact with each other.</li>
+<li>E.g.</li>
+<li>The plot shows that <strong>indeed the features interact with each other</strong>.</li>
 <li>The CGPA grade shows to have the highest interaction with all the other features.</li>
 <li>Most of the features have a “weak” interaction, below 0.25</li>
 </ul>
@@ -324,7 +416,7 @@ Total interaction:</p>
 <li>As this technique is based on partial dependence functions, it also carries the problem of <strong>possibly creating data points that are not according to the reality</strong></li>
 </ul>
 <h2 id="permutation-feature-importance">Permutation Feature Importance</h2>
-<h3 id="general-idea-3">General idea</h3>
+<h3 id="general-idea-4">General idea</h3>
 <ul>
 <li>It is a global explanation approach that identifies the contribution of each feature based on its accuracy.</li>
 <li>A feature is important if shuffling its values increases the model error, because it would mean that the model relied on the feature for the prediction.</li>
@@ -394,7 +486,7 @@ Interpretation:</p>
 <li>The permutation feature importance <strong>depends on shuffling the feature</strong> , which adds randomness to the measurement. When the permutation is repeated, the <strong>results might vary greatly.</strong> <strong>However, repeating the permutation</strong> and averaging the importance measures over repetitions <strong>stabilizes the measure, but increases the time of computation.</strong></li>
 </ul>
 <h2 id="local-interpretable-model-agnostic-explanations-lime">Local interpretable model-agnostic explanations (LIME)</h2>
-<h3 id="general-idea-4">General idea</h3>
+<h3 id="general-idea-5">General idea</h3>
 <ul>
 <li>LIME provides an explanation <strong>for a single data point.</strong></li>
 <li>It tries to answer: which variables caused the prediction?</li>
@@ -418,6 +510,7 @@ Interpretation:</p>
 <ol start="4">
 <li>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.</li>
 </ol>
+<h3 id="kernel">kernel</h3>
 <h3 id="demo-5">Demo</h3>
 <p>Generate the explanation for the first observation in the test dataset</p>
 <pre class=" language-r"><code class="prism  language-r">i <span class="token operator">=</span> <span class="token number">6</span> <span class="token comment"># explain for observation 6th </span>
@@ -444,8 +537,8 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <span class="token comment">## CGPA                 -0.0777916701      8.21 -0.63866961       8.21</span>
 <span class="token comment">## Research             -0.1428017233      0.00  0.00000000          0</span>
 </code></pre>
-<p>The  figure below shows the results of different data points for every class in order to compare whether we can find some patterns</p>
-<h3 id="figure">FIGURE!!!</h3>
+<p>The  figure below shows the results of different data points for every class in order to compare whether we can find <strong>some patterns</strong></p>
+<p><img src="https://lh3.googleusercontent.com/YJXH83Mmo-6MFPWxKo47r1-xw0MNaFrW5X0g3xqzylLtATjNhbp4gEBC1uFxoQU8kWEVamCuy5Yp=s900" alt="enter image description here"></p>
 <p>From this comparison it seems that:</p>
 <ul>
 <li>The features that push the most to predict “very likely to be accepted for the master program” are the CGPA and the TOEFL score when these are “high grades”.  While features like recommendation letter and statement of purpose do not really have a significant impact in the prediction.</li>
@@ -501,35 +594,33 @@ It is calculated differently according to whether it is for tabular or textual d
 <li>It is not clear to which other instances  (or reagion) the explanation is valid.</li>
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
-<h2 id="anchors">Anchors</h2>
-<h3 id="general-idea-5">General idea</h3>
+<h2 id="anchors">Anchors!!</h2>
+<h3 id="general-idea-6">General idea</h3>
 <ul>
 <li>An anchor explains <strong>individual predictions</strong> with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
-<li>Anchors aims to improve pitfalls of LIME, since in LIME is not clear whether the same explanation can be applied to other instances (we don´t know exactly which is the local region). Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
 <li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/M4Ype1yzyvv61H2GW1530lOmvU0tt2ONjhe-tR_meqLyC-5jtyiPJ854UzedFGeq3fRwzyOsqLt0=s600" alt="enter image description here"></p>
 <ul>
-<li>In short, an anchor is a rule on x that achieves a “high” probability of being predicted as positive.</li>
+<li>Anchors aims to improve pitfalls of LIME, since in LIME is not clear whether the same explanation can be applied to other instances (we don´t know exactly which is the local region). Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/UICNP49fWJpyJx2QaV6D9MvCsYBgjKKi5Uu7nckdOhaqGL9RPTKPdELV7gRORCEvyOyxejEWckU0=s400" alt="enter image description here"></p>
+<p>In short, an anchor is a rule on x that achieves a “high” probability of being predicted as positive.</p>
 <p><strong>Toy example: predicting positive and negative sentiment</strong></p>
-<p><img src="https://lh3.googleusercontent.com/MuRxjtNtRg-_6yl6wNVuIP0vjY5MEnA5h_YoTZWeLXh0xiKZrCcNXTQ0RjJzZjkLkocyr7UHBAo0=s600" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/ES95BMlBuzzQaeYRLOofg6MMmcQhDe4SWr_jySiKsb40l4TnvY1jWYV1G98TQpbL2UwDClqJ4TgA=s500" alt="enter image description here"></p>
 <ul>
 <li>While LIME explanations provide insight into the model, their coverage is not clear, e.g. when does the word not have a positive influence on sentiment?</li>
-<li>Anchors only apply when all the conditions in the rule are met (Figure part c). The anchors in Figure part c state that the presence of the words “not bad” ensure a prediction of positive sentiment</li>
+<li>Anchors only apply when all the conditions in the rule are met. The anchors in Figure part c state that the presence of the words “not bad” ensure a prediction of positive sentiment</li>
 <li>A piece of text that has the words not and bad will be likely predicted as positive even if the rest of the feature values change.</li>
 <li>Anchors enable users to predict how a model would behave on unseen instances with higher precision.</li>
 </ul>
 <p><strong>Definition of an anchor:</strong></p>
+<p><img src="https://lh3.googleusercontent.com/CZfHUg8YPDPx0stcI_RA1_6QgOHF3pGrlqdMsq-q3_e05uDYQDOPzFBvqx-PgqVWfL99I3gTtXal=s900" alt="enter image description here"></p>
 <ul>
 <li>Let f be the black box model</li>
 <li>Let x be an instance (the one that we want to explain) that is perturbed by some perturbation distribution D.</li>
 <li>Let A be the rule (set of predicates) that acts on x, such that A(x) returns 1 if all the predicates are true. For example, in past Figure: x = “This movie is not bad.”, f (x) = Positive, A = {“not”, “bad”}, then A(x) = 1.</li>
-<li>Let D(·|A) denote the conditional distribution (perturbed distribution) where the rule A applies e.g. (e.g. similar texts where not and bad are present). E.g.:</li>
-</ul>
-<p><img src="https://lh3.googleusercontent.com/QuAikPS1uN-9HbLUZg14foyogNBkOxuaOxdU7P_8NAp8WZVhI_sPRshAHGqTuK_mTkqVJEb3m_7P=s300" alt="enter image description here"></p>
-<ul>
+<li>Let D(·|A) denote the conditional distribution (perturbed distribution) where the rule A applies e.g. (e.g. similar texts where not and bad are present).</li>
 <li>A is an anchor if A(x) = 1 (if all predicates of the rule are true) and if a sample z from D(z|A) (a z sample that follows the perturbed distribution and complies with rule A) has a high probability to be predicted as Positive. This would mean that f(x) = f(z), i.e.  the prediction of x is equal to the predictions on z. This  is formally stated as precision, where
 <ul>
 <li>Precision(A) ≥ τ (predictions of z should be at least τ. τ is set by the user).</li>
@@ -537,7 +628,7 @@ It is calculated differently according to whether it is for tabular or textual d
 </li>
 </ul>
 <p>In short, an anchor A is a set of feature predicates on x that achieves a “high” probability of being predicted as positive.</p>
-<p><strong>How to generate a rule</strong></p>
+<h3 id="how-to-generate-a-rule"><strong>How to generate a rule</strong>!!</h3>
 <h3 id="anchors-in-detail">Anchors in detail</h3>
 <p><strong>Perturbation:</strong></p>
 <ul>
@@ -587,8 +678,8 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <li>Only captures the behavior of the model on a local region.</li>
 <li>Anchors can create explanations for complex functions, but the rule to explain the prediction can become very large.</li>
 </ul>
-<h2 id="shapley-values">Shapley values</h2>
-<h3 id="general-idea-6">General idea</h3>
+<h2 id="shapley-values">Shapley values!!</h2>
+<h3 id="general-idea-7">General idea</h3>
 <ul>
 <li>Shapley values is a <strong>local explanation approach</strong>, this is, it explain the prediction of a specific instance.</li>
 <li>It is a <strong>game theory-based</strong> approach where feature values of an instance are players in a competitive game. Each player looks for receiving a payoff, which is the prediction. A player can act alone or in coalition with other players, in this case, the group of players receive one payoff.
@@ -601,7 +692,7 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 </ul>
 </li>
 </ul>
-<h3 id="pictures">PICTURES!!!</h3>
+<p><img src="https://lh3.googleusercontent.com/Q2EAD0B-qiyaYru46fBJ9uxt7n3-hVBDK3enJtLKvi3MLj7Hf5HgXw3G-bVxRzoz5_5-ZJryfwZd=s1000" alt="enter image description here"></p>
 <p>Shapley values explains how much the feature value i contribute to the prediction ( ) compared to the <strong>average predictions of all data</strong>.</p>
 <p>For example: the contribution of the feature CGPA-8.5 when its value is  from the instance above<br>
 Contribution:  average contribution of CGPA-8.5 (over all possible coalitions)</p>
@@ -626,14 +717,17 @@ plot<span class="token punctuation">(</span>shapley_rf<span class="token punctua
 <li>The CPGA score of 8.21 increased the chance the most (It increased  the  probability of being classified as “likely” in ~ 0.09 above  the  average  aspirants (0.63)).</li>
 </ul>
 <p>The figure below shows the results of different data points for every class in order to compare whether we can find some patterns.</p>
-<h3 id="figure-1">FIGURE!!!</h3>
-<p>From this comparison it seems that:</p>
+<p><img src="https://lh3.googleusercontent.com/dbZWJxBj5sKjiuAYaCHPY3kB-GQGYGCFGHtDU6YWUQKVC6abMXTArFwwkGEoVlH2n1zlB1oWaHue=s900" alt=""></p>
+<p>From this comparison we can see that:</p>
 <ul>
 <li>There is not a clear pattern between observations of the same class.</li>
-<li>However, it is posible to see that in every class the CGPA contribute to some extent to the prediction.</li>
+<li>However, it is posible to see that in every class the CGPA contribute to some extent to the prediction.
+<ul>
 <li>For the class “very likely” a high CGPA influence the prediction</li>
 <li>For the class “likely” a CGPA lower than the ones in the class “very likely” (around 8 ) influence the prediction</li>
 <li>For the class “unlikely” the lowest CGPA socores influence the prediction.</li>
+</ul>
+</li>
 </ul>
 <h3 id="shapley-values-in-detail">Shapley values in detail</h3>
 <p>Formally, a Shapley value (ϕ) is the average marginal contribution of a feature value to the prediction over all possible coalitions. A Shapley value for a certain feature value  i , in a model with n total features, given a prediction p is computed as follows: <span class="katex--display"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>ϕ</mi><mo>(</mo><mi>p</mi><mo>)</mo><mo>=</mo><munder><mo>∑</mo><mrow><mi>S</mi><mo>⊆</mo><mi>N</mi><mi mathvariant="normal">/</mi><mi>i</mi></mrow></munder><mfrac><mrow><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>!</mo><mo>(</mo><mi>n</mi><mo>−</mo><mi mathvariant="normal">∣</mi><mi>S</mi><mi mathvariant="normal">∣</mi><mo>−</mo><mn>1</mn><mo>)</mo><mo>!</mo></mrow><mrow><mi>n</mi><mo>!</mo></mrow></mfrac><mo>(</mo><mi>p</mi><mo>(</mo><mi>s</mi><mo>∪</mo><mi>i</mi><mo>)</mo><mo>−</mo><mi>p</mi><mo>(</mo><mi>S</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">  \phi (p)=\sum_{S\subseteq N/i} \frac{ |S|!(n - |S| -1)!}{n!}(p(s \cup i) - p(S))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">ϕ</span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.277778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right: 0.277778em;"></span></span><span class="base"><span class="strut" style="height: 2.94301em; vertical-align: -1.51601em;"></span><span class="mop op-limits"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.05001em;"><span class="" style="top: -1.809em; margin-left: 0em;"><span class="pstrut" style="height: 3.05em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span style="margin-right: 0.05764em;" class="mord mathit mtight">S</span><span class="mrel mtight">⊆</span><span style="margin-right: 0.10903em;" class="mord mathit mtight">N</span><span class="mord mtight">/</span><span class="mord mathit mtight">i</span></span></span></span><span class="" style="top: -3.05001em;"><span class="pstrut" style="height: 3.05em;"></span><span class=""><span class="mop op-symbol large-op">∑</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 1.51601em;"><span class=""></span></span></span></span></span><span class="mspace" style="margin-right: 0.166667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height: 1.427em;"><span class="" style="top: -2.314em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord mathit">n</span><span class="mclose">!</span></span></span><span class="" style="top: -3.23em;"><span class="pstrut" style="height: 3em;"></span><span class="frac-line" style="border-bottom-width: 0.04em;"></span></span><span class="" style="top: -3.677em;"><span class="pstrut" style="height: 3em;"></span><span class="mord"><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mclose">!</span><span class="mopen">(</span><span class="mord mathit">n</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">∣</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mord">∣</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mclose">!</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height: 0.686em;"><span class=""></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mopen">(</span><span class="mord mathit">p</span><span class="mopen">(</span><span class="mord mathit">s</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">i</span><span class="mclose">)</span><span class="mspace" style="margin-right: 0.222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right: 0.222222em;"></span></span><span class="base"><span class="strut" style="height: 1em; vertical-align: -0.25em;"></span><span class="mord mathit">p</span><span class="mopen">(</span><span style="margin-right: 0.05764em;" class="mord mathit">S</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span></span></span></p>
@@ -705,7 +799,7 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <li>∣S∣ = 1, ∣S∣! = 1</li>
 <li>n = 2 (features)</li>
 <li>p(S) = the model’s prediction when it sees only gender is the average effect (we calculated this before): 0.025</li>
-<li>p(S ∪ i ) = the prediction of the model when it sees the gender and then when it sees the age (we calculated this before): 1.975</li>
+<li>p(S ∪ i ) = the prediction of the model when it sees the gender and then when it sees the age (we calculated this before): 2</li>
 <li>Shapley value is then: 0.9875</li>
 </ul>
 </li>
@@ -713,7 +807,6 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </li>
 <li>Add the values together: ϕBobby-14 = 0.5125 + 0.9875 = 1.5</li>
 </ol>
-<h3 id="calcular-de-nuevo">Calcular de nuevo!!!</h3>
 <ul>
 <li>Remember that the contribution is the difference between the feature effect minus the average effect (without the feature under examination). It means that Bobby´s age-14 makes the prediction to be 1.5 over the average prediction of all people.</li>
 </ul>
@@ -729,7 +822,7 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 <ul>
 <li>It is a technique computationally expensive because of all the possible coalitions. However, this can be alleviated by taking a sample of these possible coalitions. An idea to reduce the computation is proposed by Strumbelj et al. (2014).</li>
 </ul>
-<h1 id="techniques´-comparison">Techniques´ comparison</h1>
+<h1 id="comparison-of-results">Comparison of results</h1>
 <h2 id="techniques-for-local-explainability">Techniques for local explainability</h2>
 <p><strong>Lime vs. Shapley values</strong></p>
 <p><img src="https://lh3.googleusercontent.com/0Us6jLNw_UWDpAx41Ryszdx4EYbIHHrrg2sCNfEumTBFk4QBOr5TGXv5pHTKZTg9il_Y5uuqCSvc=s900" alt="enter image description here"></p>
@@ -742,11 +835,20 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </li>
 </ul>
 <h2 id="techniques-for-global-explainability">Techniques for Global explainability</h2>
+<p><strong>Feature importance from a decision tree vs. permutation feature interaction</strong></p>
+<p><img src="https://lh3.googleusercontent.com/PO_SWqCVl33dfaoyAcqO4Nrub_3-7efKktzRz-vxsNssXHmVV_oEFZeGQG8JJrs0X8Px9BM7i3zZ=s900" alt=""></p>
 <p><strong>Are the features that interact the most also the most important?</strong></p>
 <p><img src="https://lh3.googleusercontent.com/XNEcQ2mUFbTVwuGl4rwG2KUISZDsl0Y5FJu7yqBKRjRWh6fOibYa_9cDcPTLtUSCMkSh1gF6Chdc=s900" alt="enter image description here"></p>
 <p>At least two of the features that interact the most in every category are also considered the most important features.</p>
 <h2 id="global-explainability-vs.-local-explainability">Global explainability vs. local explainability</h2>
+<p><strong>LIME vs Feature importance</strong></p>
 <p><img src="https://lh3.googleusercontent.com/N1ADiOTwSYx0zTPoy8EyZ0Y6xq88nO4fAA57eyuSYOMFlOZIHt5TNdR8MbHTn924p66za_AjV4XX=s900" alt="enter image description here"></p>
+<p>As permutation feature importance, it seems that LIME has also found that the 3 features that influence the most the prediction are: CGPA, TOEFL and GRE scores. Although this is true only for the class “very likely”.</p>
+<p><strong>Shapley values vs. feature importance</strong></p>
+<p><img src="https://lh3.googleusercontent.com/21azTOP9a7yCAYBpxlCdkZvmrgNynh_AahZVrf7O39rNffKrz5T3PvJsf0mp23I92HX9C3sxU3gV=s1000" alt="enter image description here"></p>
+<p>The similarity between these two techniques lies in that both have found that the features CGPA and TOEFL scores seem to be among the ones that influence the most the predictions.</p>
+<h1 id="guideline">Guideline</h1>
+<p><img src="https://lh3.googleusercontent.com/eD8L_hkSxzIKJGfIgwkgSipfAkEekMNXA182FeCWIKi7d8NFccomSYryaXWF3GUn5OV2heJUmiam=s900" alt="enter image description here"></p>
 <h1 id="use-cases">Use cases</h1>
 <ul>
 <li>Instant explanation: implementation together with recommender systems. Individual more willing to buy something if it is explained why a product is being recommended. E.g. 2 a bank that explains why a customer can’t get a loan, and what can s/he do to get one (credit rating).</li>
