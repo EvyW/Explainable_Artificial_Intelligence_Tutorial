@@ -3,22 +3,37 @@
 
 ---
 
+<h1 id="explainable-ai">EXPLAINABLE AI</h1>
+<p>XAI aims to provide explanations which are understandable for humans with the purpose of increasing the trust in the models.</p>
+<p>A user can then analyze these explanations and determine if the model uses the right cues to infer its decision.</p>
 <h1 id="outline">Outline</h1>
 <ol>
-<li>Motivation</li>
-<li>Approaches to explain AI (Conceptualization, examples, advantages and disadvantages)<br>
+<li>
+<p>Motivation</p>
+</li>
+<li>
+<p>Approaches to explain AI (Conceptualization, examples, advantages and disadvantages)<br>
 3.1. Global surrogates models<br>
 3.2. Partial Dependence Plots<br>
 3.3. Individual Conditional Expectation Plots<br>
 3.4. Feature interaction<br>
 3.5. Feature importance<br>
-3.6. Shapley Values<br>
-3.7. LIME<br>
-3.8.Anchors</li>
-<li>Comparison of results</li>
-<li>Guideline</li>
-<li>Why do we want to explain AI? Use-cases</li>
-<li>References</li>
+3.6. LIME<br>
+3.7.Anchors<br>
+3.8. Shapley Values</p>
+</li>
+<li>
+<p>Comparison of results</p>
+</li>
+<li>
+<p>Guideline</p>
+</li>
+<li>
+<p>Why do we want to explain AI? Use-cases</p>
+</li>
+<li>
+<p>References</p>
+</li>
 </ol>
 <h3 id="how-to-use-this-document">How to use this document?</h3>
 <ul>
@@ -339,7 +354,7 @@ ice<span class="token operator">$</span>plot<span class="token punctuation">(</s
 <li>Total interaction: to what extend a feature interacts with all the other features</li>
 </ol>
 <h3 id="demo-3"><strong>Demo</strong></h3>
-<p>Create a feature interaction plot of one feature against all the others</p>
+<p>Create a feature interaction plot of <strong>one feature against all the others</strong></p>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># Plot interactions</span>
 predictor_inter <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">)</span>
 interactions <span class="token operator">&lt;-</span> Interaction<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_inter<span class="token punctuation">)</span>
@@ -348,10 +363,9 @@ interactions<span class="token operator">$</span>plot<span class="token punctuat
 <p><img src="https://lh3.googleusercontent.com/z_rw9VsW49LquKH4Ny4kdv8FltNumpP2uVUf6rnG3m03d4zs9mvrrC1kU4BcU6KTZTj3VatXTnd8=s1000" alt="enter image description here"></p>
 <p>Interpretation:</p>
 <ul>
-<li>E.g.</li>
 <li>The plot shows that <strong>indeed the features interact with each other</strong>.</li>
-<li>The CGPA grade shows to have the highest interaction with all the other features.</li>
-<li>Most of the features have a “weak” interaction, below 0.25</li>
+<li><strong>The CGPA grade shows to have the highest interaction</strong> with all the other features.</li>
+<li><strong>Most of the features have a “weak” interaction, below 0.25</strong> (<strong>Note the interaction is from 0 to 1</strong>  )</li>
 </ul>
 <h3 id="feature-interaction-in-detail">Feature interaction in detail</h3>
 <ul>
@@ -403,23 +417,23 @@ Total interaction:</p>
 <h3 id="advantages-and-disadvantages-3">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>The interactions can be detected among an arbitrary number of features.</li>
+<li>The interactions can be detected among an <strong>arbitrary number of features.</strong></li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>It is a computational expensive expensive algorithm (due to the computation of partial dependence functions at each point.)</li>
-<li>In order to reduce the computation, a sample of points can be used. However, the results can variate significantly for every sample (as it is possible to see in the example below). Executing the algorithm several times and comparing the results to check the stability might be helpful.</li>
+<li>It is a <strong>computationally expensive</strong> expensive algorithm (due to the computation of <strong>partial dependence functions at each point.</strong>)</li>
+<li>In order to reduce the computation, <strong>a sample of points can be used</strong>. <strong>However, the results can variate significantly</strong> for every sample (as it is possible to see in the example below). <strong>Executing the algorithm several times and comparing the results</strong> to check the stability <strong>might be helpful.</strong></li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/4t0l53mr9PwKUTR-gPjDQBmFJX76XA6Y-U4k1NuwjG2zewmcsQzeQG5G4XWS8Bo0OZEHGqq7LE-Q=s1100" alt="enter image description here"></p>
 <ul>
-<li>It is not easy to determine what is a “strong” or “weak” interaction</li>
+<li>It is <strong>not easy</strong> to determine what is a <strong>“strong” or “weak” interaction</strong></li>
 <li>As this technique is based on partial dependence functions, it also carries the problem of <strong>possibly creating data points that are not according to the reality</strong></li>
 </ul>
 <h2 id="permutation-feature-importance">Permutation Feature Importance</h2>
 <h3 id="general-idea-4">General idea</h3>
 <ul>
-<li>It is a global explanation approach that identifies the contribution of each feature based on its accuracy.</li>
-<li>A feature is important if shuffling its values increases the model error, because it would mean that the model relied on the feature for the prediction.</li>
+<li><strong>It is a global explanation approach</strong> that identifies the <strong>contribution of each feature based on its accuracy.</strong></li>
+<li><strong>A feature is important if shuffling its values increases the model error</strong>, because it would <strong>mean that the model relied on the feature</strong> for the prediction.</li>
 </ul>
 <h3 id="demo-4"><strong>Demo</strong></h3>
 <p>Note that the loss function used for this example is “cross-entropy”</p>
@@ -430,8 +444,8 @@ importace_rf<span class="token operator">$</span>plot<span class="token punctuat
 <p><img src="https://lh3.googleusercontent.com/vQxSCCCiw1OFOM73iHzo2Mt0EmHxK5cTdXYvkOjL5nEGUAW0qBVFnoxicjqqfN6gaGb_32uLBQqB=s900" alt="enter image description here"><br>
 Interpretation:</p>
 <ul>
-<li>The feature with the highest importance is “CGPA”,  the increase of the error due to the permutation is around 0.24</li>
-<li>The least important features are “Research”, “University”, and “Statement of purpose”</li>
+<li><strong>The feature with the highest importance is “CGPA”</strong>,  the increase of the error due to the permutation is around 0.24</li>
+<li>The <strong>least important features</strong> are “Research”, “University”, and “Statement of purpose”</li>
 </ul>
 <h3 id="permutation-feature-importance-in-detail">Permutation feature importance in detail</h3>
 <ul>
@@ -478,7 +492,7 @@ Interpretation:</p>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li><strong>Because of the permutation</strong>, it can be <strong>computationally expensive</strong> to get the most accurate feature importances.</li>
+<li><strong>Because of the permutation (shuffling)</strong>, it can be <strong>computationally expensive</strong> to get the most accurate feature importances.</li>
 <li>The <strong>permutation breaks the interaction not only with the outcome but also</strong> breaks the interaction <strong>with the other features</strong> (if any). Thus, <strong>the error increases not only due to the permutation</strong> of the feature <strong>but also due to the broken interaction</strong> with other features, reason why the <strong>results might be not related exclusively to the feature</strong> under examination. Then, the importance would not be exclusively of the feature under examination.</li>
 <li>If features are correlated, the feature importance because the permutation would create <strong>unrealistic data instances</strong> (e.g  (2 meter person weighing 30 kg for example).</li>
 <li>The permutation feature importance is <strong>computed based on the error</strong> of the model, but <strong>sometimes we might need to explain the importance of a feature based in other  criteria</strong>  than  the performance of the model. For example we might be interested in: how much of the prediction variate when the feature value changes, like partial dependent plots do .</li>
@@ -489,43 +503,44 @@ Interpretation:</p>
 <h3 id="general-idea-5">General idea</h3>
 <ul>
 <li>LIME provides an explanation <strong>for a single data point.</strong></li>
-<li>It tries to answer: which variables caused the prediction?</li>
+<li>It tries to answer: <strong>which variables caused the prediction?</strong></li>
 <li>The technique attempts to <strong>understand the model by perturbing the input</strong> of data samples and understanding how the predictions change.</li>
-<li>An <strong>explanation is created</strong> by approximating the underlying <strong>model locally by an interpretable one</strong>. Interpretable models are <strong>e.g. linear models</strong>, decision tree’s, etc. <strong>The interpretable models are trained on small perturbations</strong> of the original instance and should only provide a good local approximation.</li>
+<li><strong>We can not approximate to the whole complex model with surrogate/interpretable models</strong>, but <strong>we can approximate locally</strong>. Interpretable models are <strong>e.g. linear models</strong>, decision tree’s, etc. <strong>The interpretable models are trained on small perturbations</strong> of the original instance and should only provide a good local approximation.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/SWNEjIyAQ_kI3Ie2uECO5eKDcqIG07lk7V-9sCOQyEpWGkVJt3GmO2xsqFEwCMXO9QgjRyM0vgnc=s500" alt="(Molnar 2018)"> (Molnar 2018)</p>
 <p><strong>How does it work in general?</strong></p>
 <ol>
-<li>Permutation: from the labels of the training data take a sample (in python a normal distribution is assumed), see picture B.</li>
+<li><strong>Permutation</strong>: <strong>from the labels of the training data take a sample</strong> (in <strong>python a normal distribution is assumed</strong>), see picture B.</li>
 </ol>
 <p><img src="https://lh3.googleusercontent.com/ay1hYKdkBb27Ny9ryoX6cSCyDNul0MUor2BndSJnHdVakT4mP0D79ZqCs4ML_84I1xtbmGnJeXm5=s900" alt="">(Molnar 2018)</p>
 <ol start="2">
-<li>Assign higher weight to points near the instance of interest</li>
+<li><strong>Assign higher weight</strong> to points near the instance of interest</li>
 </ol>
 <p><img src="https://lh3.googleusercontent.com/CcDkl-J5ULSf6Y4BZ4KVUIlSu_ZkC4KlKUY2JUPzjIcbi3poWdRFn9EJyTL1sWbTOSY_cmUhgyn1=s900" alt="">(Molnar 2018)</p>
 <ol start="3">
-<li>Fit an interpretable model to the permuted data with the m features (from the permuted data weighted by its similarity to the original observation).</li>
+<li><strong>Fit an interpretable model to the permuted data</strong> (from the permuted data weighted by its similarity to the original observation).</li>
 </ol>
-<p><img src="https://lh3.googleusercontent.com/CFXSdKkR1WGX_7RYfoRyw3FQG6JmtqhGUBBvmO6qbMUZaT5y1MLY8pSX1TowV4QXkc1IlSVcLtBh=s900" alt="enter image description here">(Molnar 2018)</p>
+<p><img src="https://lh3.googleusercontent.com/CFXSdKkR1WGX_7RYfoRyw3FQG6JmtqhGUBBvmO6qbMUZaT5y1MLY8pSX1TowV4QXkc1IlSVcLtBh=s900" alt="enter image description here"><br>
+(Molnar 2018)</p>
 <ol start="4">
-<li>Extract the feature weights from the simple model and use these as explanations for the complex models local behavior.</li>
+<li><strong>Extract the feature weights</strong> from the simple model and u<strong>se these as explanations</strong> for the complex models local behavior.</li>
 </ol>
-<h3 id="kernel">kernel</h3>
 <h3 id="demo-5">Demo</h3>
-<p>Generate the explanation for the first observation in the test dataset</p>
+<p>Generate the <strong>explanation for the first observation in the test dataset (true label: likely)</strong></p>
 <pre class=" language-r"><code class="prism  language-r">i <span class="token operator">=</span> <span class="token number">6</span> <span class="token comment"># explain for observation 6th </span>
 
 predictor_lime <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">,</span> class <span class="token operator">=</span> <span class="token string">"likely"</span><span class="token punctuation">)</span> 
 lime <span class="token operator">&lt;-</span> LocalModel<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_lime<span class="token punctuation">,</span> x.interest <span class="token operator">=</span> X<span class="token punctuation">[</span>i<span class="token punctuation">,</span> <span class="token punctuation">]</span><span class="token punctuation">,</span> k <span class="token operator">=</span> <span class="token number">7</span><span class="token punctuation">)</span>
 plot<span class="token punctuation">(</span>lime<span class="token punctuation">)</span>
 </code></pre>
-<p><img src="https://lh3.googleusercontent.com/j7PYP1gxkmACGVl7SU2NNSIYDvO_fWAXRrHS4Z5bny3Ovmph1IBhgMYdsVkrixkLhL5LKaD0PsRK=s900" alt=""></p>
+<p><img src="https://lh3.googleusercontent.com/9AbvjlCoIgd5AINOFpHnZRfzWSsKlLWXeI3AL_Dkkpo6PxipdZaaS-1y5_wYEjekiigL3Hpo8FXI=s900" alt="enter image description here"></p>
 <p>Interpretation:</p>
 <ul>
-<li>The variable that caused the prediction to be “like” is the recommedion letter strength.</li>
+<li>The “<strong>local model prediction</strong>” is the <strong>prediction of the linear model</strong></li>
+<li>The <strong>variable that caused the prediction to be “like”</strong> is the <strong>recommedation letter strength.</strong></li>
 <li>While the varibles that contradict the prediction are: the statement of purpose, GRE score, university rating, CGPA score, and TOEFL score.</li>
 </ul>
-<p>The following are the results from the linear regression, the beta values are the ones that we can see in the plot.</p>
+<p>The following are the <strong>results from the linear regression</strong>, the beta values are the ones that we can see in the plot.</p>
 <pre class=" language-r"><code class="prism  language-r">lime<span class="token operator">$</span>results
 </code></pre>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment">##                              beta x.recoded      effect x.original</span>
@@ -537,13 +552,13 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <span class="token comment">## CGPA                 -0.0777916701      8.21 -0.63866961       8.21</span>
 <span class="token comment">## Research             -0.1428017233      0.00  0.00000000          0</span>
 </code></pre>
-<p>The  figure below shows the results of different data points for every class in order to compare whether we can find <strong>some patterns</strong></p>
+<p>The  figure below shows the <strong>results of different data points</strong> for every class in order to compare whether we can find <strong>some patterns</strong></p>
 <p><img src="https://lh3.googleusercontent.com/YJXH83Mmo-6MFPWxKo47r1-xw0MNaFrW5X0g3xqzylLtATjNhbp4gEBC1uFxoQU8kWEVamCuy5Yp=s900" alt="enter image description here"></p>
 <p>From this comparison it seems that:</p>
 <ul>
-<li>The features that push the most to predict “very likely to be accepted for the master program” are the CGPA and the TOEFL score when these are “high grades”.  While features like recommendation letter and statement of purpose do not really have a significant impact in the prediction.</li>
-<li>The feature that push the prediction to be “likely to be accepted” is the recommendation letter strength. It seems that when the CGPA and TOEFL scores are not the highest then a <strong>strong recommendation letter</strong> has a significant impact to possibly being accepted.</li>
-<li>The features that push the prediction to be “unlikely to be accepted”  are the university rating and statement of purpose when they are low values. However, other features like the recommendation letter and the GRE score contradict this prediction. We can note that in comparison to the ones in the class “likey”, altough the GRE scores are lower, the difference is not significant.</li>
+<li>The <strong>features that push the most to predict “very likely to be accepted for the master program” are the CGPA and the TOEFL</strong> score <strong>when these are “high grades”</strong>.  While features like recommendation letter and statement of purpose do not really have a significant impact in the prediction.</li>
+<li><strong>The feature that push the prediction to be “likely to be accepted” is the recommendation letter strength</strong>. It seems that <strong>when the CGPA and TOEFL scores are not the highest then</strong> a <strong>strong recommendation letter</strong> has a significant impact to possibly being accepted.</li>
+<li>The <strong>features that push the prediction to be “unlikely to be accepted”  are the university rating and statement of purpose when they are low values</strong>. However, other features like the recommendation letter and the GRE score contradict this prediction, we can note that in comparison to the ones in the class “likey”, altough the GRE scores are lower, the difference is not significant.</li>
 </ul>
 <h3 id="lime-in-detail"><strong>LIME in detail</strong></h3>
 <ul>
@@ -584,35 +599,34 @@ It is calculated differently according to whether it is for tabular or textual d
 <h3 id="advantages-and-disadvantages-5">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>Provide a human-friendly  explanation and the idea of the algorithm is very intuitive, basically it applies a surrogate (linear) model in a local area of interest.</li>
-<li>Works for  tabular  data, text, and  images</li>
+<li>Provide a <strong>human-friendly</strong>  explanation and <strong>the idea of the algorithm is very intuitive, basically it applies a surrogate (linear) model in a local area of interest.</strong></li>
+<li><strong>Works for  tabular  data, text, and  images</strong></li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>LIME assumes that linear models can approximate local behaviour. However, for a larger region the linear model might not be powerful enough to explain the behavior.</li>
-<li>Also, if the  model is highly non-linear even for a very small region, then the exaplanation might not be a faithful.</li>
-<li>It is not clear to which other instances  (or reagion) the explanation is valid.</li>
+<li>LIME <strong>provide only explanations for small regions</strong>. <strong>However, for a larger region the linear model might not be powerful enough</strong> to explain the behavior.</li>
+<li>LIME <strong>assumes that linear models can approximate local behaviour</strong> , <strong>but if the  model is highly non-linear</strong> even for a very small region, then the exaplanation might not be a faithful.</li>
+<li><strong>It is not clear</strong> to which other instances  (or <strong>region) the explanation is valid.</strong></li>
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
-<h2 id="anchors">Anchors!!</h2>
+<h2 id="anchors">Anchors</h2>
 <h3 id="general-idea-6">General idea</h3>
 <ul>
-<li>An anchor explains <strong>individual predictions</strong> with if-then rules. Such rules are intuitive to humans, and usually require low effort to comprehend and apply.</li>
-<li>For example, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
+<li>An anchor <strong>explains individual predictions with if-then rules</strong>. Such <strong>rules are intuitive to humans</strong>, and usually require <strong>low effort to comprehend</strong> and apply.</li>
+<li>For <strong>example</strong>, for a model that tries to <strong>predict</strong> whether the <strong>salary of a person is higher than 50K</strong>, the anchor in the following figure states that the model will almost always predict a Salary ≤ 50K if a person is not educated beyond high school, even if the other feature values would change.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/M4Ype1yzyvv61H2GW1530lOmvU0tt2ONjhe-tR_meqLyC-5jtyiPJ854UzedFGeq3fRwzyOsqLt0=s600" alt="enter image description here"></p>
 <ul>
-<li>Anchors aims to improve pitfalls of LIME, since in LIME is not clear whether the same explanation can be applied to other instances (we don´t know exactly which is the local region). Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
+<li><strong>Anchors aims to improve pitfalls of LIME</strong>, <strong>since in LIME is not clear</strong> <strong>whether the same explanation can be applied to other instances</strong> (we don´t know exactly which is the <strong>local region</strong>). Anchors, on the other hand, make their coverage very clear, the user knows exactly when the explanation for an instance “generalizes” to other instances.</li>
 </ul>
 <p><img src="https://lh3.googleusercontent.com/UICNP49fWJpyJx2QaV6D9MvCsYBgjKKi5Uu7nckdOhaqGL9RPTKPdELV7gRORCEvyOyxejEWckU0=s400" alt="enter image description here"></p>
-<p>In short, an anchor is a rule on x that achieves a “high” probability of being predicted as positive.</p>
+<p><strong>In short</strong>, an anchor is a rule on x that achieves a “high” probability of being predicted as positive.</p>
 <p><strong>Toy example: predicting positive and negative sentiment</strong></p>
 <p><img src="https://lh3.googleusercontent.com/ES95BMlBuzzQaeYRLOofg6MMmcQhDe4SWr_jySiKsb40l4TnvY1jWYV1G98TQpbL2UwDClqJ4TgA=s500" alt="enter image description here"></p>
 <ul>
-<li>While LIME explanations provide insight into the model, their coverage is not clear, e.g. when does the word not have a positive influence on sentiment?</li>
-<li>Anchors only apply when all the conditions in the rule are met. The anchors in Figure part c state that the presence of the words “not bad” ensure a prediction of positive sentiment</li>
-<li>A piece of text that has the words not and bad will be likely predicted as positive even if the rest of the feature values change.</li>
-<li>Anchors enable users to predict how a model would behave on unseen instances with higher precision.</li>
+<li><strong>Anchors only apply when all the conditions in the rule are met</strong>. The anchors in the figure above state that <strong>the presence of the words “not bad” ensure a prediction of positive sentiment</strong></li>
+<li><strong>A piece of text that has the words “not” and “bad” will be likely predicted as positive even if the rest of the feature values change.</strong></li>
+<li><strong>Anchors enable users to predict how a model would behave on unseen instances</strong> with higher precision.</li>
 </ul>
 <p><strong>Definition of an anchor:</strong></p>
 <p><img src="https://lh3.googleusercontent.com/CZfHUg8YPDPx0stcI_RA1_6QgOHF3pGrlqdMsq-q3_e05uDYQDOPzFBvqx-PgqVWfL99I3gTtXal=s900" alt="enter image description here"></p>
@@ -627,8 +641,6 @@ It is calculated differently according to whether it is for tabular or textual d
 </ul>
 </li>
 </ul>
-<p>In short, an anchor A is a set of feature predicates on x that achieves a “high” probability of being predicted as positive.</p>
-<h3 id="how-to-generate-a-rule"><strong>How to generate a rule</strong>!!</h3>
 <h3 id="anchors-in-detail">Anchors in detail</h3>
 <p><strong>Perturbation:</strong></p>
 <ul>
@@ -670,13 +682,12 @@ The KL-LUCB (Kaufmann and Kalyanakrishnan) algorithm is used to identify the rul
 <h3 id="advantages-and-disadvantages-6">Advantages and disadvantages</h3>
 <p>Advantages:</p>
 <ul>
-<li>An important advantage of anchors is that it expresses the explanation in short, disjoint rules, which are easier to interpret</li>
-<li>The user knows when the explanation for an instance generalizes to other instances.</li>
+<li>An important advantage of anchors is that <strong>it expresses the explanation in short, disjoint rules, which are easier to interpret</strong></li>
+<li>The <strong>user knows when the explanation for an instance generalizes to other instances.</strong></li>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>Only captures the behavior of the model on a local region.</li>
-<li>Anchors can create explanations for complex functions, but the rule to explain the prediction can become very large.</li>
+<li><strong>Anchors can create explanations for complex functions, but the rule to explain the prediction can become very large.</strong></li>
 </ul>
 <h2 id="shapley-values">Shapley values!!</h2>
 <h3 id="general-idea-7">General idea</h3>
