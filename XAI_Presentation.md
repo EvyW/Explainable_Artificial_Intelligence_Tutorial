@@ -5,7 +5,7 @@
 
 <h1 id="explainable-ai">EXPLAINABLE AI</h1>
 <p>XAI <strong>aims to provide explanations</strong> which are <strong>understandable for humans</strong> with the <strong>purpose of increasing the trust in the models.</strong></p>
-<p>A user can then analyze these explanations and determine if the model uses the right cues to infer its decision.</p>
+<p>A <strong>user can then analyze these explanations and determine if the model uses the “reasons” to infer its decision.</strong></p>
 <h1 id="outline">Outline</h1>
 <ol>
 <li>
@@ -18,9 +18,9 @@
 3.3. Individual Conditional Expectation Plots<br>
 3.4. Feature interaction<br>
 3.5. Feature importance<br>
-3.6. LIME<br>
-3.7.Anchors<br>
-3.8. Shapley Values</p>
+<strong>3.6. LIME<br>
+3.7. Anchors<br>
+3.8. Shapley Values</strong></p>
 </li>
 <li>
 <p>Comparison of results</p>
@@ -40,7 +40,7 @@
 <li><strong>For every XAI approach</strong> <strong>a simple idea, an example and how to interpret, technical details, advantages and disadvantages are presented</strong>.</li>
 <li><strong>At the begining</strong> of the description of every technique a <strong>general idea</strong> is introduced in order to understand easily what is the technique about. Later, if you are more interested, more technical details are given, but you can skip this part if that is not useful for you.</li>
 <li>The examples are based on the predictions of <strong>boosted trees</strong></li>
-<li><strong>At the end you can find a guideline</strong> that gives you some clues to choose the techniques that might apply to your case.</li>
+<li>At the end you can find a guideline that gives you some clues to choose the techniques that might apply to your case.</li>
 </ul>
 <h1 id="motivation">Motivation</h1>
 <p>A real case: Amazon recruiting tool</p>
@@ -53,7 +53,7 @@
 <h1 id="approaches-to-explain-ai">Approaches to explain AI</h1>
 <p><img src="https://lh3.googleusercontent.com/ndXZ9iX-KD42mT-5hTbKxJXGq_XCfGvhL4QbYwDX6AaqBcdTQ79ThedmA3RhFIGU39AvJfn0rJTq=s900" alt="enter image description here"></p>
 <p><strong>Model-specific vs. model agnostic approaches</strong></p>
-<p>As model-agnostic approaches <strong>do not d epend on</strong> the algorithm that was used, they have the advantage of being modular and therefore they can be used with any model. The rest of this document is then focused on model-agnostic approaches.</p>
+<p>As model-agnostic approaches <strong>do not depend on</strong> the algorithm that was used, they have the advantage of being <strong>modular</strong> and therefore they can be used with any model, <strong>so they are more practical</strong>. The rest of this document is then focused on model-agnostic approaches.</p>
 <h2 id="dataset">Dataset</h2>
 <p>Note that the dataset used for the running example has the following characteristics:</p>
 <ul>
@@ -271,7 +271,7 @@ pdp<span class="token operator">$</span>plot<span class="token punctuation">(</s
 <li>The model tends to predict <strong>“likely” more strongly</strong> when the grades are in <strong>between ~7.4 and ~8.3</strong>, which <strong>makes sence</strong>, because the plot for “very_likely” told us that the model tends to predict “very_likely” when the grades are greater than 8.4</li>
 </ul>
 <p><strong>PDPs for model comparison</strong></p>
-<p><img src="https://lh3.googleusercontent.com/rjL3A6nC8NDghD-zF5xNF9dzDmVW3PTxgaaUYKHknH5ls7jqebwTZObs2Ovtz-gHwJyh0wF942CP=s900" alt="enter image description here"></p>
+<p><img src="https://lh3.googleusercontent.com/i_w1ni0IqWE6gcUPB_NjtE7p45ofHY4JiZKEeqo1N0KxJVaC_eLuvUYRuOgSE29dQuv6TvoJdwgV=s900" alt="enter image description here"></p>
 <h3 id="pdps-in-detail">PDPs in detail</h3>
 <ul>
 <li>Partial dependence works by marginalizing the machine learning model output over the distribution of all the features (excluding the ones that we want to plot), so that the function shows the relationship between the features we are interested in and the predicted outcome. <strong>In simple words, it shows how my model will respond or changes if I increase or decrease x. How model inputs affect the model’s predictions.</strong></li>
@@ -298,7 +298,7 @@ Partial dependence plots can be used to compare models</p>
 </ul>
 <p>Disadvantages:</p>
 <ul>
-<li>As PDPs plots  are  plots  of  averages, they  could  o<strong>bscure individual differences</strong>.</li>
+<li>As PDPs plots  are  plots  of  averages, they  could  <strong>obscure individual differences</strong>.</li>
 <li>The maximum number of features that a PDP can display is two (plus one for the average prediction), because we can not visualize more than 3 dimensions.</li>
 <li>The most important problem with PDPs is that <strong>they assume that the features are not correlated</strong>, when this might not be true. However, pdps can work well when the relations between the features of the PDP and the other features are weak.</li>
 <li><strong>Since we vary the feature of interest we could be possibly creating data points that are not according to the reality</strong>, especially if the features are correlated.</li>
@@ -311,7 +311,7 @@ Partial dependence plots can be used to compare models</p>
 <li>From the past example (pdp example) then a total of 3 lines per observation will be displayed.</li>
 </ul>
 <h3 id="demo-2"><strong>Demo</strong></h3>
-<p>Create an ICE plot for feature CGPA for every class</p>
+<p><strong>Create an ICE plot for feature CGPA for every class</strong></p>
 <pre class=" language-r"><code class="prism  language-r"><span class="token comment"># plot ice </span>
 predictor_ice <span class="token operator">&lt;-</span> Predictor<span class="token operator">$</span>new<span class="token punctuation">(</span>xgboost_model<span class="token punctuation">,</span> data <span class="token operator">=</span> X<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">"prob"</span><span class="token punctuation">)</span>
 ice <span class="token operator">=</span> FeatureEffect<span class="token operator">$</span>new<span class="token punctuation">(</span>predictor_ice<span class="token punctuation">,</span> feature <span class="token operator">=</span> <span class="token string">"CGPA"</span><span class="token punctuation">,</span> method <span class="token operator">=</span> <span class="token string">"ice"</span><span class="token punctuation">)</span>
@@ -338,13 +338,13 @@ ice<span class="token operator">$</span>plot<span class="token punctuation">(</s
 <p>Disadvantages:</p>
 <ul>
 <li>Similarly to PDPs,  since we vary the feature, we could be <strong>possibly creating data points that are not according to the reality</strong>, especially if the features are correlated.</li>
-<li>If many curves are plotted, it becomes cluttered and difficult to read. A possible solution is to cluster lines, add some transparency, or conside only a sample.</li>
+<li><strong>If many curves are plotted, it becomes cluttered and difficult to read</strong>. A possible <strong>solution</strong> is to <strong>cluster lines, add some transparency, or conside only a sample</strong>.</li>
 </ul>
 <h2 id="feature-interaction">Feature interaction</h2>
 <h3 id="general-idea-3"><strong>General idea</strong></h3>
 <ul>
 <li>This is a <strong>global approach</strong> that <strong>explains the interaction between features</strong>. <strong>Usually the interaction between one feature and all the others</strong>.</li>
-<li>This approach states that <strong>the effect of one feature (over the prediction) is possibly influenced by another feature</strong>.</li>
+<li><strong>This approach states that the effect of one feature (over the prediction) is possibly influenced by another feature</strong>.</li>
 <li>General idea of <strong>how to compute the feature interaction</strong>:</li>
 </ul>
 <p><strong>Predicting NBA shot success</strong><br>
@@ -496,7 +496,7 @@ Interpretation:</p>
 <ul>
 <li><strong>Because of the permutation (shuffling)</strong>, it can be <strong>computationally expensive</strong> to get the most accurate feature importances.</li>
 <li>The <strong>permutation breaks the interaction not only with the outcome but also</strong> breaks the interaction <strong>with the other features</strong> (if any). Thus, <strong>the error increases not only due to the permutation</strong> of the feature <strong>but also due to the broken interaction</strong> with other features, reason why the <strong>results might be not related exclusively to the feature</strong> under examination. Then, the importance would not be exclusively of the feature under examination.</li>
-<li>If features are correlated, the feature importance because the permutation would create <strong>unrealistic data instances</strong> (e.g  (2 meter person weighing 30 kg for example).</li>
+<li>If features are correlated, the feature importance because the permutation would create <strong>unrealistic data instances</strong> (e.g  2 meter person weighing 30 kg for example).</li>
 <li>The permutation feature importance is <strong>computed based on the error</strong> of the model, but <strong>sometimes we might need to explain the importance of a feature based in other  criteria</strong>  than  the performance of the model. For example we might be interested in: how much of the prediction variate when the feature value changes, like partial dependent plots do .</li>
 <li>You need access to the true outcome. If someone only provides you with the model and unlabeled data – but not the true outcome – you cannot compute the permutation feature importance.</li>
 <li>The permutation feature importance <strong>depends on shuffling the feature</strong> , which adds randomness to the measurement. When the permutation is repeated, the <strong>results might vary greatly.</strong> <strong>However, repeating the permutation</strong> and averaging the importance measures over repetitions <strong>stabilizes the measure, but increases the time of computation.</strong></li>
@@ -539,8 +539,8 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <p>Interpretation:</p>
 <ul>
 <li>The “<strong>local model prediction</strong>” is the <strong>prediction of the linear model</strong></li>
-<li>The <strong>variable that caused the prediction to be “like”</strong> is the <strong>recommedation letter strength.</strong></li>
-<li>While the varibles that contradict the prediction are: the statement of purpose, GRE score, university rating, CGPA score, and TOEFL score.</li>
+<li>The <strong>variable that caused the prediction to be “likely”</strong> is the <strong>recommedation letter strength.</strong></li>
+<li>While <strong>the varibles that contradict the prediction are:</strong> the statement of purpose, GRE score, university rating, CGPA score, and TOEFL score.</li>
 </ul>
 <p>The following are the <strong>results from the linear regression</strong>, the beta values are the ones that we can see in the plot.</p>
 <pre class=" language-r"><code class="prism  language-r">lime<span class="token operator">$</span>results
@@ -886,5 +886,4 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </ul>
 <h1 id="references">References</h1>
 <p>Molnar, C. (2018). Interpretable machine learning: A guide for making black box models explainable. <em>Christoph Molnar, Leanpub</em>.</p>
-<p>this document have some personal opinions in the comparison part, so they can differ from some other peopel or more aknowledge or experienced people.</p>
 
