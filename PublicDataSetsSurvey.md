@@ -55,7 +55,7 @@ Most voted **"small"** data sets for classification tasks:
 
 **From UCI machine learning repository:**
 
-This repository contains 353 data sets under the category "classification" and 98 under the category "regression", which are useful for tasks such as classification, regression, and clustering.
+This repository contains 353 data sets under the category "classification" and 98 under the category "regression".
 
 **From KEEL data repository:**
 
@@ -227,7 +227,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjczNjYwMjcwLDY0MzU0MjM4MSwtMTc3Nz
-UyODMxMywxNTI5NDc4NDQ3LDI1NzgwNzgyNywtMTM0MDU1Njcx
-Nyw3MjgzNzczNjddfQ==
+eyJoaXN0b3J5IjpbMTM4NTU5NDQ1Myw2NDM1NDIzODEsLTE3Nz
+c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
+MTcsNzI4Mzc3MzY3XX0=
 -->
