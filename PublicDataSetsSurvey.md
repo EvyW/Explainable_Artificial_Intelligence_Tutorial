@@ -9,7 +9,7 @@ This document contains a review of public data sets that are potentially useful 
 This data sets were collected from sources considered top sources for machine learning, such as:
 1. Kaggle
 2. UCI Machine Learning Repository
-3. Awsome Publci
+3. Awsome Public Data Sets Collection
 
 ## List of Open Data Sources
 
@@ -216,5 +216,5 @@ https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc
 
 https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1OTM0LDcyODM3NzM2N119
+eyJoaXN0b3J5IjpbMTA5NDYyMTI2Nyw3MjgzNzczNjddfQ==
 -->
