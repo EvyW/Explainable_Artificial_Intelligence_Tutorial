@@ -67,19 +67,18 @@ Stanford Cars Dataset</li>
 </ol>
 <p><strong>
 
-From UCI machine learning repository:</strong></p>
+<strong>From UCI machine learning repository:</strong></p>
 
 
-This repository contains 353 data sets under the category “classification” and 98 under the category “regression”.</p>
-<p><strong>".
+This repository contains 353 data sets under the category “classification” and 98 under the category “regression”.
 
-**From KEEL data repository:</strong></p>
-<p>**
+<strong>From KEEL data repository:</strong></p>
+
 
 This page aims at providing to the machine learning researchers a set of benchmarks to analyze the behavior of the learning methods. It also shows some relevant research papers in which these data sets have been employed. It includes 592 data sets in the category of  “supervised classification” divided in the following sub-categories</p>
 <ul>
 <li>
-- Standard classification data sets (76)</li>
+Standard classification data sets (76)</li>
 <li>
 - Standard classification data sets with missing values (26)</li>
 <li>
@@ -303,5 +302,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU2OTQxMjk3LDc3MTAwNjM4OF19
+eyJoaXN0b3J5IjpbLTEwNDc0NDY5NzgsMTU2OTQxMjk3LDc3MT
+AwNjM4OF19
 -->
