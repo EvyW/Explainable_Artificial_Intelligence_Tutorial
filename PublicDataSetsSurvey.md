@@ -27,9 +27,9 @@ This data sets were collected from sources considered as “top sources” (for 
 Most voted <strong>“large”</strong> data sets classification tasks:</p>
 <ol>
 <li>
-1. CelebFaces Attributes (CelebA) Dataset</li>
+CelebFaces Attributes (CelebA) Dataset</li>
 <li>
-2. Stanford Cars Dataset</li>
+Stanford Cars Dataset</li>
 <li>Best Artworks of All Time</li>
 <li>LISA Traffic Light Dataset</li>
 <li>One-Shot-Pokemon Images</li>
@@ -67,8 +67,8 @@ Most voted <strong>“large”</strong> data sets classification tasks:</p>
 </ol>
 <p><strong>
 
-**From UCI machine learning repository:</strong></p>
-<p>**
+From UCI machine learning repository:</strong></p>
+
 
 This repository contains 353 data sets under the category “classification” and 98 under the category “regression”.</p>
 <p><strong>".
@@ -303,5 +303,5 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzcxMDA2Mzg4XX0=
+eyJoaXN0b3J5IjpbMTU2OTQxMjk3LDc3MTAwNjM4OF19
 -->
