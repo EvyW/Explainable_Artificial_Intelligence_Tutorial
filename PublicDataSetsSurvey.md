@@ -6,30 +6,10 @@ This document contains a review of public data sets that are potentially useful 
 3.  Text classification datasets (OCR data sets included)
 4.  Relevant supervised learning datasets 
 
-This data sets were collected from sources considered "top sources" for machine learning, such as:
-
-
+This data sets were collected from sources considered as "top sources" for machine learning, such as:
 1. Kaggle
 2. UCI Machine Learning Repository
 3. Awsome Public Data Sets Collection
-
-## List of Open Data Sources
-
-The following is a lista that contains popular open data sources:
-
-3. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
-4. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
-5. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
-6.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
-7. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
-8. Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
-9. Kaggle
-10. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
-11. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
-12. Microsoft Research Open Data (biology, healthcare, social science etc.)
-
-Search engines:
-13. Google dataset search
 
 ## 1. Supervised learning
 
@@ -210,6 +190,26 @@ AMLWorkshop
 Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 - Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.
 
+
+## List of Open Data Sources
+
+The following is a lista that contains popular open data sources:
+
+3. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
+4. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
+5. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
+6.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
+7. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
+8. Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
+9. Kaggle
+10. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
+11. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
+12. Microsoft Research Open Data (biology, healthcare, social science etc.)
+
+Search engines:
+13. Google dataset search
+
+
 ## References:
 
 https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279
@@ -218,6 +218,6 @@ https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc
 
 https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTU4MjM3ODg3MSwtMTM0MDU1NjcxNyw3Mj
-gzNzczNjddfQ==
+eyJoaXN0b3J5IjpbMjUyMzY2OTk5LC0xMzQwNTU2NzE3LDcyOD
+M3NzM2N119
 -->
