@@ -101,6 +101,9 @@ This repository includes 40 data sets in the category "Time Series".
 ## 3. Text mining
 
 **From Kaggle:**
+
+The following list presents the 10 most voted data sets in kaggle with the tags "text mining" and "text data".  However,  an extended version with the 100 most voted data sets  is attached to this file, which also include more details.
+
 1. Women's E-Commerce Clothing Reviews: 23,000 Customer Reviews and Ratings 
 2. Amazon Reviews for Sentiment Analysis: a few million Amazon reviews in fastText format
 3. Wikipedia Movie Plots: plot descriptions for ~35,000 movies: 
@@ -111,8 +114,6 @@ This repository includes 40 data sets in the category "Time Series".
 8. Star Wars Movie Scripts: this is a collection of script dialogue between characters for the first three movies (episodes 4-6).
 9. English Wikipedia Articles 2017-08-20 SQLite: the dataset encompasses nearly 5 million articles, with more than 23 million individual sections.
 10. Melbourne Airbnb Open Data: Detailed and summarized data of Airbnb activity in Melbourne, VIC, Australia
-
-*These are the 10 most voted data sets in kaggle out of 189 with the tags "text mining" and "text data".
 
 **From folks recommendations:**
 
@@ -228,7 +229,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4OTcxMTQ5MDksNjQzNTQyMzgxLC0xNz
-c3NTI4MzEzLDE1Mjk0Nzg0NDcsMjU3ODA3ODI3LC0xMzQwNTU2
-NzE3LDcyODM3NzM2N119
+eyJoaXN0b3J5IjpbMTY2NTAxODgzOSw2NDM1NDIzODEsLTE3Nz
+c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
+MTcsNzI4Mzc3MzY3XX0=
 -->
