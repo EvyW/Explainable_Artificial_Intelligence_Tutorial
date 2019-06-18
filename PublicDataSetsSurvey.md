@@ -135,6 +135,8 @@ Natural language processing data sets:
 - Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.
 - UCI’s Spambase: A large spam email dataset, useful for spam filtering.
 
+Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
+
 **From UCI machine learning repository:**
 
 This repository contains 54 data sets under the category "Text", which are useful for tasks such as classification, regression, and clustering.
@@ -193,14 +195,11 @@ Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 
 ## Other "Worth to Visit" List of Open Data Sources
 
-
-
 1. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
 2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
 3. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
 4.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
 5. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
-9. Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
 10. Kaggle
 11. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
 12. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
@@ -222,6 +221,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTg2ODgzNjYzNiwxNTI5NDc4NDQ3LDI1Nz
+eyJoaXN0b3J5IjpbMTUyNDcyMDA3NywxNTI5NDc4NDQ3LDI1Nz
 gwNzgyNywtMTM0MDU1NjcxNyw3MjgzNzczNjddfQ==
 -->
