@@ -135,7 +135,9 @@ Natural language processing data sets:
 - Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.
 - UCI’s Spambase: A large spam email dataset, useful for spam filtering.
 
-Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
+**From Yelp:**
+
+Yelp Open Datasets: it contains reviews and user data from the Yelp platform.
 
 **From UCI machine learning repository:**
 
@@ -221,6 +223,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyNDcyMDA3NywxNTI5NDc4NDQ3LDI1Nz
-gwNzgyNywtMTM0MDU1NjcxNyw3MjgzNzczNjddfQ==
+eyJoaXN0b3J5IjpbLTE3Nzc1MjgzMTMsMTUyOTQ3ODQ0NywyNT
+c4MDc4MjcsLTEzNDA1NTY3MTcsNzI4Mzc3MzY3XX0=
 -->
