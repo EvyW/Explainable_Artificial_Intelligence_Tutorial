@@ -225,6 +225,7 @@ CAPTCHA Images</li>
 <p>
 
 Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Handwritting and character recognition” with 12 data sets (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition</a>)</p>
+
 <h2 id="predictive-maintenance">4. Predictive maintenance</h2>
 <p><strong>From NASA:</strong></p>
 <p>
@@ -237,6 +238,7 @@ Description: Engine degradation simulation was carried out using C-MAPSS. Four d
 <li>Link: <a hre">https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/#turbofan</a></li>
 </ul>
 <p> 
+
 Li-ion Battery Aging Datasets:</p>
 <ul>
 <li>Description: This data set has been collected from a custom built battery prognostics testbed at the NASA Ames Prognostics Center of Excellence (PCoE). Li-ion batteries were run through 3 different operational profiles (charge, discharge and Electrochemical Impedance Spectroscopy) at different temperatures. Discharges were carried out at different current load levels until the battery voltage fell to preset voltage thresholds. Some of these thresholds were lower than that recommended by the OEM (2.7 V) in order to induce deep discharge aging effects. Repeated charge and discharge cycles result in accelerated aging of the batteries.</li>
@@ -303,6 +305,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTY1MDU3ODk1OCwxNTY5NDEyOTcsNzcxMD
-A2Mzg4XX0=
+eyJoaXN0b3J5IjpbLTEwNDg5MzQ1NDIsMTU2OTQxMjk3LDc3MT
+AwNjM4OF19
 -->
