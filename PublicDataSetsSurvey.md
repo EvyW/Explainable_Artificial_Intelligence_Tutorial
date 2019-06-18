@@ -191,9 +191,9 @@ Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 - Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.
 
 
-## List of Open Data Sources
+## Other "Worth to Visit" List of Open Data Sources
 
-The following is a lista that contains popular open data sources:
+
 
 1. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
 2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
@@ -222,6 +222,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE4NDYxMDU0ODMsMTUyOTQ3ODQ0NywyNT
-c4MDc4MjcsLTEzNDA1NTY3MTcsNzI4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbMTg2ODgzNjYzNiwxNTI5NDc4NDQ3LDI1Nz
+gwNzgyNywtMTM0MDU1NjcxNyw3MjgzNzczNjddfQ==
 -->
