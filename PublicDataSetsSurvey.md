@@ -72,7 +72,7 @@ This page aims at providing to the machine learning researchers a set of benchma
 
 **From Kaggle:**
 
-The following list contains the 10 most voted data sets (in decreasing order) with the tag "time series".  They were collected in a way that not only the temporal feature is included but also additional features concerned with the problem under examination. 
+The following list contains the 10 most voted data sets (in decreasing order) with the tag "time series".  They were collected in a way that not only the temporal feature is included but also additional features concerned with the problem under examination. An extended version with the 100 most voted data sets for time series tasks is attached to this file, which also include more details.
 
 1. S&P 500 stock data: Historical stock data for for all companies currently found on the S&P 500 index.
 Goal: 
@@ -95,6 +95,7 @@ This repository contains 93 data sets under the category "Time-Series", which ar
 This repository contains around 5 data sets in the category "Time Series".
 
 **From KEEL data repository:**
+
 This repository includes 40 data sets in the category "Time Series".
 
 ## 3. Text mining
@@ -227,7 +228,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMjA1NjEyOTM5Miw2NDM1NDIzODEsLTE3Nz
-c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
-MTcsNzI4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbLTE4OTcxMTQ5MDksNjQzNTQyMzgxLC0xNz
+c3NTI4MzEzLDE1Mjk0Nzg0NDcsMjU3ODA3ODI3LC0xMzQwNTU2
+NzE3LDcyODM3NzM2N119
 -->
