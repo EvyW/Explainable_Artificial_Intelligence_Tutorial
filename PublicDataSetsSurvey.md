@@ -102,7 +102,7 @@ This repository includes 40 data sets in the category "Time Series".
 
 **From Kaggle:**
 
-The following list presents the 10 most voted data sets in kaggle with the tags "text mining" and "text data".  However,  an extended version with the 100 most voted data sets  is attached to this file, which also include more details.
+The following list presents the 10 most voted data sets in kaggle with the tags "text mining" and "text data".  However,  an extended version with the 100 most voted data sets is attached to this file, which also include more details of each data set.
 
 1. Women's E-Commerce Clothing Reviews: 23,000 Customer Reviews and Ratings 
 2. Amazon Reviews for Sentiment Analysis: a few million Amazon reviews in fastText format
@@ -115,7 +115,7 @@ The following list presents the 10 most voted data sets in kaggle with the tags 
 9. English Wikipedia Articles 2017-08-20 SQLite: the dataset encompasses nearly 5 million articles, with more than 23 million individual sections.
 10. Melbourne Airbnb Open Data: Detailed and summarized data of Airbnb activity in Melbourne, VIC, Australia
 
-**From folks recommendations:**
+**From folks' recommendations:**
 
 According to people in the machine learning community, the following are the best data sets:
 
@@ -229,7 +229,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTY2NTAxODgzOSw2NDM1NDIzODEsLTE3Nz
+eyJoaXN0b3J5IjpbMTI5NTUxODMxOCw2NDM1NDIzODEsLTE3Nz
 c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
 MTcsNzI4Mzc3MzY3XX0=
 -->
