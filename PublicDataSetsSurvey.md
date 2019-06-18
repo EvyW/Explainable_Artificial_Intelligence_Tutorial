@@ -244,19 +244,21 @@ Li-ion Battery Aging Datasets:</p>
 <li>Description: This data set has been collected from a custom built battery prognostics testbed at the NASA Ames Prognostics Center of Excellence (PCoE). Li-ion batteries were run through 3 different operational profiles (charge, discharge and Electrochemical Impedance Spectroscopy) at different temperatures. Discharges were carried out at different current load levels until the battery voltage fell to preset voltage thresholds. Some of these thresholds were lower than that recommended by the OEM (2.7 V) in order to induce deep discharge aging effects. Repeated charge and discharge cycles result in accelerated aging of the batteries.</li>
 <li>Link: <a hrehttps://c3.nasa.gov/dashlink/resources/133/">https://c3.nasa.gov/dashlink/resources/133/</a></li>
 </ul>
+
 <p><strong>From Microsoft:</strong></p>
 <p>PySpark-Predictive-Maintenance data set:</p>
 <ul>
 <li>Description: This data is simulated to reflect features that are generic for most of the predictive maintenance scenarios.</li>
 <li>
-- Comments: Big data set.</li>
+Comments: Big data set.</li>
 <li>Link: <a href=" https://github.com/Azure/PySpark-Predictive-Maintenance">https://github.com/Azure/PySpark-Predictive-Maintenance</a> (Other info: <a href="https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1">https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1</a>)</li>
 </ul>
+
 <p>AMLWorkshop</p>
 <ul>
 <li>Description: Data used in the Azure Machine Learning workshop delivered at Silicon Valley Microsoft Technology Center. The business problem for this example is about predicting problems caused by component failures such that the question “What is the probability that a machine will fail in the near future due to a failure of a certain component?” can be answered.</li>
 <li>
-- Comments: multi-classification problem.</li>
+Comments: multi-classification problem.</li>
 <li>Link: <a href="
 - Link: https://github.com/microsoft/AMLWorkshop">https://github.com/microsoft/AMLWorkshop</a></li>
 </ul>
@@ -264,7 +266,7 @@ Li-ion Battery Aging Datasets:</p>
 <p>Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):</p>
 <ul>
 <li>
-- Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.</li>
+Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.</li>
 </ul>
 <h2 id="other-worth-to-visit-list-of-open-data-sources">
 
@@ -272,16 +274,15 @@ Li-ion Battery Aging Datasets:</p>
 ## Other “"Worth to Visit”" List of Open Data Sources</h2>
 <ol>
 <li>
-
-1. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.</li>
+ Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.</li>
 <li>
-2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.</li>
+*FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.</li>
 <li><a href="http://Data.gov">
-3. Data.gov</a>: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)</li>
+Data.gov</a>: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)</li>
 <li>
-4.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.</li>
+DBpedia: aims at getting structured content from the valuable information that Wikipedia created.</li>
 <li>
-5. Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots</li>
+Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots</li>
 <li>
 6. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.</li>
 <li>
@@ -305,6 +306,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwNDg5MzQ1NDIsMTU2OTQxMjk3LDc3MT
+eyJoaXN0b3J5IjpbLTExMjE1MTE0OTYsMTU2OTQxMjk3LDc3MT
 AwNjM4OF19
 -->
