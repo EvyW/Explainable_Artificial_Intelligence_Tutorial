@@ -284,9 +284,9 @@ DBpedia: aims at getting structured content from the valuable information that W
 <li>
 Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots</li>
 <li>
-6. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.</li>
+LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.</li>
 <li>
-7. Microsoft Research Open Data: also categorize their data sets according to topics such as biology, healthcare, social science etc.</li>
+Microsoft Research Open Data: also categorize their data sets according to topics such as biology, healthcare, social science etc.</li>
 </ol>
 <h2 id="references">
 
@@ -306,6 +306,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTExMjE1MTE0OTYsMTU2OTQxMjk3LDc3MT
-AwNjM4OF19
+eyJoaXN0b3J5IjpbNDUwMDczODAxLDE1Njk0MTI5Nyw3NzEwMD
+YzODhdfQ==
 -->
