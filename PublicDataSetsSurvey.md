@@ -195,16 +195,16 @@ Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 
 The following is a lista that contains popular open data sources:
 
-3. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
-4. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
-5. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
-6.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
-7. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
-8. Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
-9. Kaggle
-10. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
-11. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
-12. Microsoft Research Open Data (biology, healthcare, social science etc.)
+1. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.
+2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
+3. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
+4.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
+5. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
+9. Yelp Open Datasets: it contains reviews and user data from the Yelp platform. (TEXT MINING)
+10. Kaggle
+11. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
+12. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
+13. Microsoft Research Open Data (biology, healthcare, social science etc.)
 
 Search engines:
 13. Google dataset search
@@ -218,10 +218,10 @@ Badr, W. (2019, January 13). Top Sources For Machine Learning Datasets. Retrieve
 
 FreeCodeCamp.org. (2019, January 05). These Are The Best Free Open Data Sources Anyone Can Use. Retrieved from https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 
-
+List of datasets for machine-learning research. (2019, June 16). Retrieved from https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzND
-A1NTY3MTcsNzI4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbLTE4NDYxMDU0ODMsMTUyOTQ3ODQ0NywyNT
+c4MDc4MjcsLTEzNDA1NTY3MTcsNzI4Mzc3MzY3XX0=
 -->
