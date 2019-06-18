@@ -210,9 +210,9 @@ Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.
 3. Data.gov: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)
 4.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.
-5. Free code camp: offers data sets categoriWeb Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
+5. Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots
 6. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
-7. Microsoft Research Open Data (biology, healthcare, social science etc.)
+7. Microsoft Research Open Data: also categorize their data sets biology, healthcare, social science etc.)
 
 ## References:
 
@@ -226,7 +226,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTM1Mjk2MzcyNyw2NDM1NDIzODEsLTE3Nz
+eyJoaXN0b3J5IjpbLTQ0ODg5NTg1Nyw2NDM1NDIzODEsLTE3Nz
 c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
 MTcsNzI4Mzc3MzY3XX0=
 -->
