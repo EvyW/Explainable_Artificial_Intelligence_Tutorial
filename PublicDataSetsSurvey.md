@@ -1,12 +1,12 @@
 # Public Data Sets for Machine Learning Review
 
-This document contains a review of public data sets that are potentially useful for the WDL business context, specifically regarding the following topics:
+This document contains a review of public data sets that are potentially useful for the WDL business context, specifically, regarding the following topics:
 1.  Forecasting Datasets (with a temporal component)
 2.  Predictive maintenance datasets
 3.  Text classification datasets (OCR data sets included)
 4.  Relevant supervised learning datasets 
 
-This data sets were collected from sources considered as "top sources" for machine learning, such as:
+This data sets were collected from sources considered as "top sources" (for machine learning purposes) such as:
 1. Kaggle
 2. UCI Machine Learning Repository
 3. Awsome Public Data Sets Collection
@@ -223,6 +223,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3Nzc1MjgzMTMsMTUyOTQ3ODQ0NywyNT
-c4MDc4MjcsLTEzNDA1NTY3MTcsNzI4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbNjQzNTQyMzgxLC0xNzc3NTI4MzEzLDE1Mj
+k0Nzg0NDcsMjU3ODA3ODI3LC0xMzQwNTU2NzE3LDcyODM3NzM2
+N119
 -->
