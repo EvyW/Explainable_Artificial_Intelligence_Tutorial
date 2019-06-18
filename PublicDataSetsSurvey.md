@@ -159,6 +159,7 @@ Wikipedia has dedicated an article  that refer to datasets for machine learning 
 ### Focused on Optical Character Recognition (OCR)
 
 **From Kaggle:**
+
 According to the most voted (decreasing order)
 1. NumtaDB: Bengali Handwritten Digits: Build a classification model for Bengali handwritten digits.
 2. CAPTCHA Images
@@ -167,7 +168,9 @@ According to the most voted (decreasing order)
  - Chars74K dataset: Character Recognition in Natural Images
 
 **Recommendations from Wikipedia:**
+
 Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for "Handwritting and character recognition" with 12 data sets (https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition)
+
 ## 4. Predictive maintenance 
 
 **From NASA:**
@@ -210,7 +213,7 @@ Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):
 5. Free code camp: (Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, Bots)
 10. Kaggle
 11. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.
-12. UCI Machine Learning Repository: It serves as a comprehensive repository of database used by the machine learning community
+
 13. Microsoft Research Open Data (biology, healthcare, social science etc.)
 
 Search engines:
@@ -229,7 +232,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTI5NTUxODMxOCw2NDM1NDIzODEsLTE3Nz
+eyJoaXN0b3J5IjpbLTYzNjU3MjU3MCw2NDM1NDIzODEsLTE3Nz
 c1MjgzMTMsMTUyOTQ3ODQ0NywyNTc4MDc4MjcsLTEzNDA1NTY3
 MTcsNzI4Mzc3MzY3XX0=
 -->
