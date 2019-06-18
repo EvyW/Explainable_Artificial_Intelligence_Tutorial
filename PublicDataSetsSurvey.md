@@ -214,12 +214,12 @@ Search engines:
 
 Stanford, S., & Stanford, S. (2018, October 02). The Best Public Datasets for Machine Learning and Data Science. Retrieved from https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279
 
+Badr, W. (2019, January 13). Top Sources For Machine Learning Datasets. Retrieved from https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b
+
+FreeCodeCamp.org. (2019, January 05). These Are The Best Free Open Data Sources Anyone Can Use. Retrieved from https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 
 
-https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b
-
-https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTEwMzExODU5NTMsLTEzNDA1NTY3MTcsNz
-I4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbMjU3ODA3ODI3LC0xMzQwNTU2NzE3LDcyOD
+M3NzM2N119
 -->
