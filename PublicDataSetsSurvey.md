@@ -8,10 +8,12 @@
 <ol>
 <li>Forecasting Datasets (with a temporal component)</li>
 <li>Predictive maintenance datasets</li>
-<li>Text classification datasets (OCR data sets included)</li>
+<li>Text classification datasets(OCR data sets included)</li>
 <li>Relevant supervised learning datasets</li>
 </ol>
-<p>This data sets were collected from sources considered as “top sources” (for machine learning purposes) such as:</p>
+<p> 
+
+This data sets were collected from sources considered as “top sources” (for machine learning purposes) such as:</p>
 <ol>
 <li>Kaggle</li>
 <li>UCI Machine Learning Repository</li>
@@ -20,10 +22,14 @@
 <h2 id="supervised-learning">1. Supervised learning</h2>
 <p><strong>From Kaggle:</strong></p>
 <p>The following lists contain the 10 most voted data sets for classification tasks according to their size. However, an extended version with the 100 most voted data sets not only for classification but also for regression tasks (according to their size) is attached to this file, which also include more details.</p>
-<p>Most voted <strong>“large”</strong> data sets for classification tasks:</p>
+<p>
+
+Most voted <strong>“large”</strong> data sets classification tasks:</p>
 <ol>
-<li>CelebFaces Attributes (CelebA) Dataset</li>
-<li>Stanford Cars Dataset</li>
+<li>
+1. CelebFaces Attributes (CelebA) Dataset</li>
+<li>
+2. Stanford Cars Dataset</li>
 <li>Best Artworks of All Time</li>
 <li>LISA Traffic Light Dataset</li>
 <li>One-Shot-Pokemon Images</li>
@@ -36,7 +42,7 @@
 <p>Most voted <strong>“medium”</strong> data sets for classification tasks:</p>
 <ol>
 <li><a href="http://mlcourse.ai">mlcourse.ai</a></li>
-<li>Heartbeat Sounds</li>
+<li> Heartbeat Sounds</li>
 <li>Blood Cell Images</li>
 <li>Google-Landmarks Dataset</li>
 <li>Rain in Australia</li>
@@ -44,7 +50,7 @@
 <li>ECG Heartbeat Categorization Dataset</li>
 <li>News Category Dataset</li>
 <li>Data Scientist Job Market in the U.S.</li>
-<li>MotionSense Dataset : Smartphone Sensor Data</li>
+<li>MotionSense DatasetSmartphone Sensor Data</li>
 </ol>
 <p>Most voted <strong>“small”</strong> data sets for classification tasks:</p>
 <ol>
@@ -52,154 +58,250 @@
 <li>News Headlines Dataset For Sarcasm Detection</li>
 <li>Kuzushiji-MNIST</li>
 <li>Predicting a Pulsar Star</li>
-<li>Mobile Price Classification</li>
+<li>Mobile Classification</li>
 <li>Sloan Digital Sky Survey DR14</li>
 <li>Bank Marketing Dataset</li>
 <li>Bank Marketing</li>
 <li>Turkey Political Opinions</li>
 <li>Sentiment Labelled Sentences Data Set</li>
 </ol>
-<p><strong>From UCI machine learning repository:</strong></p>
-<p>This repository contains 353 data sets under the category “classification” and 98 under the category “regression”.</p>
-<p><strong>From KEEL data repository:</strong></p>
-<p>This page aims at providing to the machine learning researchers a set of benchmarks to analyze the behavior of the learning methods. It also shows some relevant research papers in which these data sets have been employed. It includes 592 data sets in the category of  “supervised classification” divided in the following sub-categories</p>
+<p><strong>
+
+**From UCI machine learning repository:</strong></p>
+<p>**
+
+This repository contains 353 data sets under the category “classification” and 98 under the category “regression”.</p>
+<p><strong>".
+
+**From KEEL data repository:</strong></p>
+<p>**
+
+This page aims at providing to the machine learning researchers a set of benchmarks to analyze the behavior of the learning methods. It also shows some relevant research papers in which these data sets have been employed. It includes 592 data sets in the category of  “supervised classification” divided in the following sub-categories</p>
 <ul>
-<li>Standard classification data sets (76)</li>
-<li>Standard classification data sets with missing values (26)</li>
-<li>Imbalanced data sets for classification (145)</li>
-<li>Multi instance classification data sets (10)</li>
-<li>Multi label classification data sets (16)</li>
-<li>Classification data sets with Class Noise (76)</li>
-<li>Classification data sets with Attribute Noise (228)</li>
+<li>
+- Standard classification data sets (76)</li>
+<li>
+- Standard classification data sets with missing values (26)</li>
+<li>
+- Imbalanced data sets for classification (145)</li>
+<li>
+- Multi instance classification data sets (10)</li>
+<li>
+- Multi label classification data sets (16)</li>
+<li>
+- Classification data sets with Class Noise (76)</li>
+<li>
+- Classification data sets with Attribute Noise (228)</li>
 </ul>
 <h2 id="forecasting-data-sets">2. Forecasting Data Sets</h2>
 <p><strong>From Kaggle:</strong></p>
-<p>The following list contains the 10 most voted data sets (in decreasing order) with the tag “time series”.  They were collected in a way that not only the temporal feature is included but also additional features concerned with the problem under examination. An extended version with the 100 most voted data sets for time series tasks is attached to this file, which also include more details.</p>
+<p>
+The following list contains the 10 most voted data sets (in decreasing order) with the tag “time series”.  They were collected in a way that not only the temporal feature is included but also additional features concerned with the problem under examination. An extended version with the 100 most voted data sets for time series tasks is attached to this file, which also include more details.</p>
 <ol>
 <li>S&amp;P 500 stock data: Historical stock data for for all companies currently found on the S&amp;P 500 index.<br>
 Goal:</li>
 <li>Bitcoin Blockchain: Complete live historical Bitcoin blockchain (blocks and transactions)</li>
 <li>Historical Hourly Weather Data 2012-2017: Hourly weather data for 30 US cities, Canadian Cities, and 6 Israeli Cities. Various weather attributes, such as temperature, humidity, air pressure, etc. are included.</li>
 <li>Energy consumption of the Netherlands: electricity and Gas consumed in the Netherlands every year different pollution levels in Madrid from 2001 to 2018.</li>
-<li>DJIA 30 Stock Time Series Historical stock data for 30 DIJA companies (2006-01-01 to 2018-01-01)</li>
-<li>Ethereum Classic Blockchain: complete live Ethereum Classic historical blockchain data</li>
-<li>MotionSense Dataset : Smartphone Sensor Data: Time-series data generated by smartphone’s sensors: accelerometer and gyroscope</li>
+<li>
+5. DJIA 30 Stock Time Series Historical stock data for 30 DIJA companies (2006-01-01 to 2018-01-01)</li>
+<li>
+6. Ethereum Classic Blockchain: complete live Ethereum Classic historical blockchain data</li>
+<li>MotionSense DatasetSmartphone Sensor Data: Time-series data generated by smartphone’s sensors: accelerometer and gyroscope</li>
 <li>Accidents in France from 2005 to 2016: Help prevent accidents</li>
 <li>Weather Data for Recruit Restaurant Competition:  The focus is on using data about reservations made at various restaurants throughout Japan, along with restaurant location and genre information to predict the actual number of visitors a restaurant will have on a given day.</li>
 <li>Quality Prediction in a Mining Process: explore real industrial data and help manufacturing plants to be more efficient. The main goal is to use this data to predict how much impurity is in the ore concentrate.</li>
 </ol>
 <p><strong>From UCI machine learning repository:</strong></p>
-<p>This repository contains 93 data sets under the category “Time-Series”, which are useful for tasks such as classification, regression, and clustering (<a href="https://archive.ics.uci.edu/ml/datasets.php?format=&amp;task=&amp;att=&amp;area=&amp;numAtt=&amp;numIns=&amp;type=ts&amp;sort=nameUp&amp;view=table">https://archive.ics.uci.edu/ml/datasets.php?format=&amp;task=&amp;att=&amp;area=&amp;numAtt=&amp;numIns=&amp;type=ts&amp;sort=nameUp&amp;view=table</a>).</p>
+<p>**
+
+This repository contains 93 data sets under the category “Time-Series”, which are useful for tasks such as classification, regression, and clustering (<a href="https://archive.ics.uci.edu/ml/datasets.php?format=&amp;task=&amp;att=&amp;area=&amp;numAtt=&amp;numIns=&amp;type=ts&amp;sort=nameUp&amp;view=table">https://archive.ics.uci.edu/ml/datasets.php?format=&amp;task=&amp;att=&amp;area=&amp;numAtt=&amp;numIns=&amp;type=ts&amp;sort=nameUp&amp;view=table</a>).</p>
 <p><strong>From Awsome  Public Data Sets Collection:</strong></p>
-<p>This repository contains around 5 data sets in the category “Time Series”.</p>
+<p>**
+
+This repository contains around 5 data sets in the category Time Series”.</p>
 <p><strong>From KEEL data repository:</strong></p>
-<p>This repository includes 40 data sets in the category “Time Series”.</p>
+<p>This repository includes 40 data sets in the category “"Time Series”.</p>
 <h2 id="text-mining">3. Text mining</h2>
 <p><strong>From Kaggle:</strong></p>
-<p>The following list presents the 10 most voted data sets in kaggle with the tags “text mining” and “text data”.  However,  an extended version with the 100 most voted data sets is attached to this file, which also include more details of each data set.</p>
+<p>The following list presents the 10 most voted data sets in kaggle with the tags “text mining” and text data”.  However,  an extended version with the 100 most voted data sets is attached to this file, which also include more details of each data set.</p>
 <ol>
-<li>Women’s E-Commerce Clothing Reviews: 23,000 Customer Reviews and Ratings</li>
+<li>Women's E-Commerce Clothing Reviews: 23,000 Customer Reviews and Ratings</li>
 <li>Amazon Reviews for Sentiment Analysis: a few million Amazon reviews in fastText format</li>
-<li>Wikipedia Movie Plots: plot descriptions for ~35,000 movies:</li>
+<li>
+3. Wikipedia Movie Plots: plot descriptions for ~35,000 movies:</li>
 <li>Seinfeld Chronicles: complete Seinfeld Scripts and Episode Details</li>
 <li>Predict Pakistan Elections 2018: help us predict the next winner:</li>
 <li>UCI ML Drug Review dataset: over 200,000 patient drug reviews.</li>
 <li>IMDB Movie Reviews Dataset: perform Sentiment Analysis and Text Classification using this Dataset</li>
-<li>Star Wars Movie Scripts: this is a collection of script dialogue between characters for the first three movies (episodes 4-6).</li>
-<li>English Wikipedia Articles 2017-08-20 SQLite: the dataset encompasses nearly 5 million articles, with more than 23 million individual sections.</li>
-<li>Melbourne Airbnb Open Data: Detailed and summarized data of Airbnb activity in Melbourne, VIC, Australia</li>
+<li>
+8. Star Wars Movie Scripts: this is a collection of script dialogue between characters for the first three movies (episodes 4-6).</li>
+<li>
+9. English Wikipedia Articles 2017-08-20 SQLite: the dataset encompasses nearly 5 million articles, with more than 23 million individual sections.</li>
+<li>
+10. Melbourne Airbnb Open Data: Detailed and summarized data of Airbnb activity in Melbourne, VIC, Australia</li>
 </ol>
-<p><strong>From folks’ recommendations:</strong></p>
-<p>According to people in the machine learning community, the following are the best data sets:</p>
-<p>For sentiment analysis:</p>
+<p><strong>
+
+**From folks’ recommendations:</strong></p>
+<p>**
+
+According to people in the machine learning community, the following are the best data sets:</p>
+<p>
+
+For sentiment analysis:</p>
 <ul>
 <li>Multidomain sentiment analysis dataset: A slightly older dataset that features product reviews from Amazon.</li>
-<li>IMDB reviews: An older, relatively small dataset for binary sentiment classification features 25,000 movie reviews.</li>
-<li>Stanford Sentiment Treebank: Standard sentiment dataset with sentiment annotations.</li>
-<li>Sentiment140: A popular dataset, which uses 160,000 tweets with emoticons pre-removed.</li>
-<li>Twitter US Airline Sentiment: Twitter data on US airlines from February 2015, classified as positive, negative, and neutral tweets</li>
+<li>
+- IMDB reviews: An older, relatively small dataset for binary sentiment classification features 25,000 movie reviews.</li>
+<li>
+- Stanford Sentiment Treebank: Standard sentiment dataset with sentiment annotations.</li>
+<li>
+- Sentiment140: A popular dataset, which uses 160,000 tweets with emoticons pre-removed.</li>
+<li>
+- Twitter US Airline Sentiment: Twitter data on US airlines from February 2015, classified as positive, negative, and neutral tweets</li>
 </ul>
-<p>Natural language processing data sets:</p>
+<p>
+
+Natural language processing data sets:</p>
 <ul>
-<li>HotspotQA Dataset: Question answering dataset featuring natural, multi-hop questions, with strong supervision for supporting facts to enable more explainable question answering systems.</li>
-<li>Enron Dataset: Email data from the senior management of Enron, organized into folders.</li>
-<li>Amazon Reviews: Contains around 35 million reviews from Amazon spanning 18 years. Data include product and user information, ratings, and plaintext review.</li>
-<li>Google Books Ngrams: A collection of words from Google books.</li>
-<li>Blogger Corpus: A collection of 681,288-blog posts gathered from <a href="http://blogger.com">blogger.com</a>. Each blog contains a minimum of 200 occurrences of commonly used English words.</li>
-<li>Wikipedia Links data: The full text of Wikipedia. The dataset contains almost 1.9 billion words from more than 4 million articles. You can search by word, phrase or part of a paragraph itself.</li>
-<li>Gutenberg eBooks List: An annotated list of ebooks from Project Gutenberg.</li>
-<li>Hansards text chunks of Canadian Parliament: 1.3 million pairs of texts from the records of the 36th Canadian Parliament.</li>
-<li>Jeopardy: Archive of more than 200,000 questions from the quiz show Jeopardy.</li>
-<li>Rotten Tomatoes Reviews: Archive of more than 480,000 critic reviews (fresh or rotten).</li>
-<li>SMS Spam Collection in English: A dataset that consists of 5,574 English SMS spam messages</li>
-<li>Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.</li>
-<li>UCI’s Spambase: A large spam email dataset, useful for spam filtering.</li>
+<li>
+- HotspotQA Dataset: Question answering dataset featuring natural, multi-hop questions, with strong supervision for supporting facts to enable more explainable question answering systems.</li>
+<li>
+- Enron Dataset: Email data from the senior management of Enron, organized into folders.</li>
+<li>
+- Amazon Reviews: Contains around 35 million reviews from Amazon spanning 18 years. Data include product and user information, ratings, and plaintext review.</li>
+<li>
+- Google Books Ngrams: A collection of words from Google books.</li>
+<li>
+- Blogger Corpus: A collection of 681,288-blog posts gathered from <a href="http://blogger.com">blogger.com</a>blogger.com. Each blog contains a minimum of 200 occurrences of commonly used English words.</li>
+<li>
+- Wikipedia Links data: The full text of Wikipedia. The dataset contains almost 1.9 billion words from more than 4 million articles. You can search by word, phrase or part of a paragraph itself.</li>
+<li>
+- Gutenberg eBooks List: An annotated list of ebooks from Project Gutenberg.</li>
+<li>
+- Hansards text chunks of Canadian Parliament: 1.3 million pairs of texts from the records of the 36th Canadian Parliament.</li>
+<li>
+- Jeopardy: Archive of more than 200,000 questions from the quiz show Jeopardy.</li>
+<li>
+- Rotten Tomatoes Reviews: Archive of more than 480,000 critic reviews (fresh or rotten).</li>
+<li>
+- SMS Spam Collection in English: A dataset that consists of 5,574 English SMS spam messages</li>
+<li>
+- Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.</li>
+<li>
+- UCI’s Spambase: A large spam email dataset, useful for spam filtering.</li>
 </ul>
 <p><strong>From Yelp:</strong></p>
-<p>Yelp Open Datasets: it contains reviews and user data from the Yelp platform.</p>
+<p>Yelp Open Datasets:it contains reviews and user data from the Yelp platform.</p>
 <p><strong>From UCI machine learning repository:</strong></p>
-<p>This repository contains 54 data sets under the category “Text”, which are useful for tasks such as classification, regression, and clustering.</p>
-<p><strong>From Awsome  Public Data Sets Collection:</strong></p>
-<p>This repository contains around 37 data sets in the category “Natural Language”.</p>
-<p><strong>Recommendations from Wikipedia:</strong><br>
+<p>**
+
+This repository contains 54 data sets under the category “Text, which are useful for tasks such as classification, regression, and clustering.</p>
+<p><strong>
+
+**From Awsome  Public Data Sets Collection:</strong></p>
+<p>**
+
+This repository contains around 37 data sets in the category “Natural Language”.</p>
+<p><strong>Recommendations from Wikipedia:</strong><br>**
 Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Text data”, with subcategories such as: reviews, news articles, messages, tweets, etc. (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Text_data">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Text_data</a>)</p>
 <h3 id="focused-on-optical-character-recognition-ocr">Focused on Optical Character Recognition (OCR)</h3>
 <p><strong>From Kaggle:</strong></p>
 <p>According to the most voted (decreasing order)</p>
 <ol>
 <li>NumtaDB: Bengali Handwritten Digits: Build a classification model for Bengali handwritten digits.</li>
-<li>CAPTCHA Images</li>
+<li>
+2. CAPTCHA Images</li>
 </ol>
 <p><strong>From Awesome Public Datasets:</strong></p>
 <ul>
-<li>Chars74K dataset: Character Recognition in Natural Images</li>
+<li>**
+ - Chars74K dataset: Character Recognition in Natural Images</li>
 </ul>
-<p><strong>Recommendations from Wikipedia:</strong></p>
-<p>Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Handwritting and character recognition” with 12 data sets (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition</a>)</p>
+<p><strong>
+
+**Recommendations from Wikipedia:</strong></p>
+<p>**
+
+Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Handwritting and character recognition” with 12 data sets (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition</a>)</p>
 <h2 id="predictive-maintenance">4. Predictive maintenance</h2>
 <p><strong>From NASA:</strong></p>
-<p>Turbofan Engine Degradation Simulation Data Set:</p>
+<p>
+
+Turbofan Engine Degradation Simulation Data Set:</p>
 <ul>
-<li>Description: Engine degradation simulation was carried out using C-MAPSS. Four different were sets simulated under different combinations of operational conditions and fault modes. Records several sensor channels to characterize fault evolution. The data set was provided by the Prognostics CoE at NASA Ames.</li>
-<li>Comments: this data set seems to be popular for research about predictive maintenance.</li>
-<li>Link: <a href="https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/#turbofan">https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/#turbofan</a></li>
+<li>
+- Description: Engine degradation simulation was carried out using C-MAPSS. Four different were sets simulated under different combinations of operational conditions and fault modes. Records several sensor channels to characterize fault evolution. The data set was provided by the Prognostics CoE at NASA Ames.</li>
+<li> Comments: this data set seems to be popular for research about predictive maintenance.</li>
+<li>Link: <a hre">https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/#turbofan</a></li>
 </ul>
-<p>Li-ion Battery Aging Datasets:</p>
+<p> 
+Li-ion Battery Aging Datasets:</p>
 <ul>
 <li>Description: This data set has been collected from a custom built battery prognostics testbed at the NASA Ames Prognostics Center of Excellence (PCoE). Li-ion batteries were run through 3 different operational profiles (charge, discharge and Electrochemical Impedance Spectroscopy) at different temperatures. Discharges were carried out at different current load levels until the battery voltage fell to preset voltage thresholds. Some of these thresholds were lower than that recommended by the OEM (2.7 V) in order to induce deep discharge aging effects. Repeated charge and discharge cycles result in accelerated aging of the batteries.</li>
-<li>Link: <a href="https://c3.nasa.gov/dashlink/resources/133/">https://c3.nasa.gov/dashlink/resources/133/</a></li>
+<li>Link: <a hrehttps://c3.nasa.gov/dashlink/resources/133/">https://c3.nasa.gov/dashlink/resources/133/</a></li>
 </ul>
 <p><strong>From Microsoft:</strong></p>
 <p>PySpark-Predictive-Maintenance data set:</p>
 <ul>
 <li>Description: This data is simulated to reflect features that are generic for most of the predictive maintenance scenarios.</li>
-<li>Comments: Big data set.</li>
-<li>Link: <a href="https://github.com/Azure/PySpark-Predictive-Maintenance">https://github.com/Azure/PySpark-Predictive-Maintenance</a> (Other info: <a href="https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1">https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1</a>)</li>
+<li>
+- Comments: Big data set.</li>
+<li>Link: <a href=" https://github.com/Azure/PySpark-Predictive-Maintenance">https://github.com/Azure/PySpark-Predictive-Maintenance</a> (Other info: <a href="https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1">https://gallery.azure.ai/Notebook/Predictive-Maintenance-Modelling-Guide-R-Notebook-1</a>)</li>
 </ul>
 <p>AMLWorkshop</p>
 <ul>
 <li>Description: Data used in the Azure Machine Learning workshop delivered at Silicon Valley Microsoft Technology Center. The business problem for this example is about predicting problems caused by component failures such that the question “What is the probability that a machine will fail in the near future due to a failure of a certain component?” can be answered.</li>
-<li>Comments: multi-classification problem.</li>
-<li>Link: <a href="https://github.com/microsoft/AMLWorkshop">https://github.com/microsoft/AMLWorkshop</a></li>
+<li>
+- Comments: multi-classification problem.</li>
+<li>Link: <a href="
+- Link: https://github.com/microsoft/AMLWorkshop">https://github.com/microsoft/AMLWorkshop</a></li>
 </ul>
 <p><strong>From Kaggle:</strong></p>
 <p>Hard Drive Test Data (Daily Snapshot of Each Operational Hard Drive in 2016):</p>
 <ul>
-<li>Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.</li>
+<li>
+- Description: Each day, Backblaze takes a snapshot of each operational hard drive that includes basic hard drive information (e.g., capacity, failure) and S.M.A.R.T. statistics reported by each drive. This dataset contains data from the first two quarters in 2016.</li>
 </ul>
-<h2 id="other-worth-to-visit-list-of-open-data-sources">Other “Worth to Visit” List of Open Data Sources</h2>
-<ol>
-<li>Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.</li>
-<li>*FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.</li>
-<li><a href="http://Data.gov">Data.gov</a>: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)</li>
-<li>*DBpedia: aims at getting structured content from the valuable information that Wikipedia created.</li>
-<li>Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots</li>
-<li>LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.</li>
-<li>Microsoft Research Open Data: also categorize their data sets according to topics such as biology, healthcare, social science etc.</li>
-</ol>
-<h2 id="references">References:</h2>
-<p>Stanford, S., &amp; Stanford, S. (2018, October 02). The Best Public Datasets for Machine Learning and Data Science. Retrieved from <a href="https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279">https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279</a></p>
-<p>Badr, W. (2019, January 13). Top Sources For Machine Learning Datasets. Retrieved from <a href="https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b">https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b</a></p>
-<p><a href="http://FreeCodeCamp.org">FreeCodeCamp.org</a>. (2019, January 05). These Are The Best Free Open Data Sources Anyone Can Use. Retrieved from <a href="https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/">https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/</a></p>
-<p>List of datasets for machine-learning research. (2019, June 16). Retrieved from <a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research</a></p>
+<h2 id="other-worth-to-visit-list-of-open-data-sources">
 
+
+## Other “"Worth to Visit”" List of Open Data Sources</h2>
+<ol>
+<li>
+
+1. Google Public Data Explorer: can help you explore vast amounts of public-interest datasets. It makes the data from different agencies and sources available.</li>
+<li>
+2. *FiveThirtyEight: It provides its various sources of data for a variety of sectors such as politics, sports, science, economics etc.</li>
+<li><a href="http://Data.gov">
+3. Data.gov</a>: Allows the acces to US government’s open data. There are now 180,000 datasets. (agriculture, climate, consumer, energy, finance, science and research, etc.)</li>
+<li>
+4.  *DBpedia: aims at getting structured content from the valuable information that Wikipedia created.</li>
+<li>
+5. Free code camp: offers data sets useful for: Web Analytics,  Social Media Analysis, Social Network Analysis, Education Analytics, Data Visualization, Data-driven Web, Development, and Bots</li>
+<li>
+6. LODUM: It is the Open Data initiative of the University of Münster. Under this initiative, it is made possible for anyone to access any public information about the university in machine-readable formats.</li>
+<li>
+7. Microsoft Research Open Data: also categorize their data sets according to topics such as biology, healthcare, social science etc.</li>
+</ol>
+<h2 id="references">
+
+## References:</h2>
+<p>
+
+Stanford, S., &amp; Stanford, S. (2018, October 02). The Best Public Datasets for Machine Learning and Data Science. Retrieved from <a href="https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279">https://medium.com/towards-artificial-intelligence/the-50-best-public-datasets-for-machine-learning-d80e9f030279</a></p>
+<p>
+
+Badr, W. (2019, January 13). Top Sources For Machine Learning Datasets. Retrieved from <a href="https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b">https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc3378b</a></p>
+<p><a href="http://FreeCodeCamp.org">
+
+FreeCodeCamp.org</a>. (2019, January 05). These Are The Best Free Open Data Sources Anyone Can Use. Retrieved from <a href="https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/">https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/</a></p>
+<p>
+
+List of datasets for machine-learning research. (2019, June 16). Retrieved from <a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research</a></p>
+
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbNzcxMDA2Mzg4XX0=
+-->
