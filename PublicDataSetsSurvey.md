@@ -1,6 +1,6 @@
 # Public Data Sets for Machine Learning Review
 
-This document contains a review of public data sets that are potentially useful as use cases for WDL , specifically regarding the following topics:
+This document contains a review of public data sets that are potentially useful in the business context of WDL , specifically regarding the following topics:
 1.  Forecasting Datasets (with a temporal component)
 2.  Predictive maintenance datasets
 3.  Text classification datasets (OCR data sets included)
@@ -213,5 +213,5 @@ https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc
 
 https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbOTgzMTI1MjcwLDcyODM3NzM2N119
+eyJoaXN0b3J5IjpbMTQxMzg5MjI4NSw3MjgzNzczNjddfQ==
 -->
