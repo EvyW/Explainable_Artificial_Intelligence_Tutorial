@@ -175,35 +175,36 @@ Google Books Ngrams: A collection of words from Google books.</li>
 <li>
 Blogger Corpus: A collection of 681,288-blog posts gathered from <a href="http://blogger.com">blogger.com</a>blogger.com. Each blog contains a minimum of 200 occurrences of commonly used English words.</li>
 <li>
-- Wikipedia Links data: The full text of Wikipedia. The dataset contains almost 1.9 billion words from more than 4 million articles. You can search by word, phrase or part of a paragraph itself.</li>
+Wikipedia Links data: The full text of Wikipedia. The dataset contains almost 1.9 billion words from more than 4 million articles. You can search by word, phrase or part of a paragraph itself.</li>
 <li>
-- Gutenberg eBooks List: An annotated list of ebooks from Project Gutenberg.</li>
+Gutenberg eBooks List: An annotated list of ebooks from Project Gutenberg.</li>
 <li>
-- Hansards text chunks of Canadian Parliament: 1.3 million pairs of texts from the records of the 36th Canadian Parliament.</li>
+Hansards text chunks of Canadian Parliament: 1.3 million pairs of texts from the records of the 36th Canadian Parliament.</li>
 <li>
-- Jeopardy: Archive of more than 200,000 questions from the quiz show Jeopardy.</li>
+Jeopardy: Archive of more than 200,000 questions from the quiz show Jeopardy.</li>
 <li>
-- Rotten Tomatoes Reviews: Archive of more than 480,000 critic reviews (fresh or rotten).</li>
+Rotten Tomatoes Reviews: Archive of more than 480,000 critic reviews (fresh or rotten).</li>
 <li>
-- SMS Spam Collection in English: A dataset that consists of 5,574 English SMS spam messages</li>
+SMS Spam Collection in English: A dataset that consists of 5,574 English SMS spam messages</li>
 <li>
-- Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.</li>
+Yelp Reviews: An open dataset released by Yelp, contains more than 5 million reviews.</li>
 <li>
-- UCI’s Spambase: A large spam email dataset, useful for spam filtering.</li>
+UCI’s Spambase: A large spam email dataset, useful for spam filtering.</li>
 </ul>
 <p><strong>From Yelp:</strong></p>
 <p>Yelp Open Datasets:it contains reviews and user data from the Yelp platform.</p>
 <p><strong>From UCI machine learning repository:</strong></p>
-<p>**
+
 
 This repository contains 54 data sets under the category “Text, which are useful for tasks such as classification, regression, and clustering.</p>
 <p><strong>
 
-**From Awsome  Public Data Sets Collection:</strong></p>
-<p>**
+<strong>From Awsome  Public Data Sets Collection:</strong></p>
+
 
 This repository contains around 37 data sets in the category “Natural Language”.</p>
-<p><strong>Recommendations from Wikipedia:</strong><br>**
+<p><strong>Recommendations from Wikipedia:</strong><br>
+
 Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Text data”, with subcategories such as: reviews, news articles, messages, tweets, etc. (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Text_data">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Text_data</a>)</p>
 <h3 id="focused-on-optical-character-recognition-ocr">Focused on Optical Character Recognition (OCR)</h3>
 <p><strong>From Kaggle:</strong></p>
@@ -211,17 +212,17 @@ Wikipedia has dedicated an article  that refer to datasets for machine learning 
 <ol>
 <li>NumtaDB: Bengali Handwritten Digits: Build a classification model for Bengali handwritten digits.</li>
 <li>
-2. CAPTCHA Images</li>
+CAPTCHA Images</li>
 </ol>
 <p><strong>From Awesome Public Datasets:</strong></p>
 <ul>
-<li>**
+<li>
  - Chars74K dataset: Character Recognition in Natural Images</li>
 </ul>
 <p><strong>
 
-**Recommendations from Wikipedia:</strong></p>
-<p>**
+<strong>Recommendations from Wikipedia:</strong></p>
+<p>
 
 Wikipedia has dedicated an article  that refer to datasets for machine learning research, this includes a section for “Handwritting and character recognition” with 12 data sets (<a href="https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition">https://en.wikipedia.org/wiki/List_of_datasets_for_machine-learning_research#Handwriting_and_character_recognition</a>)</p>
 <h2 id="predictive-maintenance">4. Predictive maintenance</h2>
@@ -302,6 +303,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMTgxNzM4MTQ2LDE1Njk0MTI5Nyw3NzEwMD
-YzODhdfQ==
+eyJoaXN0b3J5IjpbLTIwMDk1NzM4MDAsMTU2OTQxMjk3LDc3MT
+AwNjM4OF19
 -->
