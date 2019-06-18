@@ -217,7 +217,7 @@ CAPTCHA Images</li>
 <p><strong>From Awesome Public Datasets:</strong></p>
 <ul>
 <li>
- - Chars74K dataset: Character Recognition in Natural Images</li>
+ Chars74K dataset: Character Recognition in Natural Images</li>
 </ul>
 <p><strong>
 
@@ -232,7 +232,7 @@ Wikipedia has dedicated an article  that refer to datasets for machine learning 
 Turbofan Engine Degradation Simulation Data Set:</p>
 <ul>
 <li>
-- Description: Engine degradation simulation was carried out using C-MAPSS. Four different were sets simulated under different combinations of operational conditions and fault modes. Records several sensor channels to characterize fault evolution. The data set was provided by the Prognostics CoE at NASA Ames.</li>
+Description: Engine degradation simulation was carried out using C-MAPSS. Four different were sets simulated under different combinations of operational conditions and fault modes. Records several sensor channels to characterize fault evolution. The data set was provided by the Prognostics CoE at NASA Ames.</li>
 <li> Comments: this data set seems to be popular for research about predictive maintenance.</li>
 <li>Link: <a hre">https://ti.arc.nasa.gov/tech/dash/groups/pcoe/prognostic-data-repository/#turbofan</a></li>
 </ul>
@@ -303,6 +303,6 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTIwMDk1NzM4MDAsMTU2OTQxMjk3LDc3MT
-AwNjM4OF19
+eyJoaXN0b3J5IjpbLTY1MDU3ODk1OCwxNTY5NDEyOTcsNzcxMD
+A2Mzg4XX0=
 -->
