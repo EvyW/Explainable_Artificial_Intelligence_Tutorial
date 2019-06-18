@@ -53,6 +53,10 @@ Most voted **"small"** data sets for classification tasks:
 9. Turkey Political Opinions
 10. Sentiment Labelled Sentences Data Set
 
+**From UCI machine learning repository:**
+
+This repository contains 353 data sets under the category "classification" and 98 under the category "regression", which are useful for tasks such as classification, regression, and clustering.
+
 **From KEEL data repository:**
 
 This page aims at providing to the machine learning researchers a set of benchmarks to analyze the behavior of the learning methods. It also shows some relevant research papers in which these data sets have been employed. It includes 592 data sets in the category of  "supervised classification" divided in the following sub-categories
@@ -223,7 +227,7 @@ List of datasets for machine-learning research. (2019, June 16). Retrieved from 
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNjQzNTQyMzgxLC0xNzc3NTI4MzEzLDE1Mj
-k0Nzg0NDcsMjU3ODA3ODI3LC0xMzQwNTU2NzE3LDcyODM3NzM2
-N119
+eyJoaXN0b3J5IjpbNjczNjYwMjcwLDY0MzU0MjM4MSwtMTc3Nz
+UyODMxMywxNTI5NDc4NDQ3LDI1NzgwNzgyNywtMTM0MDU1Njcx
+Nyw3MjgzNzczNjddfQ==
 -->
