@@ -6,7 +6,10 @@ This document contains a review of public data sets that are potentially useful 
 3.  Text classification datasets (OCR data sets included)
 4.  Relevant supervised learning datasets 
 
-This data sets were collected From sources considered top sources for machine learning
+This data sets were collected from sources considered top sources for machine learning, such as:
+1. Kaggle
+2. UCI Machine Learning Repository
+3. Awsome Publci
 
 ## List of Open Data Sources
 
@@ -213,5 +216,5 @@ https://towardsdatascience.com/top-sources-for-machine-learning-datasets-bb6d0dc
 
 https://www.freecodecamp.org/news/https-medium-freecodecamp-org-best-free-open-data-sources-anyone-can-use-a65b514b0f2d/
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE3ODI3ODI0OTUsNzI4Mzc3MzY3XX0=
+eyJoaXN0b3J5IjpbLTE1OTM0LDcyODM3NzM2N119
 -->
