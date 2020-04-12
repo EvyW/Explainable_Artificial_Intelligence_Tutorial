@@ -538,7 +538,6 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 <p><img src="https://lh3.googleusercontent.com/9AbvjlCoIgd5AINOFpHnZRfzWSsKlLWXeI3AL_Dkkpo6PxipdZaaS-1y5_wYEjekiigL3Hpo8FXI=s900" alt="enter image description here"></p>
 <p>Interpretation:</p>
 <ul>
-<li>The “<strong>local model prediction</strong>” is the <strong>prediction of the linear model</strong></li>
 <li>The <strong>variable that caused the prediction to be “likely”</strong> is the <strong>recommedation letter strength.</strong></li>
 <li>While <strong>the varibles that contradict the prediction are:</strong> the statement of purpose, GRE score, university rating, CGPA score, and TOEFL score.</li>
 </ul>
