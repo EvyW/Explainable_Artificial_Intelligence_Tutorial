@@ -590,7 +590,7 @@ It is calculated differently according to whether it is for tabular or textual d
 <li>Tabular: For tabular data an optimal solution will depend on the type of input data
 <ol>
 <li>Categorical: categorical features will be recoded based on whether or not they are equal to the observation (maybe 1 if they are equal and 0 if not)</li>
-<li>Continuous: (if continuous features are binned these features will be recoded based on whether they are in the same bin as the observation.) The distance to the original observation is then calculated based on a user-chosen distance measure (euclidean by default), and converted to a similarity using an exponential kernel of a user defined width (defaults to 0.75 times the square root of the number of features)</li>
+<li>Continuous: The distance to the original observation is calculated based on a user-chosen distance measure (euclidean by default), and converted to a similarity value using an exponential kernel with a width defined by the user (default: 0.75 times the square root of the number of features)</li>
 </ol>
 </li>
 </ul>
