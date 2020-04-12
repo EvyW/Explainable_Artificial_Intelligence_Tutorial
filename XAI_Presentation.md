@@ -574,12 +574,12 @@ plot<span class="token punctuation">(</span>lime<span class="token punctuation">
 LIME depends on the type of input data. Currently two types of inputs are supported: tabular and text</p>
 <ul>
 <li>Tabular  data: when  tabular  data, the permutations are dependent on the training set. During the creation of the explainer the statistics for each variable are extracted and permutations are then sampled from the variable distributions (no treally the variable distribution, but more like from the variable range). This means that permutations are in fact independent from the explained variable (because when permuting (creating the new data points, relationship among variables is not considered, so realtionships are destroyed) making the similarity computation even more important as this is the only thing establishing the locality of the analysis.</li>
-<li>Which statistics are extracted?: we compute the mean and std, and discretize it into quartiles (what are quartiles for?). If it is categorical data then  we compute the frequency of each value.</li>
+<li>Which statistics are extracted?: we compute the mean and std, and discretize it into quartiles. If it is categorical data then  we compute the frequency of each value.</li>
 <li>Text data: When the outcome of text predictions are to be explained the permutations are performed by randomly removing words from the original observation. Depending on whether the model uses word location or not, words occurring multiple times will be removed one-by-one or as a whole.</li>
 <li>What are the statistics for?
 <ul>
 <li>To scale the data, so that we can meaningfully compute distances when the attributes are not on the same scale</li>
-<li>To sample perturbed instances - which we do by sampling from a Normal(0,1), multiplying by the std and adding back the mean. (they assume a normal distribution)</li>
+<li>To sample perturbed instances - which we do by sampling from a Normal(0,1), multiplying by the std and adding back the mean (normal distribution is assumed)</li>
 </ul>
 </li>
 </ul>
