@@ -606,7 +606,7 @@ It is calculated differently according to whether it is for tabular or textual d
 <p>Disadvantages:</p>
 <ul>
 <li>LIME <strong>provide only explanations for small regions</strong>. <strong>However, for a larger region the linear model might not be powerful enough</strong> to explain the behavior.</li>
-<li>LIME <strong>assumes that linear models can approximate local behaviour</strong> , <strong>but if the  model is highly non-linear</strong> even for a very small region, then the exaplanation might not be a faithful.</li>
+<li>LIME <strong>assumes that linear models can approximate local behaviour</strong> , <strong>but if the problem is highly non-linear</strong> even for a very small region, then the exaplanation might not be a faithful.</li>
 <li><strong>It is not clear</strong> to which other instances  (or <strong>region) the explanation is valid.</strong></li>
 <li>LIME uses discretization for continuous predictors (regression cases), but discretization comes with an information loss.</li>
 </ul>
