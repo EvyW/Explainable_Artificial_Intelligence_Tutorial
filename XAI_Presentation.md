@@ -756,7 +756,7 @@ plot<span class="token punctuation">(</span>shapley_rf<span class="token punctua
 <li>The sum of what every player receives should equal to the total reward</li>
 <li>If two players contributed the same value, then they should receive the same amount from the reward</li>
 <li>Someone who contributed no value should receive nothing</li>
-<li>If the coalition plays two games, then an player’s reward from both games should equal its reward from their first game plus its reward from the second game</li>
+<li>If the coalition plays two games, then a player’s reward from both games should equal its reward from their first game plus its reward from the second game</li>
 </ol>
 <p>But again, <strong>how to split the payoff fairly?</strong> A possible solutions is according to the sequence of how group members joined, and tracking marginal contributions of each player.<br>
 This would mean that every player would be rewarded for what they contribute to achieve the total payoff, and according to the the order in which a player joined. For example:</p>
