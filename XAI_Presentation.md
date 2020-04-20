@@ -758,7 +758,7 @@ plot<span class="token punctuation">(</span>shapley_rf<span class="token punctua
 <li>Someone who contributed no value should receive nothing</li>
 <li>If the coalition plays two games, then a player’s reward from both games should equal its reward from their first game plus its reward from the second game</li>
 </ol>
-<p>But again, <strong>how to split the payoff fairly?</strong> A possible solutions is according to the sequence of how group members joined, and tracking marginal contributions of each player.<br>
+<p>But again, <strong>how to split the payoff fairly?</strong> A possible solution is according to the sequence of how group members joined, and tracking marginal contributions of each player.<br>
 This would mean that every player would be rewarded for what they contribute to achieve the total payoff, and according to the the order in which a player joined. For example:</p>
 <blockquote>
 <p>“If Ava was the first member of the group, with a payoff of 5, and Bill joined to bring the payoff to 9, and later Christine joined to bring the payoff to 11, then the players’ respective payoffs would be (5, 4, 2). But, what if Christine and Bill have very similar skill sets? Then, it might the case that Christine would have a higher marginal contribution if she joined the group before Bill, because she’d be the first one to provide their overlapping skill set, and then when he joined, his marginal contribution would be lower. imagine a different payoff vector for (Ava, Bill, Christine) of (5, 1, 5)"<br>
