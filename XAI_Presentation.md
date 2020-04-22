@@ -854,7 +854,7 @@ Therefore, ϕAgeBobby=1.05 and ϕGenderBobby=0.95.</li>
 </li>
 </ul>
 <h2 id="techniques-for-global-explainability">Techniques for Global explainability</h2>
-<p><strong>Feature importance from a decision tree vs. permutation feature interaction</strong></p>
+<p><strong>Feature importance from a decision tree vs. permutation feature importance</strong></p>
 <p><img src="https://lh3.googleusercontent.com/PO_SWqCVl33dfaoyAcqO4Nrub_3-7efKktzRz-vxsNssXHmVV_oEFZeGQG8JJrs0X8Px9BM7i3zZ=s900" alt=""></p>
 <p><strong>Are the features that interact the also the most important?</strong></p>
 <p><img src="https://lh3.googleusercontent.com/XNEcQ2mUFbTVwuGl4rwG2KUISZDsl0Y5FJu7yqBKRjRWh6fOibYa_9cDcPTLtUSCMkSh1gF6Chdc=s900" alt="enter image description here"></p>
